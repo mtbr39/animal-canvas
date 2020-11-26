@@ -12,4 +12,9 @@ resource : 参照しているデータを表す
 
 `return request.auth != null;`によって認証を確認する
 
+## tips
+
+import文を使うにはscriptタグにtype="module"が必要
+
+import文はローカルを参照できない
 
