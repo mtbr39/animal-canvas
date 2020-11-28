@@ -13,9 +13,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+//++ グローバル
 let db = firebase.database();
-
-
+let authUid = null;
+//--
 
 const addSample = () => { 
     
@@ -39,9 +40,8 @@ function writeUserData(authId, name) {
 firebase.auth().onAuthStateChanged( (user) => {
     if(user) {
         let isAnonymous = user.isAnonymous;
-        let uid = user.uid;
-        console.log("onAuth", isAnonymous, uid);
-        writeUserData(authId = uid, name = "waza.");
+        authUid = user.uid;
+        console.log("onAuth", isAnonymous, authUid);
     }
     else {
 
@@ -49,20 +49,32 @@ firebase.auth().onAuthStateChanged( (user) => {
     
 } );
 
+const setUserName = () => { 
+    let inputName = document.name_form.name.value;
+    writeUserData(authId = authUid, name = inputName);
+}
 
 
-
-//↑↑↑関数宣言↑↑↑
+//↑↑↑関数宣言、コールバック登録↑↑↑
 //↓↓↓main処理↓↓↓
 
-firebase.auth().signInAnonymously()
-    .then( () => {
-        
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(function () {
+        firebase.auth().signInAnonymously()
+            .then(() => {
+
+            })
+            .catch((error) => {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+            });
     })
-    .catch((error) => {
-    let errorCode = error.code;
-    let errorMessage = error.message;
-} );
+    .catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+    });
+
+
 
 // addSample();
 // setSample();
