@@ -1,12 +1,5 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyAPbINS4YeMKuqdUEwJ5D1Pcc3bqoEUNQo",
-    authDomain: "firestoretrial-f908e.firebaseapp.com",
-    databaseURL: "https://firestoretrial-f908e.firebaseio.com",
-    projectId: "firestoretrial-f908e",
-    storageBucket: "firestoretrial-f908e.appspot.com",
-    messagingSenderId: "643217128291",
-    appId: "1:643217128291:web:bec158d83762d6dedff156",
-    measurementId: "G-1C4FEDWTK0"
+    
 };
 
 
@@ -61,9 +54,6 @@ const setUserName = () => {
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(function () {
         firebase.auth().signInAnonymously()
-            .then(() => {
-
-            })
             .catch((error) => {
                 let errorCode = error.code;
                 let errorMessage = error.message;
