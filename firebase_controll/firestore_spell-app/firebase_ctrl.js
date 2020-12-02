@@ -1,3 +1,7 @@
+const firebaseConfig = {
+    
+};
+
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
@@ -78,25 +82,44 @@ const spellSubmit = () => {
 }
 
 const castSpell = () => {
+    console.log("castSpell()");
     let inputSpell = document.spell_form.spell.value;
-    console.log(typeof(inputSpell),inputSpell);
     if(inputSpell!="") {
         db.collection("spell").doc(inputSpell).get().then((doc) => {
-            console.log("answer: ", doc.data().answer);
+            if (doc.data() != undefined) {
+                console.log("answer: ", doc.data().answer);
+            } else { 
+                console.log("Not exist spell: ", inputSpell);
+            }
         });
         
     }
 }
 
+const deleteSpell = () => { 
+    console.log("deleteSpell()");
+    let inputSpell = document.spell_form.spell.value;
 
-//↑↑↑関数宣言↑↑↑
-//↓↓↓main処理↓↓↓
+    //get(): 取得して削除対象が存在するか判定
+    db.collection("spell").doc(inputSpell).get().then((doc) => {
+        if (doc.data() != undefined) {
+            //doc().delete(): 削除処理
+            db.collection("spell").doc(inputSpell).delete().then(function () {
+                console.log("Document successfully deleted!", inputSpell);
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
+        }
+        else { 
+            console.log("Not exist spell: ", inputSpell);
+            return;
+        }
+    });
+}
+
+
 
 firebase.auth().signInAnonymously().catch( (error) => {
     let errorCode = error.code;
     let errorMessage = error.message;
 } );
-
-// addSample();
-// setSample();
-// getSample();

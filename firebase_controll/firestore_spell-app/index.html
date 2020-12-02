@@ -18,12 +18,15 @@
         <p style="text-align: right;">
             <input type="button" value="唱える" onclick="castSpell()" />
         </p>
+        <p style="text-align: right;">
+            <input type="button" value="削除" onclick="deleteSpell()" />
+        </p>
         <p>
             答え
             <input name="answer" type="text" />
         </p>
         <p style="text-align: right;">
-            <input type="button" value="封印" onclick="spellSubmit()" />
+            <input type="button" value="登録" onclick="spellSubmit()" />
         </p>
         
     </form>
@@ -32,7 +35,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
 
     <script src="./firebase_ctrl.js"></script>
 </body>
