@@ -123,3 +123,9 @@ firebase.auth().signInAnonymously().catch( (error) => {
     let errorCode = error.code;
     let errorMessage = error.message;
 } );
+
+// db.collection("spell").doc("SF")
+//     .onSnapshot(function (doc) {
+//         var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+//         console.log(source, " data: ", doc.data());
+//     });
