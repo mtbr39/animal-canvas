@@ -6,7 +6,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 0 },
             debug: false
         }
     },
@@ -128,15 +128,21 @@ function update() {
 
         player.anims.play('right', true);
     }
+    else if (cursors.up.isDown) {
+        player.setVelocityY(-160);
+    }
+    else if (cursors.down.isDown) {
+        player.setVelocityY(160);
+    }
     else {
-        player.setVelocityX(0);
+        //player.setVelocityX(0);
 
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-330);
-    }
+    //if (cursors.up.isDown && player.body.touching.down) {
+    //     player.setVelocityY(-160);
+    // }
 }
 
 function collectStar(player, star) {
