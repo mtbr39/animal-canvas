@@ -1,4 +1,4 @@
-fetch("https://newsapi.org/v2/top-headlines?country=jp&apiKey=77d742fa02a64efab928eca4132e20cb", {
+fetch("https://newsapi.org/v2/top-headlines?country=jp&apiKey=NEWSAPI_KEY", {
 	method: "GET",
 	headers: {
 		
@@ -15,4 +15,4 @@ fetch("https://newsapi.org/v2/top-headlines?country=jp&apiKey=77d742fa02a64efab9
 	console.error(err);
 });
 
-// 77d742fa02a64efab928eca4132e20cb
+console.log("testjson: ", testjson);
