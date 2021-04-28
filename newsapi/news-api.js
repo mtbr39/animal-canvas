@@ -16,3 +16,4 @@ fetch("https://newsapi.org/v2/top-headlines?country=jp&apiKey=NEWSAPI_KEY", {
 });
 
 console.log("testjson: ", testjson);
+console.log("testjson: ", testjson["article"][0]["title"]);
