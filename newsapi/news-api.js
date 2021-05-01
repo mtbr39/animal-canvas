@@ -23,7 +23,7 @@ console.log(APIKEY);
 console.log("testjson: ", testjson);
 console.log("testjson: ", testjson["articles"][1]["title"]);
 
-const information=document.getElementById("information");
+
 const infoArray = [];
 
 infoArray.ホスト=location.host;
@@ -52,8 +52,10 @@ infoArray.タッチ操作可能 = navigator.pointerEnabled;
 infoArray.最大同時タッチ数 = navigator.maxTouchPoints;
 
 console.log(infoArray);
-for(key in infoArray){
-  information.innerHTML+=(key+":"+infoArray[key]+"<br>");
-}
+
+// // const information=document.getElementById("information");
+// for(key in infoArray){
+//   information.innerHTML+=(key+":"+infoArray[key]+"<br>");
+// }
 
 
