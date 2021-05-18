@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
+
+html {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #2e2e2e;
+}
+
 .title {
     font-size: 3.0rem;
-    font-weight: 600;
-    border-bottom: 4px black solid;
+    line-height: 3.0rem;
+    font-weight: 700;
+    border-bottom: 2px black solid;
+    overflow: hidden;
 }

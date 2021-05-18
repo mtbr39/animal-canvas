@@ -7,7 +7,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 0 },
             debug: false
         }
     },
@@ -30,25 +30,20 @@ var scoreText;
 var game = new Phaser.Game(config);
 
 function preload() {
-    // this.load.image('sky', 'assets/sky.png');
-    // this.load.image('ground', 'assets/platform.png');
-    // this.load.image('star', 'assets/star.png');
-    // this.load.image('bomb', 'assets/bomb.png');
-    // this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image("circle", "img/Circle128.png");
+    this.load.image("square", "img/Square128.png");
 }
 
 function create() {
     
     platforms = this.physics.add.staticGroup();
+    platforms.create(400, 568, "square").setScale(2).refreshBody();
+    platforms.create(600, 400, "square");
 
-    console.log(typeof(this.physics.add), this.physics.add);
-    console.log(typeof(this.physics), this.physics);
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '64px', fill: '#f00' });
 
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#f00' });
+    player = this.physics.add.sprite(100, 450, "circle");
 
-    let r1 = new Phaser.Geom.Rectangle(200, 200, 148, 148);
-
-    let r2 = this.add.rectangle(200, 200, 148, 148, 0x6666ff);
 
 
 
@@ -57,14 +52,3 @@ function create() {
 function update() {
     
 }
-
-
-// function hitBomb(player, bomb) {
-//     this.physics.pause();
-
-//     player.setTint(0xff0000);
-
-//     player.anims.play('turn');
-
-//     gameOver = true;
-// }
