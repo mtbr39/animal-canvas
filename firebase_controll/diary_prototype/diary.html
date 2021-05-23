@@ -10,18 +10,29 @@
 </head>
 
 <body>
-    <div id="app">
 
-        Firebase Cloud Firestore
-
-        <input v-model="email" placeholder="メールアドレス" />
+    <div class="center-wrap">
+        <div id="app">
         
-        <input type="password" v-model="password" placeholder="パスワード">
+            
+            <span class="app-title">ニッキ</span>
         
-        <button v-on:click="signUp">サインアップ</button>
+            <input v-model="email" placeholder="メールアドレス" />
         
-
+            <input type="password" v-model="password" placeholder="パスワード">
+        
+            <div class="align-right">
+                <button v-on:click="signUp">オーケー</button>
+            </div>
+            
+        
+        
+        </div>
     </div>
+
+
+
+    <!-- --------------------------------------------------------------------- -->
 
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>

@@ -5,10 +5,49 @@
     font-family: 'M PLUS Rounded 1c', sans-serif;
     font-size: 24px;
     font-weight: 900;
+    color: dimgray;
     margin: 20px;
     padding: 15px 20px;
 }
 
+body {
+    background-color: floralwhite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-wrap {
+    margin: auto;
+    text-align: center;
+}
+
+span.app-title {
+    margin: 0px;
+    padding: 0px;
+    font-size: 100px;
+    font-weight: 700;
+}
+
 input {
     display: block;
+    background-color: floralwhite;
+    border-radius: 8px;
+    border: 4px solid dimgray;
+    
+}
+
+button {
+    display: inline-block;
+    margin-right: 0;
+    background-color: floralwhite;
+    border-radius: 8px;
+    border: 4px solid salmon;
+    color: salmon;
+}
+
+.align-right {
+    text-align: right;
+    margin-right: 0;
 }
