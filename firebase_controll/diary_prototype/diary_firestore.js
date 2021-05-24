@@ -3,12 +3,18 @@ firebase.analytics();
 
 let db = firebase.firestore();
 
+
+
 class fs {
+  constructor() {
+    this.user = {};
+  }
+
   static logUser() {
     console.log("logUser");
 
-      let user = firebase.auth().currentUser;
-      let username, email, photoUrl, uid, emailVerified;
+    let user = firebase.auth().currentUser;
+    let username, email, photoUrl, uid, emailVerified;
 
     if (user != null) {
       username = user.displayName;
@@ -22,6 +28,8 @@ class fs {
     } else {
       console.log("userがぬる。");
     }
+
+    return user;
   }
 
   static signUp(formInput) {
@@ -65,26 +73,23 @@ class fs {
         console.log(errorCode, "そして", errorMessage);
       });
   }
+
+
 }
 
-// addSample();
-// setSample();
-// getSample();
+fs1 = new fs();
 
-
-
+//onAuthStateChangedイベントに登録
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    fs.logUser();
+    console.log("現在のユーザー", user.email);
   } else {
-
+    console.log("ユーザーなし");
   }
 });
 
-// firebase
-//   .auth()
-//   .signInAnonymously()
-//   .catch((error) => {
-//     let errorCode = error.code;
-//     let errorMessage = error.message;
-//   });
+
+
+
+
+
