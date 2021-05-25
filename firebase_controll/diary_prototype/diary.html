@@ -13,17 +13,54 @@
 
     <div class="center-wrap">
         <div id="app">
+
+            <div class="page-login">
+
+                <span class="app-title">ニッキ</span>
+                
+                <input type="email" v-model="email" placeholder="メールアドレス" />
+                
+                <input type="password" v-model="password" placeholder="パスワード">
+
+                <button v-on:click="signUp">オーケー</button>
+
+
+            </div>
+
+            <div class="page-home">
+
+                <div class="grid-alpha">
+
+                    <div v-for="(item, index) in grid_items">
+                        {{index}} 
+                        - 
+                        <!-- {{item.feeling}} -->
+                    </div>
+
+                </div>
+
+                <div class="date-text">{{date_text}}</div>
+                <div class="time-text">{{hours_text}}<span>:</span>{{minutes_text}}</div>
+                <div>いまどんなかんじ？</div>
+                
+                <div class="feeling-select">
+
+                    <div v-for="(item, index) in feel_set" class="feel-set">
+                        <div>
+                            {{item.feel}}
+                        </div>
+                    </div>
+            
+                </div>
+
+
+
+            </div>
+
+
         
             
-            <span class="app-title">ニッキ</span>
-        
-            <input v-model="email" placeholder="メールアドレス" />
-        
-            <input type="password" v-model="password" placeholder="パスワード">
-        
-            <div class="align-right">
-                <button v-on:click="signUp">オーケー</button>
-            </div>
+
 
             {{ user_email }}
             
