@@ -45,7 +45,8 @@
                 
                 <div class="feeling-select">
 
-                    <div v-for="(item, index) in feel_set" class="feel-set">
+                    <div v-for="(item, index) in feel_set" class="feel-set"
+                        v-on:click="saveFeel">
                         <div>
                             {{item.feel}}
                         </div>
@@ -62,7 +63,7 @@
             
 
 
-            {{ user_email }}
+            {{ user.email }} {{user.uid}}
             
         
         

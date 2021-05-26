@@ -112,6 +112,11 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+.feel-set:hover {
+    border: 4px solid salmon;
+    color: salmon;
 }
 
 .date-text {
