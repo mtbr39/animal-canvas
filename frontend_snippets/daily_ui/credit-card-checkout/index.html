@@ -1,0 +1,48 @@
+<!-- console $ pug -w ./ -o ./ -P-->
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>credit-card-checkout</title>
+    <link rel="stylesheet" href="./layout.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+</head>
+
+<body>
+
+    <div id="credit-card-checkout">
+        <div class="left-box">
+            <div class="card-box">
+                クレカ
+            </div>
+        </div>
+        <div class="right-box">
+            <div class="term-title">
+                支払情報
+            </div>
+            <div>
+                <label>名義
+                    <input type="text">
+                </label>
+                <label>カード番号
+                    <input type="text">
+                </label>
+
+                <div class="bottom-input">
+                    <label>有効期限
+                        <input type="text">
+                    </label>
+                    <label>CVC
+                        <input type="text">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./vue.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;700&display=swap");
+
+:root {
+    --main-color: #51ace1;
+    --main-color-shadow: #2596d9;
+    --font-color: #093149;
+    --bg-color: #f4f9fc;
+    font-family: "Noto Sans JP", sans-serif;
+    color: var(--font-color);
+    font-weight: 300;
+    font-size: 20px;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background: var(--bg-color);
+}
+
+div {
+    /* border: 4px solid var(--main-color);
+    margin: 10px;
+    min-width: 60px;
+    min-height: 40px; */
+}
+
+#credit-card-checkout {
+    width: 90vw;
+    max-width: 1080px;
+    min-width: 720px;
+    margin: auto;
+    margin-top: 240px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.left-box {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-box {
+    background-color: var(--main-color);
+    background: linear-gradient(
+        175deg,
+        var(--main-color),
+        var(--main-color-shadow)
+    );
+    width: 360px;
+    height: 220px;
+    border-radius: 20px;
+    box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.1);
+    color: var(--bg-color);
+}
+.card-box svg {
+    fill: #f8e7a3;
+}
+
+.right-box {
+    width: 30%;
+}
+
+.term-title {
+    /* text-align: center; */
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--main-color);
+}
+
+.bottom-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottom-input > label {
+}
+.bottom-input > label:nth-child(2) {
+    width: 40%;
+    margin-left: 40px;
+}
+
+label {
+    display: block;
+    margin: 40px 0px;
+    font-size: 16px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    padding: 6px 4px;
+    margin: 10px 0px;
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    font-weight: 700;
+}
+
+input:focus {
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+    outline: 0;
+}
