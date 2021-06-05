@@ -12,10 +12,36 @@
 
 <body>
 
+    <div class=corp-logo>
+        <i class="fab fa-fort-awesome"></i>
+        とあるショップ
+    </div>
     <div id="credit-card-checkout">
         <div class="left-box">
             <div class="card-box">
-                クレカ
+                <div class="card-number">
+                    {{ card_number }}
+                </div>
+                <div class="card-info">
+                    <div>
+                        名義
+                        <div class="info-prop">
+                            {{ card_holder }}
+                        </div>
+                    </div>
+                    <div>
+                        有効期限
+                        <div class="info-prop">
+                            {{ expiry_date }}
+                        </div>
+                    </div>
+                    <div>
+                        CVC
+                        <div class="info-prop">
+                            {{ card_cvc }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="right-box">
@@ -23,22 +49,24 @@
                 支払情報
             </div>
             <div>
-                <label>名義
-                    <input type="text">
-                </label>
                 <label>カード番号
-                    <input type="text">
+                    <input type="text" v-model="card_number">
                 </label>
-
+                <label>名義
+                    <input type="text" v-model="card_holder">
+                </label>
                 <div class="bottom-input">
                     <label>有効期限
-                        <input type="text">
+                        <input type="text" v-model="expiry_date">
                     </label>
                     <label>CVC
-                        <input type="text">
+                        <input type="text" v-model="card_cvc">
                     </label>
                 </div>
             </div>
+            <button>
+                確認
+            </button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

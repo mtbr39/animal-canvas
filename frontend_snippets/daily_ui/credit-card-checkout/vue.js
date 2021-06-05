@@ -1,12 +1,9 @@
-const mochi_menu = new Vue({
-    el: "credit-card-checkout",
+const credit_card_checkout = new Vue({
+    el: "#credit-card-checkout",
     data: {
-        active_menu: 0,
-    },
-    methods: {
-        menu_click(n) {},
-    },
-    computed: {
-        position_class() {},
+        card_number: "",
+        card_holder: "",
+        expiry_date: "",
+        card_cvc: "",
     },
 });
