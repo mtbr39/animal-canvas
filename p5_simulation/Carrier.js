@@ -9,7 +9,7 @@ class Carrier {
         this.trace = trace1; //ほんとは new Trace();
     }
     draw() {
-        this.trace.updateParent(this.sprite.position);
+        this.trace.setTrailLead(this.sprite.position);
         if (millis() - this.moveTime > 4000) {
             this.moveTime = millis();
             this.sprite.velocity.x = this.sprite.velocity.x * -1;

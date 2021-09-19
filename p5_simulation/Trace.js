@@ -10,26 +10,21 @@
 //TraceとCarrierは1:1 TraceはCargosに付けたりはずしたりする
 class Trace {
     constructor() {
-        this.parentPosition = "init";
-        this.childrenPosition = [createVector(-1, -1)];
+        this.trail = [createVector(-1, -1)]; //位置座標の配列
     }
-    getElderPosition(nth) {
-        return this.childrenPosition[nth - 1];
-    }
-    updateParent(_parentPosition) {
-        this.childrenPosition[0] = _parentPosition;
-    }
-    getNthPosition(nth) {
-        return this.childrenPosition[nth]
-            ? this.childrenPosition[nth]
-            : "error:その番号のpositionはありません";
+
+    setTrailLead(_leadPosition) {
+        this.trail[0] = _leadPosition;
     }
     pushChildAndGetNth() {
-        this.childrenPosition.push("newChild");
-        let nth = this.childrenPosition.length - 1;
+        this.trail.push("newChild");
+        let nth = this.trail.length - 1;
         return nth;
     }
     updateNthPosition(nth, _childPosition) {
-        this.childrenPosition[nth] = _childPosition;
+        this.trail[nth] = _childPosition;
+    }
+    getElderPosition(nth) {
+        return this.trail[nth - 1];
     }
 }
