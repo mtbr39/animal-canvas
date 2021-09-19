@@ -7,6 +7,7 @@ class Carrier {
         this.sprite.maxSpeed = 4;
         this.moveTime = 0;
         this.trace = trace1; //ほんとは new Trace();
+        drawer.submitObject(this);
     }
     draw() {
         this.trace.setTrailLead(this.sprite.position);

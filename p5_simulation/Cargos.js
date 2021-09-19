@@ -3,11 +3,7 @@ class Cargos {
         this.group = new Group();
         this.cargos = [];
     }
-    draw() {
-        this.cargos.forEach((cargoIns) => {
-            cargoIns.draw();
-        });
-    }
+    draw() {}
     onMousePressed() {
         let cargo = new Cargo({ x: mouseX, y: mouseY });
         this.group.add(cargo.sprite);
@@ -22,6 +18,7 @@ class Cargo {
         this.sprite.shapeColor = color(200);
         // this.sprite.velocity.y = 4.0;
         this.nth = trace1.pushChildAndGetNth(); //todo : 付替え可能なTraceを所有させる
+        drawer.submitObject(this);
     }
     draw() {
         this.sprite.velocity.x =
