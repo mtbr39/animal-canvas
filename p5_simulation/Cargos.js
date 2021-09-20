@@ -16,7 +16,6 @@ class Cargo {
         let y0 = options.y | 0;
         this.sprite = createSprite(x0, y0, 40, 40);
         this.sprite.shapeColor = color(200);
-        // this.sprite.velocity.y = 4.0;
         this.nth = trace1.pushChildAndGetNth(); //todo : 付替え可能なTraceを所有させる
         drawer.submitObject(this);
     }

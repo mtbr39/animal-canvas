@@ -7,7 +7,7 @@ let trace1;
 function setup() {
     createCanvas(1080, 720);
 
-    drawer = new drawer();
+    drawer = new Drawer();
     trace1 = new Trace();
     carrier = new Carrier();
     cargos = new Cargos();

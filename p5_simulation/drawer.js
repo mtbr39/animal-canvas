@@ -1,4 +1,4 @@
-class drawer {
+class Drawer {
     constructor() {
         this.objectList = [];
     }
