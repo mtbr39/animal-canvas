@@ -14,6 +14,14 @@ class Carrier {
         if (millis() - this.moveTime > 4000) {
             this.moveTime = millis();
             this.sprite.velocity.x = this.sprite.velocity.x * -1;
+            this.collect();
         }
+    }
+    collect() {
+        console.log("collect");
+        collectAreaManager.createCollectArea({
+            x: this.sprite.position.x,
+            y: this.sprite.position.y,
+        });
     }
 }
