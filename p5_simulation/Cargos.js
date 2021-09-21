@@ -16,17 +16,34 @@ class Cargo {
         let y0 = options.y | 0;
         this.sprite = createSprite(x0, y0, 40, 40);
         this.sprite.shapeColor = color(200);
-        this.nth = trace1.pushChildAndGetNth(); //todo : 付替え可能なTraceを所有させる
+        this.trace = null;
+        this.nth = "init";
+        this.isTracing = false;
+
         drawer.submitObject(this);
     }
     draw() {
-        this.sprite.velocity.x =
-            (trace1.getElderPosition(this.nth).x - this.sprite.position.x) *
-            0.02;
-        this.sprite.velocity.y =
-            (trace1.getElderPosition(this.nth).y - this.sprite.position.y) *
-            0.02;
+        this.sprite.overlap(
+            collectAreaManager.group,
+            (mysprite, targetSprite) => {
+                if (!this.isTracing) {
+                    this.isTracing = true;
+                    this.trace = collectAreaManager.getTrace(targetSprite);
+                    this.nth = this.trace.pushChildAndGetNth();
+                }
+            }
+        );
+        if (this.trace) {
+            this.sprite.velocity.x =
+                (this.trace.getElderPosition(this.nth).x -
+                    this.sprite.position.x) *
+                0.02;
+            this.sprite.velocity.y =
+                (this.trace.getElderPosition(this.nth).y -
+                    this.sprite.position.y) *
+                0.02;
 
-        trace1.updateNthPosition(this.nth, this.sprite.position);
+            this.trace.updateNthPosition(this.nth, this.sprite.position);
+        }
     }
 }

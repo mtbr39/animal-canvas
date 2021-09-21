@@ -18,8 +18,9 @@ class Carrier {
         }
     }
     collect() {
-        console.log("collect");
+        console.log("collect", this.trace);
         collectAreaManager.createCollectArea({
+            trace: this.trace,
             x: this.sprite.position.x,
             y: this.sprite.position.y,
         });
