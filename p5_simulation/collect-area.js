@@ -7,11 +7,14 @@ class CollectAreaManager {
         let collectArea = new CollectArea(options);
         this.collectAreaArray.push(collectArea);
         this.group.add(collectArea.sprite);
+        // console.log("createCollectArea", this.group);
     }
     getTrace(collectAreaSprite) {
         let area = this.collectAreaArray.find((el) => {
+            // console.log("gettraceLOOP", el);
             return el.sprite === collectAreaSprite;
         });
+        // console.log("gettrace", this.collectAreaArray, collectAreaSprite, area);
         return area.trace;
     }
 }
