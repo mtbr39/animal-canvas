@@ -1,0 +1,12 @@
+
+ul.grid-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 240px);
+    grid-auto-rows: 240px;
+    gap: 40px;
+    place-items: center;
+}
+
+ul.grid-block li {
+    border: 1px solid black;
+}
