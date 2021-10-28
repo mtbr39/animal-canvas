@@ -1,0 +1,63 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#particles {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+#particles canvas {
+    display: block;
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+.page-wrap {
+    min-width: 100%;
+    min-height: 100vh;
+    background-color: #004e89;
+}
+
+.ship {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ship svg {
+    width: 500px;
+    height: 500px;
+}
+.ship svg path {
+    stroke: #fff;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 0;
+    stroke-width: 2;
+    -webkit-animation: hello 6s ease-in-out 0s;
+    animation: hello 6s ease-in 0s;
+}
+@keyframes hello {
+    0% {
+        stroke-dashoffset: 2000;
+        fill: transparent;
+    }
+    20% {
+        stroke-dashoffset: 2000;
+        fill: transparent;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.wave {
+    /* width: 32px; */
+    height: 240px;
+    background-image: url(./assets/wave.svg);
+    background-repeat: repeat-x;
+    background-size: 36%;
+}
