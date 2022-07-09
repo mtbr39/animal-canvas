@@ -42,42 +42,6 @@ function init() {
     const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
     camera.position.set(0, 0, +1000);
 
-    // //グループ バックアップ
-    // const treeGroup = new THREE.Group();
-    // scene.add(treeGroup);
-
-    // const sphere01 = new THREE.Mesh(
-    //     new THREE.SphereGeometry(200, 30, 30),
-    //     new THREE.MeshStandardMaterial({ color: 0x226f54 })
-    // );
-    // sphere01.position.x = 30;
-    // sphere01.position.y = 150;
-    // treeGroup.add(sphere01);
-
-    // const sphere02 = new THREE.Mesh(
-    //     new THREE.SphereGeometry(150, 30, 30),
-    //     new THREE.MeshStandardMaterial({ color: 0x226f54 })
-    // );
-    // sphere02.position.x = -120;
-    // sphere02.position.y = 60;
-    // treeGroup.add(sphere02);
-
-    // const cylinder01 = new THREE.Mesh(
-    //     new THREE.CylinderGeometry(20, 50, 500, 32),
-    //     new THREE.MeshBasicMaterial({ color: 0x43291f })
-    // );
-    // cylinder01.position.y = -100;
-    // treeGroup.add(cylinder01);
-
-    // const cylinder02 = new THREE.Mesh(
-    //     new THREE.CylinderGeometry(10, 20, 200, 32),
-    //     new THREE.MeshBasicMaterial({ color: 0x43291f })
-    // );
-    // cylinder02.rotation.z = 0.5;
-    // cylinder02.position.x = -60;
-    // cylinder02.position.y = -100;
-    // treeGroup.add(cylinder02);
-
     //グループ
     const treeGroup = new THREE.Group();
     scene.add(treeGroup);
