@@ -21,7 +21,7 @@ dim_out = 1             # 出力は1次元
 hidden_count = 1024     # 隠れ層のノードは1024個
 learn_rate = 0.01      # 学習率
 
-# 訓練データは x は -1～1、y は 2 * x ** 2 - 1
+# 訓練データ : x は -1～1、y は x+1
 train_count = 10        # 訓練データ数
 x_train = np.arange(-1, 1, 2 / train_count).reshape((train_count, dim_in))
 y_train = np.array([x + 1 for x in x_train]).reshape((train_count, dim_out))
@@ -72,7 +72,7 @@ def backward(x, diff):
 
 # メイン処理
 idxes = np.arange(train_count)          # idxes は 0～63
-for epoc in range(100):                # 1000エポック
+for epoc in range(100):                 # エポック数
     np.random.shuffle(idxes)            # 確率的勾配降下法のため、エポックごとにランダムにシャッフルする
     error = 0                           # 二乗和誤差
     for idx in idxes:
