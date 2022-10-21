@@ -11,6 +11,7 @@ function setup() {
 
     drawer = new Drawer();
     mover = new Mover();
+    plantController = new PlantController();
 }
 
 function draw() {
@@ -18,7 +19,9 @@ function draw() {
 
     drawer.draw();
 
-    drawSprites();
+    // drawSprites();
+
+    // allSprites.debug = mouse.pressing();
 }
 
 function mousePressed() {
