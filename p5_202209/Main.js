@@ -1,17 +1,16 @@
 let drawer;
-let collectAreaManager;
-let carrier;
-let cargos;
-
-let trace1;
 
 function setup() {
-    createCanvas(1080, 720);
-    console.log("setup");
+    let canvas = createCanvas(windowWidth, windowHeight);
+    canvas.parent("main-id");
+    canvas.style("display", "block");
 
     drawer = new Drawer();
     mover = new Mover();
     plantController = new PlantController();
+
+
+
 }
 
 function draw() {
@@ -27,3 +26,8 @@ function draw() {
 function mousePressed() {
 
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
