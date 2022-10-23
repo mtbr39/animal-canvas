@@ -11,11 +11,8 @@ class Mover {
             
         });
 
-        // this.sprite.rotation = 90;
         this.sprite.addSpeed(1.0, this.sprite.rotation);
 
-
-        
         drawer.submitObject(this);
     }
     draw() {
@@ -29,10 +26,10 @@ class Mover {
 
     }
 
+
     findPlant(targetSprite) { 
-        this.sprite.rotation = (Math.atan((targetSprite.x - this.sprite.x) / (targetSprite.y - this.sprite.y)) * 180) / Math.PI;
+        // this.sprite.rotation = (Math.atan((targetSprite.x - this.sprite.x) / (targetSprite.y - this.sprite.y)) * 180) / Math.PI;
         this.sprite.moveTowards(targetSprite.x, targetSprite.y, 0.01);
-        console.log("findPlant", targetSprite.x - this.sprite.x, targetSprite.y - this.sprite.y, targetSprite.type, this.sprite.rotation);
         targetSprite.color = color(0, 0, 255, 0);
         return;
     }
@@ -47,15 +44,6 @@ class Vision {
         this.sprite = new Sprite(x0 + this.offsetX, y0 + this.offsetY, 400, 400);
         this.sprite.type = "Vision";
         this.sprite.color = color(0, 0, 255, 0);
-
-        // this.sprite.overlaps(allSprites, (mySprite, targetSprite) => {
-        //     // console.log("overlap test", targetSprite.type);
-        //     console.log("Vision in Plant overlap");
-        //     if (targetSprite.type == "Plant") { 
-        //         console.log("Vision in Plant overlap")
-        //         targetSprite.color = color(0, 0, 255, 0);
-        //     };
-        // });
 
         drawer.submitObject(this);
     }

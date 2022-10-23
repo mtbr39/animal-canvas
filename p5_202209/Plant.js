@@ -9,8 +9,8 @@ class Plant {
         let y0 = options.y | 0;
         this.sprite = new Sprite(x0, y0, 16);
         this.sprite.type = "Plant";
-        // this.sprite.color = color(0,0,255,0.5);
-        // this.sprite.overlaps(allSprites);
+        this.sprite.color = color(0,0,255,0);
+        this.sprite.overlaps(allSprites);
         this.sprite.drag = 0;
         drawer.submitObject(this);
     }
