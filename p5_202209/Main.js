@@ -2,16 +2,23 @@ let drawer;
 
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight);
-    canvas.parent("main-id");
-    canvas.style("display", "block");
 
     drawingContext.shadowBlur = 16;
     drawingContext.shadowColor = color(255);
 
     drawer = new Drawer();
-    mover = new Mover();
-    plantController = new PlantController();
+    let mover = new Mover();
+    let plantController = new PlantController();
 
+    s01 = new Sprite(400, 400, 400,400);
+
+    s01.overlaps(allSprites, (mySprite, targetSprite) => {
+
+        if (targetSprite.type == "Plant") {
+            console.log("s01 plant find");
+            targetSprite.color = color(0, 0, 255, 0);
+        }
+    });
 
 
 }
@@ -24,6 +31,8 @@ function draw() {
     stroke(255);
 
     drawer.draw();
+
+    // s01.moveTowards(mouse.x, mouse.y);
 
     // drawSprites();
 
