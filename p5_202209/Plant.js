@@ -7,17 +7,13 @@ class Plant {
     constructor(options) {
         let x0 = options.x | 0;
         let y0 = options.y | 0;
-        this.sprite = createSprite(x0, y0, 20, 20);
-        this.sprite.visible = false;
-        this.radius = 10;
-        this.sprite.drag = 100;
+        this.sprite = new Sprite(x0, y0, 16);
+        this.sprite.color = color(0,0,255,0);
+        
+        this.sprite.drag = 0;
         drawer.submitObject(this);
     }
     draw() {
-        fill(0, 0, 0, 1);
-        strokeWeight(1.0);
-        stroke(255);
-        circle(this.sprite.position.x, this.sprite.position.y, this.radius);
 
     }
 }
