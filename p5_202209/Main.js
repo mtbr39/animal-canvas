@@ -5,6 +5,9 @@ function setup() {
     canvas.parent("main-id");
     canvas.style("display", "block");
 
+    drawingContext.shadowBlur = 16;
+    drawingContext.shadowColor = color(255);
+
     drawer = new Drawer();
     mover = new Mover();
     plantController = new PlantController();
@@ -15,6 +18,10 @@ function setup() {
 
 function draw() {
     background(0);
+
+    fill(0, 0, 0, 1);
+    strokeWeight(1.0);
+    stroke(255);
 
     drawer.draw();
 
