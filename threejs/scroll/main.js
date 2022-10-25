@@ -13,7 +13,7 @@ function init() {
 
     // シーンを作成
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xffffff );
+    scene.background = new THREE.Color( 0xb0c4de );
 
     // カメラを作成
     const camera = new THREE.PerspectiveCamera(
@@ -24,22 +24,19 @@ function init() {
     );
     camera.position.set(0, 0, +1000);
 
-    // 箱を作成
+    // Boxを作成
     const geometry = new THREE.BoxGeometry(100, 100, 100);
-    const material = new THREE.MeshStandardMaterial({
-        color: 0x0000ff
-    });
+    const material = new THREE.MeshStandardMaterial({color: 0x4169e1});
     const box = new THREE.Mesh(geometry, material);
     scene.add(box);
 
-    // 平行光源
-    const directionalLight = new THREE.DirectionalLight(
-        0xffffff
-    );
+    // ライティング
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(1, 1, 1);
-    
-    // シーンに追加
     scene.add(directionalLight);
+
+    const hemisLight = new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0);
+    scene.add(hemisLight);
 
     // 初回実行
     renderer.render(scene, camera);
