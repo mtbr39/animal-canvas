@@ -1,21 +1,14 @@
 let drawer;
-let collectAreaManager;
-let carrier;
-let cargos;
-
-let trace1;
 
 function setup() {
-    createCanvas(1080, 720);
-    // world.gravity.y = 10;
-    console.log("setup");
+    let canvas = createCanvas(windowWidth, windowHeight);
 
     drawingContext.shadowBlur = 16;
     drawingContext.shadowColor = color(255);
 
     drawer = new Drawer();
-    mover = new Mover();
-    plantController = new PlantController();
+    let mover = new Mover();
+    let plantController = new PlantController();
 }
 
 function draw() {
@@ -26,12 +19,13 @@ function draw() {
     stroke(255);
 
     drawer.draw();
-
-    // drawSprites();
-
-    // allSprites.debug = mouse.pressing();
 }
 
 function mousePressed() {
 
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
