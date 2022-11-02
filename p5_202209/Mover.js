@@ -11,11 +11,14 @@ class Mover {
             
         });
 
+        this.stateAction = function(){return;};
+
         this.sprite.addSpeed(1.0, this.sprite.rotation);
 
         drawer.submitObject(this);
     }
     draw() {
+        this.stateAction();
         // this.sprite.moveTowards(mouse.x, mouse.y);
 
         if (kb.presses(' ')) { 
@@ -26,11 +29,19 @@ class Mover {
 
     }
 
+    changeState(stateFunction) {
+        this.stateAction = stateFunction;
+    }
+
 
     findPlant(targetSprite) { 
+        // JSON.stringify([1, 2]) == JSON.stringify([1, 2]) // true
+        if ([this.sprite.x, this.sprite.y]==[targetSprite.x, targetSprite.y]) {
+            console.log("到着");
+        }
         // this.sprite.rotation = (Math.atan((targetSprite.x - this.sprite.x) / (targetSprite.y - this.sprite.y)) * 180) / Math.PI;
-        this.sprite.moveTowards(targetSprite.x, targetSprite.y, 0.01);
-        targetSprite.color = color(0, 0, 255, 0);
+        this.sprite.move(targetSprite.x, targetSprite.y, 2);
+        // targetSprite.color = color(0, 0, 255, 0);
         return;
     }
 }
