@@ -1,0 +1,33 @@
+:root {
+    --color-back1: #282D34;
+    --color-back2: #1A1E24;
+    --color-line: #6B7885;
+    --color-text: #A1AEBE;
+    
+    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body.dark {
+    background-color: var(--color-back1);
+    color: var(--color-text);
+}
+
+.dark h1 {
+    color: var(--color-text);
+}
+
+.dark canvas {
+    background-color: var(--color-back2);
+    border: 1px solid var(--color-line);
+    filter: drop-shadow(0px 0px 2px black);
+}
+
+canvas {
+    /* border: 1px solid var(--color-line); */
+    /* margin: 1.0rem; */
+}
