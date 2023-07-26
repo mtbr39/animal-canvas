@@ -17,10 +17,17 @@ window.addEventListener('load', () => {
         B: {x: 0, y: 0}
     };
 
+    //クラスインスタンス生成など
+    let alphaAnimals = [];
+    alphaAnimals[1] = new Animal();
+
     draw();
 
+    //描写
     function draw() {
         ctx2.drawLine(points.A, points.B);
+
+        
     }
 
     // ---- マウスイベント ----
