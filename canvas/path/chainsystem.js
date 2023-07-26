@@ -42,6 +42,13 @@ class Drawer {
             object.update();
         } );
     }
+    checkCollision() {
+        this.objects.forEach( (checkObject) => {
+            this.objects.forEach( (collideObject) => {
+                // console.log("## checkCollision-debug", checkObject.position, collideObject.position)
+            } );
+        } );
+    }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
