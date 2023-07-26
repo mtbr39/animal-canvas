@@ -2,17 +2,26 @@
 
 class Animal {
     constructor() {
-        this.position = {x:0, y:0}
-        this.direction = 0;
-        this.width = 0;
-        this.height = 0;
+        this.position = {x:0, y:0};
+        this.direction = Math.random() * 2 * Math.PI;
+        this.velocity = 0.5;
+        this.width = 40;
+        this.height = 40;
+        this.directionDelta = 0;
 
     }
 
     update() {
-        this.position.x += 1;
+        this.directionDelta += 0.02 * (Math.random()-0.5);
+        this.direction += this.directionDelta;
+        this.moveTowardDirection();
+        
     }
 
+    moveTowardDirection() {
+        this.position.x += this.velocity * Math.cos(this.direction);
+        this.position.y += this.velocity * Math.sin(this.direction);
+    }
 
 }
 
@@ -42,7 +51,7 @@ class Drawer {
     }
     drawObject(object) {
         if (object.drawType === undefined) {
-            this.circle(object.position, 100);
+            this.circle(object.position, object.width);
         }
     }
 

@@ -6,15 +6,17 @@ window.addEventListener('load', () => {
     let ctx = canvas.getContext('2d');
     
     let cw = canvas.width / 250;
-    let org = {x: 0, y: 0};
+    let org = {x: 100, y: 100};
 
     //クラスインスタンス生成など
     const drawer = new Drawer({canvas: canvas, ctx: ctx, cw: cw, org: org});
     
     let alphaAnimals = [];
-    alphaAnimals[1] = new Animal();
+    for (let i=0; i<10; i++) {
+        alphaAnimals[i] = new Animal();
+        drawer.submitObject(alphaAnimals[i]);
+    }
     
-    drawer.submitObject(alphaAnimals[1]);
 
     // FrameLoop
     const fps = 60;
@@ -32,6 +34,7 @@ window.addEventListener('load', () => {
     }
 
     function update() {
+        drawer.checkCollision();
         drawer.update();
         drawer.draw();
 
