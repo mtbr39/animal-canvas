@@ -14,11 +14,11 @@ class Animal {
     update() {
         this.directionDelta += 0.02 * (Math.random()-0.5);
         this.direction += this.directionDelta;
-        this.moveTowardDirection();
+        this.moveTowardsDirection();
         
     }
 
-    moveTowardDirection() {
+    moveTowardsDirection() {
         this.position.x += this.velocity * Math.cos(this.direction);
         this.position.y += this.velocity * Math.sin(this.direction);
     }
