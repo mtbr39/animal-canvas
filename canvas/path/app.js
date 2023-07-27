@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
     
     let alphaAnimals = [];
     for (let i=0; i<10; i++) {
-        alphaAnimals[i] = new Animal();
+        alphaAnimals[i] = new Animal({id: utl.randomStringLikeSynbolID()});
         drawer.submitObject(alphaAnimals[i]);
     }
     
