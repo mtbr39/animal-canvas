@@ -96,4 +96,12 @@ class utl {
         let N = length;
         return Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
     }
+    static randomStringLikeSynbolID(alphabetLength = 6, numberLength = 9) {
+        const randomStringFromLetters = (S, N) => Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
+        const randomNaturalNumber = (start, N) => Math.floor(Math.random()*N+start);
+        return [
+            randomStringFromLetters("abcdefghijklmnopqrstuvwxyz", randomNaturalNumber(1,alphabetLength)),
+            randomStringFromLetters("0123456789", randomNaturalNumber(0,numberLength))
+        ].join('');
+    }
 }

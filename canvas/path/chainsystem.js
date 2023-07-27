@@ -2,7 +2,8 @@
 
 class Animal {
     constructor(option = {x:0}) {
-        this.id = Math.random().toString(36).substring(2); // ランダムな文字列
+        this.id = utl.randomStringLikeSynbolID();
+        // this.id = Math.random().toString(36).substring(2); // ランダムな文字列
         this.position = {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
