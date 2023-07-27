@@ -1,13 +1,16 @@
 
 
 class Animal {
-    constructor() {
+    constructor(option = {x:0}) {
+        this.id = Math.random().toString(36).substring(2); // ランダムな文字列
         this.position = {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
         this.width = 40;
         this.height = 40;
         this.directionDelta = 0;
+
+        console.log(this.id);
 
     }
 

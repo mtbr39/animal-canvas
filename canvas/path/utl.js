@@ -90,4 +90,10 @@ class utl {
         let angle = this.angleLine(p1, p2);
         return this.rotatePoint({x: p1.x + distance, y: p1.y}, angle, p1);
     }
+    static randomString(length = 16) {
+        // let S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let S = "abcdefghijklmnopqrstuvwxyz0123456789";
+        let N = length;
+        return Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
+    }
 }
