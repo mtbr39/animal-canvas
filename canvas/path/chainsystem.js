@@ -16,6 +16,7 @@ class Animal {
 
     update() {
         this.directionDelta += 0.02 * (Math.random()-0.5);
+        this.directionDelta = Math.max(Math.min(this.directionDelta, 0.1), -0.1);
         this.direction += this.directionDelta;
         this.moveTowardsDirection();
         
