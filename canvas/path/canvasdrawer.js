@@ -20,19 +20,19 @@ class Drawer {
     }
     checkCollision() {
         this.objects.forEach( (targetObject) => {
-            this.objects.forEach( (checkObject) => {
-                if (targetObject.id !== checkObject.id) {
-                    targetObject.colliders.forEach( (targetCollider) => {
-                        checkObject.colliders.forEach( (checkCollider) => {
-                            if ( Drawer.isOverlappedCircle( targetCollider, checkCollider ) ) {
-                                targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
-                            }
-                        } );
-                    } );
-                    
+        this.objects.forEach( (checkObject)  => {
+            if (targetObject.id !== checkObject.id) {
+                targetObject.colliders.forEach( (targetCollider) => {
+                checkObject.colliders.forEach(  (checkCollider)  => {
+                    if ( Drawer.isOverlappedCircle( targetCollider, checkCollider ) ) {
+                        targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                    }
+                } );
+                } );
+                
 
-                }
-            } );
+            }
+        } );
         } );
     }
     static isOverlappedCircle(circle1, circle2) { // collider = {position:, radius}
@@ -56,7 +56,9 @@ class Drawer {
     drawObject(object) {
         if (object.drawType === undefined) {
             this.circle(object.position, object.radius);
-            this.fillText(object.id, object.position, {
+        }
+        if (object.creatureType === 'herbivore') {
+            this.fillText(object.identifiedName, object.position, {
                 offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
             });
         }

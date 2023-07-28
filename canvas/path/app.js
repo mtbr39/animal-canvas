@@ -1,11 +1,12 @@
 window.addEventListener('load', () => {
 
     let canvas = document.getElementById('canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerWidth;
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
     let ctx = canvas.getContext('2d');
     
-    let cw = canvas.width / 250;
+    const canvasAndXYRate = 250;
+    let cw = canvas.width / canvasAndXYRate;
     let org = {x: 100, y: 100};
 
     //クラスインスタンス生成など
@@ -15,6 +16,18 @@ window.addEventListener('load', () => {
     for (let i=0; i<10; i++) {
         alphaAnimals[i] = new Animal({id: utl.randomStringLikeSynbolID()});
         drawer.submitObject(alphaAnimals[i]);
+    }
+
+    let alphaPlants = [];
+    for (let i=0; i<50; i++) {
+        alphaPlants[i] = new Animal({
+            id: utl.randomStringLikeSynbolID(),
+            position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
+            radius: 2,
+            creatureType: 'plant',
+
+        });
+        drawer.submitObject(alphaPlants[i]);
     }
     
 

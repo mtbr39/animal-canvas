@@ -2,11 +2,12 @@
 
 class Animal {
     constructor(option = {}) {
-        this.id = option.id || Math.random().toString(36).substring(2);
-        this.position = {x:0, y:0};
+        this.identifiedName = option.id || Math.random().toString(36).substring(2);
+        this.id = Math.random().toString(36).substring(2);
+        this.position = option.position || {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
-        this.radius = 10;
+        this.radius = option.radius || 10;
         this.rotationSpeed = 0;
         this.colliders = [
             // {type:'circle', id:'large', position:this.position, radius:100},
@@ -14,13 +15,13 @@ class Animal {
             {type:'circle', id:'my', position:this.position, radius:this.radius},
         ];
         // 生物種によるhabit:習慣
-        this.creatureType = option.creatureType || 'herbivoreA';
+        this.creatureType = option.creatureType || 'herbivore';
         this.habit = {};
         switch ( this.creatureType ) {
-            case 'herbivoreA':
+            case 'herbivore':
                 this.habit = new HerbivoreHabit({object: this});
                 break;
-            case 'plantA':
+            case 'plant':
                 this.habit = new PlantHabit({object: this});
                 break;
         }
