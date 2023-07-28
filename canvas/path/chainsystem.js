@@ -6,28 +6,37 @@ class Animal {
         this.position = {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
-        this.width = 10;
-        // this.height = 40;
+        this.radius = 10;
         this.rotationSpeed = 0;
         this.colliders = [
             // {type:'circle', id:'large', position:this.position, radius:100},
             // {type:'circle', id:'medium', position:this.position, radius:60},
-            {type:'circle', id:'my', position:this.position, radius:10},
+            {type:'circle', id:'my', position:this.position, radius:this.radius},
         ];
+        // 生物種によるhabit:習慣
+        this.creatureType = option.creatureType || 'herbivoreA';
+        this.habit = {};
+        switch ( this.creatureType ) {
+            case 'herbivoreA':
+                this.habit = new HerbivoreHabit({object: this});
+                break;
+            case 'plantA':
+                this.habit = new PlantHabit({object: this});
+                break;
+        }
 
         console.log(this.id, );
 
     }
 
     updateColliders() {
-        this.colliders.forEach()
+        this.colliders.forEach();
     }
 
     update() {
-        this.rotationSpeed += 0.02 * (Math.random()-0.5);
-        this.rotationSpeed = Math.max(Math.min(this.rotationSpeed, 0.1), -0.1);
-        this.direction += this.rotationSpeed;
-        this.moveTowardsDirection();
+        this.habit.update();
+        
+        
         
     }
 
@@ -38,9 +47,34 @@ class Animal {
 
     }
 
+}
+
+class HerbivoreHabit {
+    constructor(option = {}) {
+        this.object = option.object || {};
+    }
+
+    update () {
+        this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
+        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
+        this.object.direction += this.object.rotationSpeed;
+        this.moveTowardsDirection();
+    }
+
     moveTowardsDirection() {
-        this.position.x += this.velocity * Math.cos(this.direction);
-        this.position.y += this.velocity * Math.sin(this.direction);
+        this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
+        this.object.position.y += this.object.velocity * Math.sin(this.object.direction);
+    }
+
+}
+
+class PlantHabit {
+    constructor(option = {}) {
+        this.object = option.object || {};
+    }
+
+    update () {
+
     }
 
 }
@@ -100,7 +134,7 @@ class Drawer {
     }
     drawObject(object) {
         if (object.drawType === undefined) {
-            this.circle(object.position, object.width);
+            this.circle(object.position, object.radius);
             this.fillText(object.id, object.position, {
                 offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
             });
