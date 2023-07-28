@@ -55,7 +55,7 @@ class Drawer {
     }
     drawObject(object) {
         if (object.drawType === undefined) {
-            this.circle(object.position, object.radius);
+            this.circle(object.position, object.radius, {fillColor:object.fillColor});
         }
         if (object.creatureType === 'herbivore') {
             this.fillText(object.identifiedName, object.position, {
@@ -77,12 +77,13 @@ class Drawer {
         return {x: (this.org.x + point.x) * this.cw, y: (this.org.y + point.y) * this.cw}
     }
     circle(p, radius, option={}) {
+        const fillColor = option.fillColor || "#86efac";
         const strokeColor = option.strokeColor || 'none';
         const lineWidth = option.lineWidth || 4;
         this.ctx.beginPath();
         this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*this.cw, 0, Math.PI * 2, true);
         if (strokeColor == 'none') {
-            this.ctx.fillStyle = "#86efac";
+            this.ctx.fillStyle = fillColor;
             this.ctx.fill();
         } else {
             this.ctx.globalAlpha = 0.3;

@@ -26,7 +26,7 @@ class Animal {
                 this.habit = new PlantHabit({object: this});
                 break;
         }
-        this.fillColor = option.fillColor || rbga(0,0,0,0);
+        this.fillColor = option.fillColor || "#86efac";
 
         console.log(this.id, );
 
@@ -46,7 +46,7 @@ class Animal {
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
-        console.log(`衝突している！ own:${this.id}-${ownColliderID} ### op:${collidedObject.id}-${opponentColliderID}`);
+        // console.log(`衝突している！ own:${this.id}-${ownColliderID} ### op:${collidedObject.id}-${opponentColliderID}`);
 
         this.habit.onCollision(collidedObject, option);
 
@@ -69,7 +69,7 @@ class HerbivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant') {
-            this.object.radius += 0.1;
+            this.object.radius += 0.5;
         }
 
     }
@@ -95,7 +95,7 @@ class PlantHabit {
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
             this.object.colliders = [];
-            this.object.fillColor = 'rgba(0, 0, 255, 1)';
+            this.object.fillColor = 'rgba(231, 208, 182)';
         }
 
     }

@@ -17,12 +17,13 @@ window.addEventListener('load', () => {
         alphaAnimals[i] = new Animal({
             id: utl.randomStringLikeSynbolID(),
             creatureType: 'herbivore',
+            radius: 6,
         });
         drawer.submitObject(alphaAnimals[i]);
     }
 
     let alphaPlants = [];
-    for (let i=0; i<50; i++) {
+    for (let i=0; i<300; i++) {
         alphaPlants[i] = new Animal({
             id: utl.randomStringLikeSynbolID(),
             position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
