@@ -14,7 +14,10 @@ window.addEventListener('load', () => {
     
     let alphaAnimals = [];
     for (let i=0; i<10; i++) {
-        alphaAnimals[i] = new Animal({id: utl.randomStringLikeSynbolID()});
+        alphaAnimals[i] = new Animal({
+            id: utl.randomStringLikeSynbolID(),
+            creatureType: 'herbivore',
+        });
         drawer.submitObject(alphaAnimals[i]);
     }
 
@@ -25,6 +28,9 @@ window.addEventListener('load', () => {
             position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
             radius: 2,
             creatureType: 'plant',
+            // colliders: [
+            //     {type:'circle', id:'my', position:this.position, radius:2},
+            // ]
 
         });
         drawer.submitObject(alphaPlants[i]);

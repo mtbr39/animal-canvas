@@ -9,6 +9,7 @@ class Animal {
         this.velocity = 0.5;
         this.radius = option.radius || 10;
         this.rotationSpeed = 0;
+        // todo: colliderの初期値有りのときcollider.positionに参照渡しする
         this.colliders = [
             // {type:'circle', id:'large', position:this.position, radius:100},
             // {type:'circle', id:'medium', position:this.position, radius:60},
@@ -25,6 +26,7 @@ class Animal {
                 this.habit = new PlantHabit({object: this});
                 break;
         }
+        this.fillColor = option.fillColor || rbga(0,0,0,0);
 
         console.log(this.id, );
 
@@ -46,6 +48,8 @@ class Animal {
         const opponentColliderID = option.opponentColliderID || null;
         console.log(`衝突している！ own:${this.id}-${ownColliderID} ### op:${collidedObject.id}-${opponentColliderID}`);
 
+        this.habit.onCollision(collidedObject, option);
+
     }
 
 }
@@ -61,6 +65,14 @@ class HerbivoreHabit {
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
     }
+    onCollision(collidedObject, option) {
+        const ownColliderID = option.ownColliderID || null;
+        const opponentColliderID = option.opponentColliderID || null;
+        if (collidedObject.creatureType == 'plant') {
+            this.object.radius += 0.1;
+        }
+
+    }
 
     moveTowardsDirection() {
         this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
@@ -72,9 +84,19 @@ class HerbivoreHabit {
 class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
+        this.object.radius = 1;
     }
 
     update () {
+
+    }
+    onCollision(collidedObject, option) {
+        const ownColliderID = option.ownColliderID || null;
+        const opponentColliderID = option.opponentColliderID || null;
+        if (collidedObject.creatureType == 'herbivore') {
+            this.object.colliders = [];
+            this.object.fillColor = 'rgba(0, 0, 255, 1)';
+        }
 
     }
 
