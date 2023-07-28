@@ -9,6 +9,10 @@ class Animal {
         this.width = 40;
         this.height = 40;
         this.rotationSpeed = 0;
+        this.colliders = [
+            {type:'circle', id:'large', position:this.position, radius:100},
+            {type:'circle', id:'medium', position:this.position, radius:60}
+        ];
 
         console.log(this.id);
 
@@ -20,6 +24,11 @@ class Animal {
         this.direction += this.rotationSpeed;
         this.moveTowardsDirection();
         
+    }
+
+    onCollision(collidedObject) {
+
+
     }
 
     moveTowardsDirection() {
@@ -36,6 +45,7 @@ class Drawer {
         this.cw = option.cw;
         this.org = option.org;
         this.objects = [];
+        this.debugMode = false;
     }
 
     submitObject(object) {
@@ -50,6 +60,9 @@ class Drawer {
         this.objects.forEach( (checkObject) => {
             this.objects.forEach( (collideObject) => {
                 // console.log("## checkCollision-debug", checkObject.position, collideObject.position)
+                if (checkObject.id !== collideObject.id) {
+                    checkObject.onCollision(collideObject);
+                }
             } );
         } );
     }
@@ -63,7 +76,17 @@ class Drawer {
     drawObject(object) {
         if (object.drawType === undefined) {
             this.circle(object.position, object.width);
-            this.fillText(object.id, object.position, {offset:{x:-4, y:-10}, size:4, color:'darkgray'});
+            this.fillText(object.id, object.position, {
+                offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
+            });
+        }
+        if (this.debugMode) {
+            object.colliders.forEach( (collider) => {
+                this.circle(collider.position, collider.radius, {
+                    strokeColor:'gray',
+                    lineWidth:1
+                })
+            } );
         }
     }
 
@@ -71,20 +94,38 @@ class Drawer {
     canvasPoint(point) {
         return {x: (this.org.x + point.x) * this.cw, y: (this.org.y + point.y) * this.cw}
     }
-    circle(p, radius) {
+    circle(p, radius, option={}) {
+        const strokeColor = option.strokeColor || 'none';
+        const lineWidth = option.lineWidth || 4;
         this.ctx.beginPath();
         this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*0.2*this.cw, 0, Math.PI * 2, true);
-        this.ctx.fillStyle = "#86efac";
-        this.ctx.fill();
+        if (strokeColor == 'none') {
+            this.ctx.fillStyle = "#86efac";
+            this.ctx.fill();
+        } else {
+            this.ctx.globalAlpha = 0.3;
+            this.ctx.strokeStyle = strokeColor;
+            this.ctx.lineWidth = lineWidth;
+            this.ctx.stroke();
+            this.ctx.globalAlpha = 1.0;
+        }
+        
     }
     fillText(text, point, option = {}) {
         const offset = option.offset || {x:0, y:0};
         const size = option.size || 10;
         const color = option.color || "black";
-        this.ctx.font = `${size*this.cw}px serif`;
-        this.ctx.fillStyle = color;
-        this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
+        const strokeWidth = option.strokeWidth || "none";
+        this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
+        if (strokeWidth == 'none') {
+            this.ctx.fillStyle = color;
+            this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
+        } else {
+            this.ctx.lineWidth = strokeWidth*this.cw;
+            this.ctx.strokeText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
+        }
     }
+    
 
     // ---- 以前作成したもの ----
     drawLine(p1, p2, option = {}) {
