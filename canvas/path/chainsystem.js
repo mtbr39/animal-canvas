@@ -62,13 +62,30 @@ class Drawer {
     drawObject(object) {
         if (object.drawType === undefined) {
             this.circle(object.position, object.width);
+            this.fillText(object.id, object.position, {offset:{x:-4, y:-10}, size:4, color:'darkgray'});
         }
     }
 
-    
+    // ---- 自作描写ライブラリ ----
     canvasPoint(point) {
         return {x: (this.org.x + point.x) * this.cw, y: (this.org.y + point.y) * this.cw}
     }
+    circle(p, radius) {
+        this.ctx.beginPath();
+        this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*0.2*this.cw, 0, Math.PI * 2, true);
+        this.ctx.fillStyle = "#86efac";
+        this.ctx.fill();
+    }
+    fillText(text, point, option = {}) {
+        const offset = option.offset || {x:0, y:0};
+        const size = option.size || 10;
+        const color = option.color || "black";
+        this.ctx.font = `${size*this.cw}px serif`;
+        this.ctx.fillStyle = color;
+        this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
+    }
+
+    // ---- 以前作成したもの ----
     drawLine(p1, p2, option = {}) {
         this.ctx.beginPath();
         this.modMoveTo(p1);
@@ -97,11 +114,6 @@ class Drawer {
         p = {x: p.x / this.cw - this.org.x, y: p.y / this.cw - this.org.y};
         return p;
     }
-    modFillText(text, point, offset={x:0, y:0}) {
-        this.ctx.font = `${8*this.cw}px serif`;
-        this.ctx.fillStyle = "black";
-        this.ctx.fillText(text, this.canvasPoint(point).x - offset.x*this.cw, this.canvasPoint(point).y - offset.y*this.cw);
-    }
     modFillText2(text, point, angle, offset={x:10, y:10}) {
         this.ctx.font = `${6*this.cw}px serif`;
         let pointDisplay = {x: point.x + offset.x, y: point.y + offset.y};
@@ -114,12 +126,6 @@ class Drawer {
         this.modMoveTo(p);
         this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, 100, 0 * Math.PI / 180, 45 * Math.PI / 180, false);
         this.ctx.fillStyle = 'black';
-        this.ctx.fill();
-    }
-    circle(p, radius) {
-        this.ctx.beginPath();
-        this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*0.2*this.cw, 0, Math.PI * 2, true);
-        this.ctx.fillStyle = "#86efac";
         this.ctx.fill();
     }
     drawCornerArc(point, p2, p3, angle) {
