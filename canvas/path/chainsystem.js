@@ -6,16 +6,21 @@ class Animal {
         this.position = {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
-        this.width = 40;
-        this.height = 40;
+        this.width = 10;
+        // this.height = 40;
         this.rotationSpeed = 0;
         this.colliders = [
-            {type:'circle', id:'large', position:this.position, radius:100},
-            {type:'circle', id:'medium', position:this.position, radius:60}
+            // {type:'circle', id:'large', position:this.position, radius:100},
+            // {type:'circle', id:'medium', position:this.position, radius:60},
+            {type:'circle', id:'my', position:this.position, radius:10},
         ];
 
-        console.log(this.id);
+        console.log(this.id, );
 
+    }
+
+    updateColliders() {
+        this.colliders.forEach()
     }
 
     update() {
@@ -26,8 +31,10 @@ class Animal {
         
     }
 
-    onCollision(collidedObject) {
-
+    onCollision(collidedObject, option) {
+        const ownColliderID = option.ownColliderID || null;
+        const opponentColliderID = option.opponentColliderID || null;
+        console.log(`衝突している！ own:${this.id}-${ownColliderID} ### op:${collidedObject.id}-${opponentColliderID}`);
 
     }
 
@@ -57,14 +64,32 @@ class Drawer {
         } );
     }
     checkCollision() {
-        this.objects.forEach( (checkObject) => {
-            this.objects.forEach( (collideObject) => {
-                // console.log("## checkCollision-debug", checkObject.position, collideObject.position)
-                if (checkObject.id !== collideObject.id) {
-                    checkObject.onCollision(collideObject);
+        this.objects.forEach( (targetObject) => {
+            this.objects.forEach( (checkObject) => {
+                if (targetObject.id !== checkObject.id) {
+                    targetObject.colliders.forEach( (targetCollider) => {
+                        checkObject.colliders.forEach( (checkCollider) => {
+                            if ( Drawer.isOverlappedCircle( targetCollider, checkCollider ) ) {
+                                targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                            }
+                        } );
+                    } );
+                    
+
                 }
             } );
         } );
+    }
+    static isOverlappedCircle(circle1, circle2) { // collider = {position:, radius}
+        let isOverlapped = false;
+        if ( this.distance(circle1.position, circle2.position) <= circle1.radius + circle2.radius ) {
+            isOverlapped = true;
+        }
+        return isOverlapped;
+
+    }
+    static distance(p1, p2) {
+        return ( (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2 ) ** (1/2);
     }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -98,7 +123,7 @@ class Drawer {
         const strokeColor = option.strokeColor || 'none';
         const lineWidth = option.lineWidth || 4;
         this.ctx.beginPath();
-        this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*0.2*this.cw, 0, Math.PI * 2, true);
+        this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*this.cw, 0, Math.PI * 2, true);
         if (strokeColor == 'none') {
             this.ctx.fillStyle = "#86efac";
             this.ctx.fill();
