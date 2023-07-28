@@ -8,16 +8,16 @@ class Animal {
         this.velocity = 0.5;
         this.width = 40;
         this.height = 40;
-        this.directionDelta = 0;
+        this.rotationSpeed = 0;
 
         console.log(this.id);
 
     }
 
     update() {
-        this.directionDelta += 0.02 * (Math.random()-0.5);
-        this.directionDelta = Math.max(Math.min(this.directionDelta, 0.1), -0.1);
-        this.direction += this.directionDelta;
+        this.rotationSpeed += 0.02 * (Math.random()-0.5);
+        this.rotationSpeed = Math.max(Math.min(this.rotationSpeed, 0.1), -0.1);
+        this.direction += this.rotationSpeed;
         this.moveTowardsDirection();
         
     }
