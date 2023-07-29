@@ -28,7 +28,7 @@ class Animal {
         }
         this.fillColor = option.fillColor || "#86efac";
 
-        console.log(this.id, this.radius);
+        console.log(this.id, );
 
     }
 

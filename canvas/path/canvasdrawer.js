@@ -13,23 +13,7 @@ class ObjectDistributer {
         this.collisionManager = new CollisionManager(option);
         this.drawManager = new DrawManager(option);
 
-        // ---- マウスイベント ----
-
-        this.canvas.addEventListener('mousedown', (e) => {
-            this.mousePosition = this.getMousePosition(e);
-            console.log("#### objDstrbtr ####", this.drawManager.camera.position,this.mousePosition);
-        });
-
-        this.canvas.addEventListener('mouseup', () => {
-
-        });
-
-        this.canvas.addEventListener('mousemove', (e) => {
-
-            this.mousePosition = this.getMousePosition(e);
-            this.drawManager.camera.position = this.mousePosition;
-
-        });
+        
     }
 
     submitObject(object) {
@@ -49,6 +33,25 @@ class ObjectDistributer {
         };
     }
     
+}
+
+class InputManager {
+    // ---- マウスイベント ----
+
+    this.canvas.addEventListener('mousedown', (e) => {
+        this.mousePosition = this.getMousePosition(e);
+    });
+
+    this.canvas.addEventListener('mouseup', () => {
+
+    });
+
+    this.canvas.addEventListener('mousemove', (e) => {
+
+        this.mousePosition = this.getMousePosition(e);
+        this.drawManager.camera.position = this.mousePosition;
+
+    });
 }
 
 class DrawManager {
