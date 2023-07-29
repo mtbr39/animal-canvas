@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
     let org = {x: 100, y: 100};
 
     //クラスインスタンス生成など
-    const drawer = new Drawer({canvas: canvas, ctx: ctx, cw: cw, org: org});
+    const objectDistributer = new ObjectDistributer({canvas: canvas, ctx: ctx, cw: cw, org: org});
     
     let alphaAnimals = [];
     for (let i=0; i<10; i++) {
@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
             creatureType: 'herbivore',
             radius: 6,
         });
-        drawer.submitObject(alphaAnimals[i]);
+        objectDistributer.submitObject(alphaAnimals[i]);
     }
 
     let alphaPlants = [];
@@ -31,7 +31,7 @@ window.addEventListener('load', () => {
             creatureType: 'plant',
 
         });
-        drawer.submitObject(alphaPlants[i]);
+        objectDistributer.submitObject(alphaPlants[i]);
     }
     
 
@@ -51,9 +51,9 @@ window.addEventListener('load', () => {
     }
 
     function update() {
-        drawer.checkCollision();
-        drawer.update();
-        drawer.draw();
+        objectDistributer.collisionManager.check();
+        objectDistributer.update();
+        objectDistributer.drawManager.draw();
 
     }
 

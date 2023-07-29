@@ -1,20 +1,23 @@
 
 
-class Drawer {
+class ObjectDistributer {
     constructor(option) {
         this.canvas = option.canvas;
-        this.ctx = option.ctx;
+        // this.ctx = option.ctx;
         this.cw = option.cw;
         this.org = option.org;
-        this.camera = {position:{x:0, y:0}, zoom:100};
         this.objects = [];
         this.debugMode = false;
         this.mousePosition = {};
+        option.objects = this.objects;
+        this.collisionManager = new CollisionManager(option);
+        this.drawManager = new DrawManager(option);
 
         // ---- マウスイベント ----
 
         this.canvas.addEventListener('mousedown', (e) => {
-            
+            this.mousePosition = this.getMousePosition(e);
+            console.log("#### objDstrbtr ####", this.drawManager.camera.position,this.mousePosition);
         });
 
         this.canvas.addEventListener('mouseup', () => {
@@ -24,8 +27,7 @@ class Drawer {
         this.canvas.addEventListener('mousemove', (e) => {
 
             this.mousePosition = this.getMousePosition(e);
-            this.camera.position = this.mousePosition;
-
+            this.drawManager.camera.position = this.mousePosition;
 
         });
     }
@@ -38,34 +40,29 @@ class Drawer {
             object.update();
         } );
     }
-    checkCollision() {
-        this.objects.forEach( (targetObject) => {
-        this.objects.forEach( (checkObject)  => {
-            if (targetObject.id !== checkObject.id) {
-                targetObject.colliders.forEach( (targetCollider) => {
-                checkObject.colliders.forEach(  (checkCollider)  => {
-                    if ( Drawer.isOverlappedCircle( targetCollider, checkCollider ) ) {
-                        targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
-                    }
-                } );
-                } );
-                
 
-            }
-        } );
-        } );
+    getMousePosition(event) {
+        const rect = this.canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left - this.org.x*this.cw,
+            y: event.clientY - rect.top - this.org.y*this.cw,
+        };
     }
-    static isOverlappedCircle(circle1, circle2) { // collider = {position:, radius}
-        let isOverlapped = false;
-        if ( this.distance(circle1.position, circle2.position) <= circle1.radius.value + circle2.radius.value ) {
-            isOverlapped = true;
-        }
-        return isOverlapped;
+    
+}
+
+class DrawManager {
+    constructor(option = {}) {
+        this.objects = option.objects || [];
+        this.canvas = option.canvas;
+        this.ctx = option.ctx;
+        this.cw = option.cw;
+        this.org = option.org;
+        this.camera = {position:{x:0, y:0}, zoom:100};
+        this.debugMode = false;
 
     }
-    static distance(p1, p2) {
-        return ( (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2 ) ** (1/2);
-    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -90,14 +87,6 @@ class Drawer {
                 })
             } );
         }
-    }
-
-    getMousePosition(event) {
-        const rect = this.canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - rect.left - this.org.x*this.cw,
-            y: event.clientY - rect.top - this.org.y*this.cw,
-        };
     }
 
     // ---- 自作描写ライブラリ ----
@@ -203,5 +192,42 @@ class Drawer {
         this.modLineTo( pointEnd );
         this.ctx.strokeStyle = "#ef4444";
         this.ctx.stroke();
+    }
+    
+}
+
+class CollisionManager {
+    constructor(option = {}) {
+        this.objects = option.objects || [];
+
+    }
+
+    check() {
+        this.objects.forEach( (targetObject) => {
+        this.objects.forEach( (checkObject)  => {
+            if (targetObject.id !== checkObject.id) {
+                targetObject.colliders.forEach( (targetCollider) => {
+                checkObject.colliders.forEach(  (checkCollider)  => {
+                    if ( CollisionManager.isOverlappedCircle( targetCollider, checkCollider ) ) {
+                        targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                    }
+                } );
+                } );
+                
+
+            }
+        } );
+        } );
+    }
+    static isOverlappedCircle(circle1, circle2) { // collider = {position:, radius}
+        let isOverlapped = false;
+        if ( this.distance(circle1.position, circle2.position) <= circle1.radius.value + circle2.radius.value ) {
+            isOverlapped = true;
+        }
+        return isOverlapped;
+
+    }
+    static distance(p1, p2) {
+        return ( (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2 ) ** (1/2);
     }
 }
