@@ -10,7 +10,9 @@ window.addEventListener('load', () => {
     let org = {x: 100, y: 100};
 
     //クラスインスタンス生成など
-    const objectDistributer = new ObjectDistributer({canvas: canvas, ctx: ctx, cw: cw, org: org});
+    const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
+    const inputManager = new InputManager( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
+    inputManager.submitReceiver( objectDistributer );
     
     let alphaAnimals = [];
     for (let i=0; i<10; i++) {

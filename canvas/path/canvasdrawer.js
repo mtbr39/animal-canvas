@@ -8,12 +8,11 @@ class ObjectDistributer {
         this.org = option.org;
         this.objects = [];
         this.debugMode = false;
-        this.mousePosition = {};
         option.objects = this.objects;
         this.collisionManager = new CollisionManager(option);
         this.drawManager = new DrawManager(option);
 
-        
+        console.log("objDist-debug", );
     }
 
     submitObject(object) {
@@ -24,6 +23,45 @@ class ObjectDistributer {
             object.update();
         } );
     }
+    onMouseMove(input) {
+        // mousePosition = input.mousePosition;
+        this.drawManager.camera.position = input.mousePosition;
+    }
+    
+}
+
+class InputManager {
+    constructor(option) {
+        this.canvas = option.canvas;
+        this.cw = option.cw;
+        this.org = option.org;
+        this.mousePosition = {};
+        this.receivers = [];
+
+        // ---- マウスイベント ----
+        this.canvas.addEventListener('mousedown', (e) => {
+            this.mousePosition = this.getMousePosition(e);
+        });
+
+        this.canvas.addEventListener('mouseup', () => {
+
+        });
+
+        this.canvas.addEventListener('mousemove', (e) => {
+            this.mousePosition = this.getMousePosition(e);
+            this.receivers.forEach( (receiver) => {
+                if (typeof receiver.onMouseMove === 'function') {
+                    
+                    receiver.onMouseMove({mousePosition: this.mousePosition});
+                }
+            } );
+
+        });
+    }
+
+    submitReceiver(object) {
+        this.receivers.push(object);
+    }
 
     getMousePosition(event) {
         const rect = this.canvas.getBoundingClientRect();
@@ -32,26 +70,6 @@ class ObjectDistributer {
             y: event.clientY - rect.top - this.org.y*this.cw,
         };
     }
-    
-}
-
-class InputManager {
-    // ---- マウスイベント ----
-
-    this.canvas.addEventListener('mousedown', (e) => {
-        this.mousePosition = this.getMousePosition(e);
-    });
-
-    this.canvas.addEventListener('mouseup', () => {
-
-    });
-
-    this.canvas.addEventListener('mousemove', (e) => {
-
-        this.mousePosition = this.getMousePosition(e);
-        this.drawManager.camera.position = this.mousePosition;
-
-    });
 }
 
 class DrawManager {
