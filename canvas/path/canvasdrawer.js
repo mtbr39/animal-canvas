@@ -6,8 +6,28 @@ class Drawer {
         this.ctx = option.ctx;
         this.cw = option.cw;
         this.org = option.org;
+        this.camera = {position:{x:0, y:0}, zoom:100};
         this.objects = [];
         this.debugMode = false;
+        this.mousePosition = {};
+
+        // ---- マウスイベント ----
+
+        this.canvas.addEventListener('mousedown', (e) => {
+            
+        });
+
+        this.canvas.addEventListener('mouseup', () => {
+
+        });
+
+        this.canvas.addEventListener('mousemove', (e) => {
+
+            this.mousePosition = this.getMousePosition(e);
+            this.camera.position = this.mousePosition;
+
+
+        });
     }
 
     submitObject(object) {
@@ -37,7 +57,7 @@ class Drawer {
     }
     static isOverlappedCircle(circle1, circle2) { // collider = {position:, radius}
         let isOverlapped = false;
-        if ( this.distance(circle1.position, circle2.position) <= circle1.radius + circle2.radius ) {
+        if ( this.distance(circle1.position, circle2.position) <= circle1.radius.value + circle2.radius.value ) {
             isOverlapped = true;
         }
         return isOverlapped;
@@ -55,7 +75,7 @@ class Drawer {
     }
     drawObject(object) {
         if (object.drawType === undefined) {
-            this.circle(object.position, object.radius, {fillColor:object.fillColor});
+            this.circle(object.position, object.radius.value, {fillColor:object.fillColor});
         }
         if (object.creatureType === 'herbivore') {
             this.fillText(object.identifiedName, object.position, {
@@ -64,7 +84,7 @@ class Drawer {
         }
         if (this.debugMode) {
             object.colliders.forEach( (collider) => {
-                this.circle(collider.position, collider.radius, {
+                this.circle(collider.position, collider.radius.value, {
                     strokeColor:'gray',
                     lineWidth:1
                 })
@@ -72,9 +92,17 @@ class Drawer {
         }
     }
 
+    getMousePosition(event) {
+        const rect = this.canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left - this.org.x*this.cw,
+            y: event.clientY - rect.top - this.org.y*this.cw,
+        };
+    }
+
     // ---- 自作描写ライブラリ ----
     canvasPoint(point) {
-        return {x: (this.org.x + point.x) * this.cw, y: (this.org.y + point.y) * this.cw}
+        return {x: (this.org.x + point.x - this.camera.position.x) * this.cw, y: (this.org.y + point.y - this.camera.position.y) * this.cw}
     }
     circle(p, radius, option={}) {
         const fillColor = option.fillColor || "#86efac";

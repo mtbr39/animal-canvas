@@ -29,9 +29,6 @@ window.addEventListener('load', () => {
             position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
             radius: 2,
             creatureType: 'plant',
-            // colliders: [
-            //     {type:'circle', id:'my', position:this.position, radius:2},
-            // ]
 
         });
         drawer.submitObject(alphaPlants[i]);
@@ -62,19 +59,7 @@ window.addEventListener('load', () => {
 
     loop();
 
-    // ---- マウスイベント ----
-
-    canvas.addEventListener('mousedown', (e) => {
-        
-    });
-
-    canvas.addEventListener('mouseup', () => {
-
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
-        
-    });
+    
 
     resizeCanvas();
     window.onresize = resizeCanvas;

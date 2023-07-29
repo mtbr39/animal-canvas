@@ -7,7 +7,7 @@ class Animal {
         this.position = option.position || {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
         this.velocity = 0.5;
-        this.radius = option.radius || 10;
+        this.radius = {value: option.radius || 10};
         this.rotationSpeed = 0;
         // todo: colliderの初期値有りのときcollider.positionに参照渡しする
         this.colliders = [
@@ -28,7 +28,7 @@ class Animal {
         }
         this.fillColor = option.fillColor || "#86efac";
 
-        console.log(this.id, );
+        console.log(this.id, this.radius);
 
     }
 
@@ -69,7 +69,7 @@ class HerbivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant') {
-            this.object.radius += 0.5;
+            this.object.radius.value += 0.5;
         }
 
     }
@@ -84,7 +84,6 @@ class HerbivoreHabit {
 class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.object.radius = 1;
     }
 
     update () {
