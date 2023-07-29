@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --color-back-light: #7dbbc3;
+    --color-back-dark: #274F54;
+    --color-font: black;
+    --color-point: yellow;
+    --color-bgline: gainsboro;
+}
+
+body {
+    color: var(--color-font);
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-back-light);
+    transition: all 0.5s ease-out;
+}
+
+body.darkmode {
+    background-color: var(--color-back-dark);
+}
+
+label.switch {
+    display: block;
+    margin: auto;
+    margin-top: 240px;
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: var(--color-back-dark);
+    transition: all 0.5s ease-out;
+}
+
+.darkmode label.switch {
+    background-color: var(--color-back-light);
+}
