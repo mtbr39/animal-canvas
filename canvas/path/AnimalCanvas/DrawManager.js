@@ -30,7 +30,7 @@ class DrawManager {
         if (object.drawType === undefined) {
             this.circle(object.position, object.radius.value, {fillColor:object.fillColor});
         }
-        if (object.creatureType === 'herbivore') {
+        if (object.creatureType === 'herbivore' || object.creatureType === 'carnivore') {
             this.fillText(object.identifiedName, object.position, {
                 offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
             });

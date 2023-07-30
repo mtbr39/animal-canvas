@@ -2,7 +2,7 @@
 
 class Animal {
     constructor(option = {}) {
-        this.identifiedName = option.id || Math.random().toString(36).substring(2);
+        this.identifiedName = option.identifiedName || Math.random().toString(36).substring(2);
         this.id = Math.random().toString(36).substring(2);
         this.position = option.position || {x:0, y:0};
         this.direction = Math.random() * 2 * Math.PI;
@@ -15,6 +15,14 @@ class Animal {
             // {type:'circle', id:'medium', position:this.position, radius:60},
             {type:'circle', id:'my', position:this.position, radius:this.radius},
         ];
+        
+        this.fillColor = option.fillColor || "#86efac";
+        this.energy = this.radius;
+        this.needDelete = false;
+        this.canReproduct = false;
+        this.reproductEnergyThreshold = 10;
+        this.status = 'live';
+
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
         this.habit = {};
@@ -22,14 +30,13 @@ class Animal {
             case 'herbivore':
                 this.habit = new HerbivoreHabit({object: this});
                 break;
+            case 'carnivore':
+                this.habit = new CarnivoreHabit({object: this});
+                break;
             case 'plant':
                 this.habit = new PlantHabit({object: this});
                 break;
         }
-        this.fillColor = option.fillColor || "#86efac";
-        this.energy = this.radius;
-        this.needDelete = false;
-        this.canReproduct = false;
 
         console.log(this.id, );
 
@@ -55,8 +62,8 @@ class Animal {
             this.radius.value = 0;
             this.needDelete = true;
         }
-        if (this.energy.value >= 10) {
-            this.energy.value = 6;
+        if (this.energy.value >= this.reproductEnergyThreshold) {
+            this.energy.value = this.reproductEnergyThreshold * 0.8;
             this.canReproduct = true;
         }
     }
@@ -67,6 +74,53 @@ class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.exhaustVelocity = 0.005;
+        this.changeStatus = '';
+    }
+
+    update () {
+        if (this.changeStatus != '') {
+            this.object.status = this.changeStatus;
+            this.changeStatus = '';
+        }
+        this.randomWalkAction();
+    }
+    onCollision(collidedObject, option) {
+        const ownColliderID = option.ownColliderID || null;
+        const opponentColliderID = option.opponentColliderID || null;
+        if (collidedObject.creatureType == 'plant') {
+            this.object.energy.value += 1.0;
+        }
+        if (collidedObject.creatureType == 'carnivore') {
+            this.object.velocity = 0;
+            this.object.fillColor = 'black';
+            this.changeStatus = 'death';
+        }
+
+    }
+
+    randomWalkAction() {
+        this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
+        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
+        this.object.direction += this.object.rotationSpeed;
+        this.moveTowardsDirection();
+
+        this.object.energy.value -= this.exhaustVelocity;
+    }
+    
+
+    moveTowardsDirection() {
+        this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
+        this.object.position.y += this.object.velocity * Math.sin(this.object.direction);
+    }
+
+}
+
+class CarnivoreHabit {
+    constructor(option = {}) {
+        this.object = option.object || {};
+        this.exhaustVelocity = 0.005;
+        this.object.fillColor = 'orange';
+        this.object.reproductEnergyThreshold = 20;
     }
 
     update () {
@@ -75,8 +129,8 @@ class HerbivoreHabit {
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
-        if (collidedObject.creatureType == 'plant') {
-            this.object.energy.value += 1.0;
+        if (collidedObject.creatureType == 'herbivore' && collidedObject.status != 'death') {
+            this.object.energy.value += 5.0;
         }
 
     }
@@ -141,7 +195,7 @@ class AnimalFactory {
             this.make({
                 id: utl.randomStringLikeSynbolID(),
                 position: {x:animal.position.x, y:animal.position.y},
-                creatureType: 'herbivore',
+                creatureType: animal.creatureType,
                 radius: 6,
             });
         }
