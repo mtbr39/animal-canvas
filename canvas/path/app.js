@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     inputManager.submitReceiver( objectDistributer );
 
     const animalFactory = new AnimalFactory({distributer: objectDistributer});
-    
+
     for (let i=0; i<20; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
@@ -26,12 +26,11 @@ window.addEventListener('load', () => {
     }
 
     let alphaPlants = [];
-    for (let i=0; i<300; i++) {
+    for (let i=0; i<400; i++) {
         alphaPlants[i] = new Animal({
-            position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
-            radius: 2,
+            position: {x: (Math.random()-0.5)*canvasAndXYRate * 2, y: (Math.random()-0.5)*canvasAndXYRate * 2},
+            radius: 4,
             creatureType: 'plant',
-
         });
         objectDistributer.submitObject(alphaPlants[i]);
     }

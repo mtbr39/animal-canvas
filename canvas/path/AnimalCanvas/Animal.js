@@ -22,6 +22,7 @@ class Animal {
         this.canReproduct = false;
         this.reproductEnergyThreshold = 10;
         this.status = 'live';
+        this.changeStatus = '';
 
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
@@ -43,6 +44,10 @@ class Animal {
     }
 
     update() {
+        if (this.changeStatus != '') {
+            this.status = this.changeStatus;
+            this.changeStatus = '';
+        }
         this.habit.update();
         this.checkEnergyAndDeath();
     }
@@ -74,26 +79,23 @@ class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.exhaustVelocity = 0.005;
-        this.changeStatus = '';
+        // this.object.fillColor = 'yellow';
+        this.reproductEnergyThreshold = 10;
     }
 
     update () {
-        if (this.changeStatus != '') {
-            this.object.status = this.changeStatus;
-            this.changeStatus = '';
-        }
         this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
-        if (collidedObject.creatureType == 'plant') {
-            this.object.energy.value += 1.0;
+        if (collidedObject.creatureType == 'plant' && collidedObject.status != 'death') {
+            this.object.energy.value += 4.0;
         }
         if (collidedObject.creatureType == 'carnivore') {
             this.object.velocity = 0;
-            this.object.fillColor = 'black';
-            this.changeStatus = 'death';
+            this.object.fillColor = 'darkgray';
+            this.object.changeStatus = 'death';
         }
 
     }
@@ -118,7 +120,8 @@ class HerbivoreHabit {
 class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.005;
+        this.exhaustVelocity = 0.01;
+        this.object.velocity = this.object.velocity * 1.5;
         this.object.fillColor = 'orange';
         this.object.reproductEnergyThreshold = 20;
     }
@@ -155,17 +158,30 @@ class CarnivoreHabit {
 class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
+        this.reviveTime = 120;
+        this.collidersSet = this.object.colliders;
+        this.deathTimer = 0;
+        this.object.strokeColor = this.object.fillColor;
     }
 
     update () {
-
+        if (this.object.status == 'death') {
+            this.deathTimer ++;
+        } 
+        if (this.deathTimer > this.reviveTime) {
+            this.deathTimer = 0;
+            this.object.status = 'live'
+            this.object.colliders = this.collidersSet;
+            this.object.strokeColor = "#86efac";
+        }
     }
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
+            this.object.changeStatus = 'death';
             this.object.colliders = [];
-            this.object.fillColor = 'rgba(231, 208, 182)';
+            this.object.strokeColor = 'rgba(231, 208, 182)';
         }
 
     }
