@@ -13,15 +13,16 @@ window.addEventListener('load', () => {
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
     const inputManager = new InputManager( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
     inputManager.submitReceiver( objectDistributer );
+
+    const animalFactory = new AnimalFactory({distributer: objectDistributer});
     
     let alphaAnimals = [];
     for (let i=0; i<10; i++) {
-        alphaAnimals[i] = new Animal({
+        animalFactory.make({
             id: utl.randomStringLikeSynbolID(),
             creatureType: 'herbivore',
             radius: 6,
         });
-        objectDistributer.submitObject(alphaAnimals[i]);
     }
 
     let alphaPlants = [];
@@ -54,6 +55,7 @@ window.addEventListener('load', () => {
 
     function update() {
         objectDistributer.collisionManager.check();
+        animalFactory.update();
         inputManager.update();
         objectDistributer.update();
         objectDistributer.drawManager.draw();

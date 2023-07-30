@@ -29,6 +29,7 @@ class Animal {
         this.fillColor = option.fillColor || "#86efac";
         this.energy = this.radius;
         this.needDelete = false;
+        this.canReproduct = false;
 
         console.log(this.id, );
 
@@ -54,6 +55,10 @@ class Animal {
             this.radius.value = 0;
             this.needDelete = true;
         }
+        if (this.energy.value >= 10) {
+            this.energy.value = 6;
+            this.canReproduct = true;
+        }
     }
 
 }
@@ -61,6 +66,7 @@ class Animal {
 class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
+        this.exhaustVelocity = 0.005;
     }
 
     update () {
@@ -70,7 +76,7 @@ class HerbivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant') {
-            this.object.energy.value += 0.5;
+            this.object.energy.value += 1.0;
         }
 
     }
@@ -81,7 +87,7 @@ class HerbivoreHabit {
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
 
-        this.object.energy.value -= 0.02;
+        this.object.energy.value -= this.exhaustVelocity;
     }
     
 
@@ -108,6 +114,37 @@ class PlantHabit {
             this.object.fillColor = 'rgba(231, 208, 182)';
         }
 
+    }
+
+}
+
+class AnimalFactory {
+    constructor(option = {}) {
+        this.animals = [];
+        this.distributer = option.distributer || {};
+    }
+
+    make(option) {
+        let animal = new Animal(option);
+        this.animals.push(animal);
+        this.distributer.submitObject(animal);
+    }
+    update() {
+        this.animals.forEach( (animal) => {
+            this.checkCanReproduct(animal);
+        } );
+    }
+
+    checkCanReproduct (animal) {
+        if(animal.canReproduct) {
+            animal.canReproduct = false;
+            this.make({
+                id: utl.randomStringLikeSynbolID(),
+                position: {x:animal.position.x, y:animal.position.y},
+                creatureType: 'herbivore',
+                radius: 6,
+            });
+        }
     }
 
 }
