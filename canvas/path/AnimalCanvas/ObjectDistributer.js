@@ -24,11 +24,14 @@ class ObjectDistributer {
         } );
     }
     onMouseMove(input) {
-        // this.drawManager.camera.position = input.mousePosition;
+        
     }
     onMouseHoldDown(input) {
-        // this.canvas.style.background = 'black';
         this.drawManager.onMouseHoldDown(input);
+    }
+
+    onMouseWheel(input) {
+        this.drawManager.onMouseWheel(input);
     }
     
 }

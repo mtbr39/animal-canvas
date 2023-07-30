@@ -8,6 +8,7 @@ class InputManager {
         this.mousePosition = {};
         this.receivers = [];
         this.isMouseHoldDown = false;
+        this.wheelDelta = null;
 
         // ---- マウスイベント ----
         this.canvas.addEventListener('mousedown', (e) => {
@@ -15,7 +16,7 @@ class InputManager {
             this.isMouseHoldDown = true;
         });
 
-        this.canvas.addEventListener('mouseup', () => {
+        this.canvas.addEventListener('mouseup', (e) => {
             this.isMouseHoldDown = false;
         });
 
@@ -27,6 +28,15 @@ class InputManager {
                 }
             } );
 
+        });
+
+        window.addEventListener('wheel', (e) => {
+            this.wheelDelta = e.wheelDelta;
+            this.receivers.forEach( (receiver) => {
+                if (typeof receiver.onMouseWheel === 'function') {
+                    receiver.onMouseWheel({wheelDelta: this.wheelDelta});
+                }
+            } );
         });
 
     }

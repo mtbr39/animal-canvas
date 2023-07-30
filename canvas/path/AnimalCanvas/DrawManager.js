@@ -7,11 +7,19 @@ class DrawManager {
         this.ctx = option.ctx;
         this.cw = option.cw;
         this.org = option.org;
-        this.camera = {position:{x:0, y:0}, zoom:100, scrollSpeed:0.2};
+        this.camera = {position:{x:0, y:0}, zoom:100, scrollSpeed:0.2, scrollType:-1};
         this.debugMode = false;
     }
 
     draw() {
+        const lerp = (x, y, p) => {
+            return x + (y - x) * p;
+        };
+        if (this.cwChanged != null) {
+            this.cw = lerp(this.cw, this.cwChanged, 0.2);
+        }
+        
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.objects.forEach( (object) => {
@@ -38,14 +46,17 @@ class DrawManager {
     }
 
     onMouseHoldDown(input) {
+        const lerp = (x, y, p) => {
+            return x + (y - x) * p;
+        };
         if (input.mousePositionDelta != null) {
-            this.camera.position.x += input.mousePositionDelta.x * this.camera.scrollSpeed;
-            this.camera.position.y += input.mousePositionDelta.y * this.camera.scrollSpeed;
+            this.camera.position.x += input.mousePositionDelta.x * this.camera.scrollSpeed * this.camera.scrollType;
+            this.camera.position.y += input.mousePositionDelta.y * this.camera.scrollSpeed * this.camera.scrollType;
         }
     }
 
-    onMouseHoldUp(input) {
-        
+    onMouseWheel(input) {
+        this.cwChanged = this.cw + input.wheelDelta * 0.004;
     }
 
     // ---- 自作描写ライブラリ ----
