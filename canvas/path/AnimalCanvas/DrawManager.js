@@ -85,7 +85,10 @@ class DrawManager {
         }
     }
     
+}
 
+
+class DrawUtl {
     // ---- 以前作成したもの ----
     drawLine(p1, p2, option = {}) {
         this.ctx.beginPath();
@@ -152,5 +155,4 @@ class DrawManager {
         this.ctx.strokeStyle = "#ef4444";
         this.ctx.stroke();
     }
-    
 }
