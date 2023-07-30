@@ -24,8 +24,11 @@ class ObjectDistributer {
         } );
     }
     onMouseMove(input) {
-        // mousePosition = input.mousePosition;
-        this.drawManager.camera.position = input.mousePosition;
+        // this.drawManager.camera.position = input.mousePosition;
+    }
+    onMouseHoldDown(input) {
+        // this.canvas.style.background = 'black';
+        this.drawManager.onMouseHoldDown(input);
     }
     
 }
@@ -37,26 +40,28 @@ class InputManager {
         this.org = option.org;
         this.mousePosition = {};
         this.receivers = [];
+        this.isMouseHoldDown = false;
 
         // ---- マウスイベント ----
         this.canvas.addEventListener('mousedown', (e) => {
             this.mousePosition = this.getMousePosition(e);
+            this.isMouseHoldDown = true;
         });
 
         this.canvas.addEventListener('mouseup', () => {
-
+            this.isMouseHoldDown = false;
         });
 
         this.canvas.addEventListener('mousemove', (e) => {
             this.mousePosition = this.getMousePosition(e);
             this.receivers.forEach( (receiver) => {
                 if (typeof receiver.onMouseMove === 'function') {
-                    
                     receiver.onMouseMove({mousePosition: this.mousePosition});
                 }
             } );
 
         });
+
     }
 
     submitReceiver(object) {
@@ -70,6 +75,27 @@ class InputManager {
             y: event.clientY - rect.top - this.org.y*this.cw,
         };
     }
+
+    update() {
+        if (this.isMouseHoldDown) {
+
+            if (this.prevMousePosition != null) {
+                this.mousePositionDelta = {x: this.mousePosition.x - this.prevMousePosition.x, y: this.mousePosition.y - this.prevMousePosition.y};
+                this.prevMousePosition = this.mousePosition;
+            } else {
+                this.mousePositionDelta = null;
+                this.prevMousePosition = this.mousePosition;
+            }
+
+            this.receivers.forEach( (receiver) => {
+                if (typeof receiver.onMouseHoldDown === 'function') {
+                    receiver.onMouseHoldDown({mousePosition: this.mousePosition, mousePositionDelta: this.mousePositionDelta});
+                }
+            } );
+        } else {
+            this.prevMousePosition = null;
+        }
+    }
 }
 
 class DrawManager {
@@ -79,9 +105,8 @@ class DrawManager {
         this.ctx = option.ctx;
         this.cw = option.cw;
         this.org = option.org;
-        this.camera = {position:{x:0, y:0}, zoom:100};
+        this.camera = {position:{x:0, y:0}, zoom:100, scrollSpeed:0.2};
         this.debugMode = false;
-
     }
 
     draw() {
@@ -108,6 +133,17 @@ class DrawManager {
                 })
             } );
         }
+    }
+
+    onMouseHoldDown(input) {
+        if (input.mousePositionDelta != null) {
+            this.camera.position.x += input.mousePositionDelta.x * this.camera.scrollSpeed;
+            this.camera.position.y += input.mousePositionDelta.y * this.camera.scrollSpeed;
+        }
+    }
+
+    onMouseHoldUp(input) {
+        
     }
 
     // ---- 自作描写ライブラリ ----

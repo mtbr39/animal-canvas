@@ -54,6 +54,7 @@ window.addEventListener('load', () => {
 
     function update() {
         objectDistributer.collisionManager.check();
+        inputManager.update();
         objectDistributer.update();
         objectDistributer.drawManager.draw();
 
