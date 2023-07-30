@@ -2,7 +2,7 @@
 
 class DrawManager {
     constructor(option = {}) {
-        this.objects = option.objects || [];
+        this.objects = option.objects;
         this.canvas = option.canvas;
         this.ctx = option.ctx;
         this.cw = option.cw;
@@ -18,8 +18,8 @@ class DrawManager {
         if (this.cwChanged != null) {
             this.cw = lerp(this.cw, this.cwChanged, 0.2);
         }
-        
 
+        
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.objects.forEach( (object) => {

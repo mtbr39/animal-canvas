@@ -19,6 +19,8 @@ class ObjectDistributer {
         this.objects.push(object);
     }
     update() {
+        this.checkAndDeleteObject();
+
         this.objects.forEach( (object) => {
             object.update();
         } );
@@ -32,6 +34,14 @@ class ObjectDistributer {
 
     onMouseWheel(input) {
         this.drawManager.onMouseWheel(input);
+    }
+
+    checkAndDeleteObject() {
+        this.objects.forEach( (object, index) => {
+            if (object.needDelete) {
+                this.objects.splice(index, 1);
+            }
+        } );
     }
     
 }

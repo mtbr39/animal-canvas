@@ -27,20 +27,16 @@ class Animal {
                 break;
         }
         this.fillColor = option.fillColor || "#86efac";
+        this.energy = this.radius;
+        this.needDelete = false;
 
         console.log(this.id, );
 
     }
 
-    updateColliders() {
-        this.colliders.forEach();
-    }
-
     update() {
         this.habit.update();
-        
-        
-        
+        this.checkEnergyAndDeath();
     }
 
     onCollision(collidedObject, option) {
@@ -52,6 +48,14 @@ class Animal {
 
     }
 
+    checkEnergyAndDeath () {
+        
+        if (this.energy.value <= 0) {
+            this.radius.value = 0;
+            this.needDelete = true;
+        }
+    }
+
 }
 
 class HerbivoreHabit {
@@ -60,19 +64,26 @@ class HerbivoreHabit {
     }
 
     update () {
-        this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
-        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
-        this.object.direction += this.object.rotationSpeed;
-        this.moveTowardsDirection();
+        this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant') {
-            this.object.radius.value += 0.5;
+            this.object.energy.value += 0.5;
         }
 
     }
+
+    randomWalkAction() {
+        this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
+        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
+        this.object.direction += this.object.rotationSpeed;
+        this.moveTowardsDirection();
+
+        this.object.energy.value -= 0.02;
+    }
+    
 
     moveTowardsDirection() {
         this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
