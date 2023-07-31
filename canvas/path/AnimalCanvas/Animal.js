@@ -82,7 +82,7 @@ class Animal {
 class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.001;
+        this.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
         this.object.radius.value = 6;
         this.object.reproductEnergyThreshold = 10;
@@ -199,6 +199,8 @@ class AnimalFactory {
     constructor(option = {}) {
         this.animals = [];
         this.distributer = option.distributer || {};
+        this.org = option.org;
+        this.cageSize = option.cageSize || {width: 100, height: 100};
     }
 
     make(option) {
@@ -208,6 +210,7 @@ class AnimalFactory {
     }
     update() {
         this.animals.forEach( (animal) => {
+            this.teleportOutsideCage(animal);
             this.checkCanReproduct(animal);
         } );
     }
@@ -222,6 +225,18 @@ class AnimalFactory {
                 radius: animal.radius.value,
                 isReproduct: true,
             });
+        }
+    }
+
+    teleportOutsideCage (animal) {
+        let whichSideX = animal.position.x/animal.position.x;
+        let whichSideY = animal.position.y/animal.position.y;
+        let halfCageSize = {width: this.cageSize.width/2, height: this.cageSize.height/2}
+        if ( Math.abs(animal.position.x) > halfCageSize.width ) {
+            animal.position.x = whichSideX * halfCageSize.width;
+        }
+        if ( Math.abs(animal.position.y) > halfCageSize.height ) {
+            animal.position.y = whichSideY * halfCageSize.height;
         }
     }
 

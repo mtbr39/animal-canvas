@@ -5,21 +5,23 @@ window.addEventListener('load', () => {
     canvas.height = document.documentElement.clientHeight;
     let ctx = canvas.getContext('2d');
     
-    const canvasAndXYRate = 250;
-    let cw = canvas.width / canvasAndXYRate;
-    let org = {x: 100, y: 100};
+    const canvasWidthCw = 250;
+    let cw = canvas.width / canvasWidthCw;
+    let org = {x: canvasWidthCw / 2, y: canvasWidthCw / 2};
+
+    let cageSize = {width: 500, height: 500};
 
     //クラスインスタンス生成など
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
     const inputManager = new InputManager( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
     inputManager.submitReceiver( objectDistributer );
 
-    const animalFactory = new AnimalFactory({distributer: objectDistributer});
+    const animalFactory = new AnimalFactory({distributer: objectDistributer, org: org, cageSize: cageSize});
 
-    for (let i=0; i<100; i++) {
+    for (let i=0; i<40; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
+            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
             creatureType: 'herbivore',
         });
     }
@@ -27,7 +29,7 @@ window.addEventListener('load', () => {
     let alphaPlants = [];
     for (let i=0; i<400; i++) {
         alphaPlants[i] = new Animal({
-            position: {x: (Math.random()-0.5)*canvasAndXYRate * 2, y: (Math.random()-0.5)*canvasAndXYRate * 2},
+            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
             creatureType: 'plant',
         });
         objectDistributer.submitObject(alphaPlants[i]);
@@ -36,7 +38,7 @@ window.addEventListener('load', () => {
     for (let i=0; i<2; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
+            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
             creatureType: 'carnivore',
         });
         objectDistributer.submitObject(alphaPlants[i]);
