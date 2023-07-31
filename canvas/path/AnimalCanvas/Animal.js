@@ -107,7 +107,7 @@ class HerbivoreHabit {
 
     randomWalkAction() {
         this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
-        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
+        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
 
@@ -125,9 +125,9 @@ class HerbivoreHabit {
 class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.01;
+        this.exhaustVelocity = 0.02;
         this.object.radius.value = 15;
-        this.object.velocity = this.object.velocity * 1.5;
+        this.object.velocity = this.object.velocity * 10;
         this.object.fillColor = '#f3b1a5';
         this.object.reproductEnergyThreshold = 30;
     }
@@ -146,7 +146,7 @@ class CarnivoreHabit {
 
     randomWalkAction() {
         this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
-        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.1), -0.1);
+        this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
 
