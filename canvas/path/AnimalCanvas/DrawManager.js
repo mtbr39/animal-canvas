@@ -30,7 +30,7 @@ class DrawManager {
         if (object.drawType === undefined) {
             this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor});
         }
-        if (object.creatureType === 'herbivore' || object.creatureType === 'carnivore') {
+        if (object.creatureType === 'herbivore' && object.status != 'death' || object.creatureType === 'carnivore') {
             this.fillText(object.identifiedName, object.position, {
                 offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
             });
@@ -86,7 +86,8 @@ class DrawManager {
         const size = option.size || 10;
         const color = option.color || "black";
         const strokeWidth = option.strokeWidth || "none";
-        this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
+        // this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
+        this.ctx.font = size*3+"px 'M PLUS Rounded 1c',serif";
         if (strokeWidth == 'none') {
             this.ctx.fillStyle = color;
             this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
@@ -94,6 +95,16 @@ class DrawManager {
             this.ctx.lineWidth = strokeWidth*this.cw;
             this.ctx.strokeText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
         }
+    }
+    fillTextWithRotate(text, point, angle) {
+        const offset = option.offset || {x:0, y:0};
+        const size = option.size || 10;
+        const color = option.color || "black";
+        this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
+        let pointDisplay = {x: point.x + offset.x, y: point.y + offset.y};
+        pointDisplay = utl.rotatePoint(pointDisplay, angle, point);
+        this.ctx.fillStyle = color;
+        this.ctx.fillText(text, this.canvasPoint(pointDisplay).x - 4*this.cw, this.canvasPoint(pointDisplay).y + 2*this.cw);
     }
     
 }
@@ -129,13 +140,7 @@ class DrawUtl {
         p = {x: p.x / this.cw - this.org.x, y: p.y / this.cw - this.org.y};
         return p;
     }
-    modFillText2(text, point, angle, offset={x:10, y:10}) {
-        this.ctx.font = `${6*this.cw}px serif`;
-        let pointDisplay = {x: point.x + offset.x, y: point.y + offset.y};
-        pointDisplay = utl.rotatePoint(pointDisplay, angle, point);
-        this.ctx.fillStyle = "black";
-        this.ctx.fillText(text, this.canvasPoint(pointDisplay).x - 4*this.cw, this.canvasPoint(pointDisplay).y + 2*this.cw);
-    }
+    
     modArc(p) {
         this.ctx.beginPath();
         this.modMoveTo(p);
