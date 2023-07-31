@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
     canvas.height = document.documentElement.clientHeight;
     let ctx = canvas.getContext('2d');
     
-    const canvasWidthCw = 250;
+    const canvasWidthCw = 600;
     let cw = canvas.width / canvasWidthCw;
     let org = {x: canvasWidthCw / 2, y: canvasWidthCw / 2};
 

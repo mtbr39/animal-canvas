@@ -11,16 +11,16 @@ class InputManager {
         this.wheelDelta = null;
 
         // ---- マウスイベント ----
-        this.canvas.addEventListener('mousedown', (e) => {
+        this.canvas.addEventListener('pointerdown', (e) => {
             this.mousePosition = this.getMousePosition(e);
             this.isMouseHoldDown = true;
         });
 
-        this.canvas.addEventListener('mouseup', (e) => {
+        this.canvas.addEventListener('pointerup', (e) => {
             this.isMouseHoldDown = false;
         });
 
-        this.canvas.addEventListener('mousemove', (e) => {
+        this.canvas.addEventListener('pointermove', (e) => {
             this.mousePosition = this.getMousePosition(e);
             this.receivers.forEach( (receiver) => {
                 if (typeof receiver.onMouseMove === 'function') {
