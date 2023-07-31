@@ -95,7 +95,7 @@ class HerbivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant' && collidedObject.status != 'death') {
-            this.object.energy.value += 1.0;
+            this.object.energy.value += 2;
         }
         if (collidedObject.creatureType == 'carnivore') {
             this.object.velocity = 0;
@@ -125,9 +125,9 @@ class HerbivoreHabit {
 class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.02;
+        this.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
-        this.object.velocity = this.object.velocity * 10;
+        this.object.velocity = this.object.velocity * 4;
         this.object.fillColor = '#f3b1a5';
         this.object.reproductEnergyThreshold = 30;
     }
