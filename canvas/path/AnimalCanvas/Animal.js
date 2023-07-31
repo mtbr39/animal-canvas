@@ -23,6 +23,7 @@ class Animal {
         this.reproductEnergyThreshold = 10;
         this.status = 'live';
         this.changeStatus = '';
+        this.isReproduct = option.isReproduct || false;
 
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
@@ -80,7 +81,7 @@ class HerbivoreHabit {
         this.object = option.object || {};
         this.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
-        this.reproductEnergyThreshold = 10;
+        this.object.reproductEnergyThreshold = 10;
     }
 
     update () {
@@ -180,7 +181,7 @@ class PlantHabit {
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
             this.object.changeStatus = 'death';
-            this.object.colliders = [];
+            // this.object.colliders = [];
             this.object.strokeColor = 'rgba(231, 208, 182)';
         }
 
@@ -209,10 +210,11 @@ class AnimalFactory {
         if(animal.canReproduct) {
             animal.canReproduct = false;
             this.make({
-                id: utl.randomStringLikeSynbolID(),
+                identifiedName: utl.randomStringLikeSynbolID(),
                 position: {x:animal.position.x, y:animal.position.y},
                 creatureType: animal.creatureType,
                 radius: 6,
+                isReproduct: true,
             });
         }
     }
