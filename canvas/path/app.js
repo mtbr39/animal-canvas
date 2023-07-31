@@ -83,4 +83,10 @@ window.addEventListener('load', () => {
         canvas.height = document.documentElement.clientHeight;
     };
 
+    document.addEventListener("touchmove", (event) => {
+        if (event.touches.length >= 2) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+
 })
