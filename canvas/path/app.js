@@ -16,12 +16,11 @@ window.addEventListener('load', () => {
 
     const animalFactory = new AnimalFactory({distributer: objectDistributer});
 
-    for (let i=0; i<20; i++) {
+    for (let i=0; i<100; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
             position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
             creatureType: 'herbivore',
-            radius: 6,
         });
     }
 
@@ -29,17 +28,15 @@ window.addEventListener('load', () => {
     for (let i=0; i<400; i++) {
         alphaPlants[i] = new Animal({
             position: {x: (Math.random()-0.5)*canvasAndXYRate * 2, y: (Math.random()-0.5)*canvasAndXYRate * 2},
-            radius: 4,
             creatureType: 'plant',
         });
         objectDistributer.submitObject(alphaPlants[i]);
     }
 
-    for (let i=0; i<3; i++) {
+    for (let i=0; i<2; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
             position: {x: (Math.random()-0.5)*canvasAndXYRate, y: (Math.random()-0.5)*canvasAndXYRate},
-            radius: 15,
             creatureType: 'carnivore',
         });
         objectDistributer.submitObject(alphaPlants[i]);
