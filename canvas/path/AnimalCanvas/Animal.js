@@ -19,6 +19,7 @@ class Animal {
         
         this.fillColor = option.fillColor || "#86efac";
         this.energy = this.radius;
+        this.exhaustVelocity = 0;
         this.needDelete = false;
         this.canReproduct = false;
         this.reproductEnergyThreshold = 10;
@@ -51,6 +52,7 @@ class Animal {
             this.changeStatus = '';
         }
         this.habit.update();
+        this.exhaustEnergy();
         this.checkEnergyAndDeath();
     }
 
@@ -61,6 +63,10 @@ class Animal {
 
         this.habit.onCollision(collidedObject, option);
 
+    }
+
+    exhaustEnergy () {
+        this.energy.value -= this.exhaustVelocity;
     }
 
     checkEnergyAndDeath () {
@@ -82,7 +88,7 @@ class Animal {
 class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.005;
+        this.object.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
         this.object.radius.value = 6;
         this.object.reproductEnergyThreshold = 10;
@@ -101,6 +107,7 @@ class HerbivoreHabit {
             this.object.velocity = 0;
             this.object.fillColor = 'darkgray';
             this.object.changeStatus = 'death';
+            this.object.exhaustVelocity = 0.03;
         }
 
     }
@@ -110,8 +117,6 @@ class HerbivoreHabit {
         this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
-
-        this.object.energy.value -= this.exhaustVelocity;
     }
     
 
@@ -125,7 +130,7 @@ class HerbivoreHabit {
 class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.exhaustVelocity = 0.015;
+        this.object.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
         this.object.velocity = this.object.velocity * 4;
         this.object.fillColor = '#f3b1a5';
@@ -149,8 +154,6 @@ class CarnivoreHabit {
         this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
         this.moveTowardsDirection();
-
-        this.object.energy.value -= this.exhaustVelocity;
     }
     
 
