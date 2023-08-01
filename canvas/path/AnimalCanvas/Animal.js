@@ -229,14 +229,26 @@ class AnimalFactory {
     }
 
     teleportOutsideCage (animal) {
-        let whichSideX = animal.position.x/animal.position.x;
-        let whichSideY = animal.position.y/animal.position.y;
+        let teleportType = 'noTeleport';
+        let whichSideX = animal.position.x/Math.abs(animal.position.x);
+        let whichSideY = animal.position.y/Math.abs(animal.position.y);
+        if (teleportType == 'noTeleport') {
+            
+        }
+        if (teleportType == 'allSideTeleport') {
+            whichSideX *= -1;
+            whichSideY *= -1;
+        }
+        if (teleportType == 'oneSideTeleport') {
+            whichSideX = 1;
+            whichSideY = 1;
+        }
         let halfCageSize = {width: this.cageSize.width/2, height: this.cageSize.height/2}
         if ( Math.abs(animal.position.x) > halfCageSize.width ) {
-            animal.position.x = whichSideX * halfCageSize.width;
+            animal.position.x = halfCageSize.width * whichSideX;
         }
         if ( Math.abs(animal.position.y) > halfCageSize.height ) {
-            animal.position.y = whichSideY * halfCageSize.height;
+            animal.position.y = halfCageSize.height * whichSideY;
         }
     }
 
