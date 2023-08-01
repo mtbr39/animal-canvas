@@ -11,33 +11,35 @@ class InputManager {
         this.wheelDelta = null;
 
         // ---- マウスイベント ----
-        this.canvas.addEventListener('pointerdown', (e) => {
-            this.mousePosition = this.getMousePosition(e);
-            this.isMouseHoldDown = true;
-        });
+        if (InputManager.isSmartPhone() == false) {
+            this.canvas.addEventListener('pointerdown', (e) => {
+                this.mousePosition = this.getMousePosition(e);
+                this.isMouseHoldDown = true;
+            });
 
-        this.canvas.addEventListener('pointerup', (e) => {
-            this.isMouseHoldDown = false;
-        });
+            this.canvas.addEventListener('pointerup', (e) => {
+                this.isMouseHoldDown = false;
+            });
 
-        this.canvas.addEventListener('pointermove', (e) => {
-            this.mousePosition = this.getMousePosition(e);
-            this.receivers.forEach( (receiver) => {
-                if (typeof receiver.onMouseMove === 'function') {
-                    receiver.onMouseMove({mousePosition: this.mousePosition});
-                }
-            } );
+            this.canvas.addEventListener('pointermove', (e) => {
+                this.mousePosition = this.getMousePosition(e);
+                this.receivers.forEach( (receiver) => {
+                    if (typeof receiver.onMouseMove === 'function') {
+                        receiver.onMouseMove({mousePosition: this.mousePosition});
+                    }
+                } );
 
-        });
+            });
 
-        window.addEventListener('wheel', (e) => {
-            this.wheelDelta = e.wheelDelta;
-            this.receivers.forEach( (receiver) => {
-                if (typeof receiver.onMouseWheel === 'function') {
-                    receiver.onMouseWheel({wheelDelta: this.wheelDelta});
-                }
-            } );
-        });
+            window.addEventListener('wheel', (e) => {
+                this.wheelDelta = e.wheelDelta;
+                this.receivers.forEach( (receiver) => {
+                    if (typeof receiver.onMouseWheel === 'function') {
+                        receiver.onMouseWheel({wheelDelta: this.wheelDelta});
+                    }
+                } );
+            });
+        }
 
     }
 
@@ -71,6 +73,14 @@ class InputManager {
             } );
         } else {
             this.prevMousePosition = null;
+        }
+    }
+
+    static isSmartPhone() {
+        if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
