@@ -104,4 +104,11 @@ class utl {
             randomStringFromLetters("0123456789", randomNaturalNumber(0,numberLength))
         ].join('');
     }
+    static isSmartPhone() {
+        if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

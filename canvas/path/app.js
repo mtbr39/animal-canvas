@@ -67,6 +67,10 @@ window.addEventListener('load', () => {
         objectDistributer.update();
         objectDistributer.drawManager.draw();
 
+        // ctx.font = "40px 'M PLUS Rounded 1c',serif";
+        // ctx.fillStyle = 'black';
+        // ctx.fillText(`マウスポジション${Math.floor(inputManager.mousePosition.x)}, ${Math.floor(inputManager.mousePosition.y)} holdかな ${inputManager.isMouseHoldDown}`, 100,100);
+
     }
 
     loop();
