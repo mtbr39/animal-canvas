@@ -9,7 +9,7 @@ class Animal {
         this.velocity = 0.5;
         this.radius = {value: option.radius || 10};
         this.rotationSpeed = 0;
-        // todo: colliderの初期値有りのときcollider.positionに参照渡しする
+        this.layer = 0;
         this.colliders = [
             // {type:'circle', id:'large', position:this.position, radius:100},
             // {type:'circle', id:'medium', position:this.position, radius:60},
@@ -42,7 +42,7 @@ class Animal {
                 break;
         }
 
-        console.log(this.id, );
+        console.log(this.identifiedName, );
 
     }
 
@@ -88,6 +88,7 @@ class Animal {
 class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
+        this.object.layer = 20;
         this.object.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
         this.object.radius.value = 6;
@@ -170,6 +171,7 @@ class PlantHabit {
         this.reviveTime = 600;
         this.collidersSet = this.object.colliders;
         this.deathTimer = 0;
+        this.object.layer = 10;
         this.object.radius.value = 10;
         this.object.strokeColor = this.object.fillColor;
     }

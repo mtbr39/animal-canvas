@@ -13,7 +13,8 @@ window.addEventListener('load', () => {
     let cw = Math.sqrt(canvas.width * canvas.height) * canvasWidthCw; // canvasのピクセル面積に対して描写比率を決定
     let org = {x: canvas.width / cw / 2 , y: canvas.height / cw / 2};
 
-    let cageSize = {width: canvas.width / cw, height: canvas.height / cw};
+    let calcCanvasSize = {width: canvas.width / cw, height: canvas.height / cw};
+    let cageSize = {width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.9};
 
     //クラスインスタンス生成など
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );

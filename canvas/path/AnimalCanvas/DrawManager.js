@@ -12,15 +12,18 @@ class DrawManager {
     }
 
     draw() {
+        this.sortObjects();
+
         const lerp = (x, y, p) => {
             return x + (y - x) * p;
         };
         if (this.cwChanged != null) {
             this.cw = lerp(this.cw, this.cwChanged, 0.2);
         }
-
         
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.drawBackground();
 
         this.objects.forEach( (object) => {
             this.drawObject(object);
@@ -43,6 +46,22 @@ class DrawManager {
                 })
             } );
         }
+    }
+
+    sortObjects() {
+        this.objects.sort( (objectA, objectB) => {
+            if (       objectA.layer > objectB.layer) {
+                return -1;
+            } else if (objectA.layer < objectB.layer) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } );
+    }
+
+    drawBackground() {
+        
     }
 
     onMouseHoldDown(input) {
@@ -106,27 +125,19 @@ class DrawManager {
         this.ctx.fillStyle = color;
         this.ctx.fillText(text, this.canvasPoint(pointDisplay).x - 4*this.cw, this.canvasPoint(pointDisplay).y + 2*this.cw);
     }
-    
-}
-
-
-class DrawUtl {
-    // ---- 以前作成したもの ----
     drawLine(p1, p2, option = {}) {
+        let color = option.color ?? 'black';
+        let width = option.width ?? '2';
         this.ctx.beginPath();
-        this.modMoveTo(p1);
-        this.modLineTo(p2);
-        let lineColor = 'black'; 
-        if (option.edgeName && option.edgeName == option.clickTarget) {
-            lineColor = 'red';
-        }
-        this.callStyle({strokeStyle: lineColor});
+        this.moveTo(p1);
+        this.lineTo(p2);
+        this.style({strokeStyle: color, lineWidth: width});
         this.ctx.stroke();
     }
-    modMoveTo(p) {
+    moveTo(p) {
         this.ctx.moveTo( this.canvasPoint(p).x, this.canvasPoint(p).y );
     }
-    modLineTo(p) {
+    lineTo(p) {
         this.ctx.lineTo( this.canvasPoint(p).x, this.canvasPoint(p).y );
     }
     style(option = {}) {
@@ -136,6 +147,12 @@ class DrawUtl {
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
     }
+    
+}
+
+
+class DrawUtl {
+    // ---- 以前作成したもの ----
     inverseMod(p) {
         p = {x: p.x / this.cw - this.org.x, y: p.y / this.cw - this.org.y};
         return p;
