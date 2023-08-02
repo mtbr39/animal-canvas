@@ -2,6 +2,8 @@ window.addEventListener('load', () => {
 
     let canvas = document.getElementById('canvas');
 
+    canvas.style.backgroundColor = '#F6ECE6';
+
     let cssCanvasSize = {width: document.documentElement.clientWidth, height: document.documentElement.clientHeight};
     let pixelRatioCanvasSize = {width: cssCanvasSize.width * window.devicePixelRatio, height: cssCanvasSize.height * window.devicePixelRatio};
     canvas.width = pixelRatioCanvasSize.width;

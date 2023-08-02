@@ -17,7 +17,8 @@ class Animal {
         ];
         this.collidersSet = this.colliders;
         
-        this.fillColor = option.fillColor || "#86efac";
+        // this.fillColor = option.fillColor || "#86efac";
+        this.fillColor = option.fillColor || '#36C994';
         this.energy = this.radius;
         this.exhaustVelocity = 0;
         this.needDelete = false;
@@ -134,7 +135,7 @@ class CarnivoreHabit {
         this.object.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
         this.object.velocity = this.object.velocity * 4;
-        this.object.fillColor = '#f3b1a5';
+        this.object.fillColor = '#EB6973';
         this.object.reproductEnergyThreshold = 30;
     }
 

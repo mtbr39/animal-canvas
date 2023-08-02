@@ -9,6 +9,9 @@ class DrawManager {
         this.org = option.org;
         this.camera = {position:{x:0, y:0}, zoom:100, scrollSpeed:0.2, scrollType:-1};
         this.debugMode = false;
+
+        
+        this.cageSize = {width: this.canvas.width/this.cw * 0.9, height: this.canvas.height/this.cw * 0.9};
     }
 
     draw() {
@@ -61,7 +64,22 @@ class DrawManager {
     }
 
     drawBackground() {
-        
+        let border = {x:-1 * this.cageSize.width/2, y:-1*this.cageSize.height/2, w: this.cageSize.width, h: this.cageSize.height, num:16};
+        // this.drawLine(this.objects[0].position, this.objects[1].position, {color:'white'});
+        let color = '#C5BCB6';
+        let gap = border.w/(border.num);
+        for(let i=0; i<=border.num; i++) {
+            let p1 = {x: border.x + gap*i, y:border.y};
+            let p2 = {x: border.x + gap*i, y:border.y+border.h};
+            
+            this.drawLine(p1,p2, {color: color});
+        }
+        for(let i=0; gap*i<=border.h; i++) {
+            let p1 = {x: border.x, y: border.y + gap*i};
+            let p2 = {x: border.x + border.w, y: border.y + gap*i};
+            
+            this.drawLine(p1,p2, {color: color});
+        }
     }
 
     onMouseHoldDown(input) {
