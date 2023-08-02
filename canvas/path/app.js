@@ -8,12 +8,12 @@ window.addEventListener('load', () => {
     canvas.height = pixelRatioCanvasSize.height;
     let ctx = canvas.getContext('2d');
     
-    const canvasWidthCw = 600;
-    const canvasHeightCw = canvasWidthCw / canvas.width * canvas.height;
-    let cw = canvas.width / canvasWidthCw;
-    let org = {x: canvasWidthCw / 2, y: canvasHeightCw / 2};
+    const canvasWidthCw = 0.001 * 1.8;
+    // const canvasHeightCw = canvasWidthCw / canvas.width * canvas.height;
+    let cw = Math.sqrt(canvas.width * canvas.height) * canvasWidthCw; // canvasのピクセル面積に対して描写比率を決定
+    let org = {x: canvas.width / cw / 2 , y: canvas.height / cw / 2};
 
-    let cageSize = {width: canvasWidthCw*0.9, height: canvasHeightCw*0.9};
+    let cageSize = {width: canvas.width / cw, height: canvas.height / cw};
 
     //クラスインスタンス生成など
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
@@ -82,7 +82,7 @@ window.addEventListener('load', () => {
     
 
     resizeCanvas();
-    window.onresize = resizeCanvas;
+    // window.onresize = resizeCanvas;
 
     function resizeCanvas() {
         canvas.style.width = `${cssCanvasSize.width}px`;
