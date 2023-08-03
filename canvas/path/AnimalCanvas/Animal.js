@@ -196,7 +196,7 @@ class PlantHabit {
         if (this.deathTimer > this.reviveTime) {
             this.deathTimer = 0;
             this.object.status = 'live'
-            // this.object.colliders = this.collidersSet;
+            this.object.colliders = this.collidersSet;
             this.object.strokeColor = "#86efac";
         }
     }
@@ -205,7 +205,6 @@ class PlantHabit {
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
             this.object.changeStatus = 'death';
-            // this.object.colliders = [];
             this.object.strokeColor = 'rgba(231, 208, 182)';
         }
 
