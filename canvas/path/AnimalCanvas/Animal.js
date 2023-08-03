@@ -11,8 +11,6 @@ class Animal {
         this.rotationSpeed = 0;
         this.layer = 0;
         this.colliders = [
-            // {type:'circle', id:'large', position:this.position, radius:100},
-            // {type:'circle', id:'medium', position:this.position, radius:60},
             {type:'circle', id:'my', position:this.position, radius:this.radius},
         ];
         this.collidersSet = this.colliders;
@@ -97,6 +95,9 @@ class HerbivoreHabit {
         this.object.radius.value = 6;
         this.object.reproductEnergyThreshold = 10;
         this.object.reproductNum = 2;
+        this.object.colliders = [
+            {type:'circle', id:'herbivoreBody', opponentIds:['plantBody', 'carnivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
     }
 
     update () {
@@ -140,6 +141,9 @@ class CarnivoreHabit {
         this.object.velocity = this.object.velocity * 3.0;
         this.object.fillColor = '#EB6973';
         this.object.reproductEnergyThreshold = 30;
+        this.object.colliders = [
+            {type:'circle', id:'carnivoreBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
     }
 
     update () {
@@ -179,6 +183,10 @@ class PlantHabit {
         this.object.radius.value = 10;
         this.object.strokeColor = this.object.fillColor;
         this.object.alpha = 0.5;
+        this.object.colliders = [
+            {type:'circle', id:'plantBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
+        
     }
 
     update () {

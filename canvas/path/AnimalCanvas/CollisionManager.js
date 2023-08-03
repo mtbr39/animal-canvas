@@ -15,8 +15,11 @@ class CollisionManager {
             if (targetObject.id !== checkObject.id) {
                 targetObject.colliders.forEach( (targetCollider) => {
                 checkObject.colliders.forEach(  (checkCollider)  => {
-                    if ( CollisionManager.isOverlappedCircle( targetCollider, checkCollider ) ) {
-                        targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                    // console.log("全部falseなのかい",targetCollider.opponentIds, checkCollider.id ,targetCollider.opponentIds.includes( checkCollider.id ) );
+                    if ( targetCollider.opponentIds.includes( checkCollider.id ) ) {
+                        if ( CollisionManager.isOverlappedCircle( targetCollider, checkCollider ) ) {
+                            targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                        }
                     }
                 } );
                 } );
