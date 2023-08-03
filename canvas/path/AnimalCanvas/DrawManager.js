@@ -38,7 +38,7 @@ class DrawManager {
         }
         if (object.creatureType === 'herbivore' && object.status != 'death' || object.creatureType === 'carnivore') {
             this.fillText(object.identifiedName, object.position, {
-                offset:{x:-4, y:-10}, size:4, color:'darkgray', strokeWidth:'none',
+                offset:{x:-4, y:-10}, size:5, color:'black', strokeWidth:'none',
             });
         }
         if (this.debugMode) {
@@ -72,13 +72,13 @@ class DrawManager {
             let p1 = {x: border.x + gap*i, y:border.y};
             let p2 = {x: border.x + gap*i, y:border.y+border.h};
             
-            this.drawLine(p1,p2, {color: color});
+            this.drawLine(p1,p2, {color: color, alpha: 0.2});
         }
         for(let i=0; gap*i<=border.h; i++) {
             let p1 = {x: border.x, y: border.y + gap*i};
             let p2 = {x: border.x + border.w, y: border.y + gap*i};
             
-            this.drawLine(p1,p2, {color: color});
+            this.drawLine(p1,p2, {color: color, alpha: 0.2});
         }
     }
 
@@ -107,12 +107,10 @@ class DrawManager {
         this.ctx.beginPath();
         this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*this.cw, 0, Math.PI * 2, true);
         if (strokeColor == 'none') {
-            this.ctx.fillStyle = fillColor;
+            this.style({fillStyle: fillColor});
             this.ctx.fill();
         } else {
-            this.ctx.globalAlpha = 0.3;
-            this.ctx.strokeStyle = strokeColor;
-            this.ctx.lineWidth = lineWidth;
+            this.style({globalAlpha: 0.3, strokeStyle: strokeColor, lineWidth: lineWidth});
             this.ctx.stroke();
             this.ctx.globalAlpha = 1.0;
         }
@@ -146,10 +144,11 @@ class DrawManager {
     drawLine(p1, p2, option = {}) {
         let color = option.color ?? 'black';
         let width = option.width ?? '2';
+        let alpha = option.alpha ?? 1.0;
         this.ctx.beginPath();
         this.moveTo(p1);
         this.lineTo(p2);
-        this.style({strokeStyle: color, lineWidth: width});
+        this.style({strokeStyle: color, lineWidth: width, globalAlpha: alpha});
         this.ctx.stroke();
     }
     moveTo(p) {
@@ -159,9 +158,10 @@ class DrawManager {
         this.ctx.lineTo( this.canvasPoint(p).x, this.canvasPoint(p).y );
     }
     style(option = {}) {
+        this.ctx.fillStyle = option.fillStyle ?? 'black';
         this.ctx.strokeStyle = option.strokeStyle ?? 'black';
         this.ctx.lineWidth = option.lineWidth ?? 2;
-        this.ctx.globalAlpha = 1.0;
+        this.ctx.globalAlpha = option.globalAlpha ?? 1.0;
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
     }
