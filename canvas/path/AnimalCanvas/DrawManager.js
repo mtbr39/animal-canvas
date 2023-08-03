@@ -34,7 +34,7 @@ class DrawManager {
     }
     drawObject(object) {
         if (object.drawType === undefined) {
-            this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor});
+            this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor, alpha:object.alpha});
         }
         if (object.creatureType === 'herbivore' && object.status != 'death' || object.creatureType === 'carnivore') {
             this.fillText(object.identifiedName, object.position, {
@@ -104,15 +104,14 @@ class DrawManager {
         const fillColor = option.fillColor || "#86efac";
         const strokeColor = option.strokeColor || 'none';
         const lineWidth = option.lineWidth || 4;
+        const alpha = option.alpha || 1.0;
         this.ctx.beginPath();
         this.ctx.arc(this.canvasPoint(p).x, this.canvasPoint(p).y, radius*this.cw, 0, Math.PI * 2, true);
+        this.style({fillStyle: fillColor, globalAlpha: alpha, strokeStyle: strokeColor, lineWidth: lineWidth});
         if (strokeColor == 'none') {
-            this.style({fillStyle: fillColor});
             this.ctx.fill();
         } else {
-            this.style({globalAlpha: 0.3, strokeStyle: strokeColor, lineWidth: lineWidth});
             this.ctx.stroke();
-            this.ctx.globalAlpha = 1.0;
         }
         
     }

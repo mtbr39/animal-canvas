@@ -19,6 +19,7 @@ class Animal {
         
         // this.fillColor = option.fillColor || "#86efac";
         this.fillColor = option.fillColor || '#36C994';
+        this.alpha = 0.8;
         this.energy = this.radius;
         this.exhaustVelocity = 0;
         this.needDelete = false;
@@ -172,9 +173,10 @@ class PlantHabit {
         this.reviveTime = 600;
         this.collidersSet = this.object.colliders;
         this.deathTimer = 0;
-        this.object.layer = 10;
+        this.object.layer = 30;
         this.object.radius.value = 10;
         this.object.strokeColor = this.object.fillColor;
+        this.object.alpha = 0.5;
     }
 
     update () {
@@ -229,6 +231,7 @@ class AnimalFactory {
                 position: {x:animal.position.x, y:animal.position.y},
                 creatureType: animal.creatureType,
                 radius: animal.radius.value,
+                fillColor : animal.fillColor,
                 isReproduct: true,
             });
         }
