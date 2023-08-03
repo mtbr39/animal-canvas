@@ -28,6 +28,7 @@ class Animal {
         this.status = 'live';
         this.changeStatus = '';
         this.isReproduct = option.isReproduct || false;
+        this.reproductNum = 1;
 
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
@@ -75,7 +76,7 @@ class Animal {
         if (this.status == 'death' && this.colliders != []) {
             this.colliders = [];
         }
-        if (this.energy.value <= 0) {
+        if (this.energy.value <= 0.5) {
             this.radius.value = 0;
             this.needDelete = true;
         }
@@ -91,10 +92,11 @@ class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.object.layer = 20;
-        this.object.exhaustVelocity = 0.005;
+        this.object.exhaustVelocity = 0.01;
         // this.object.fillColor = 'yellow';
         this.object.radius.value = 6;
         this.object.reproductEnergyThreshold = 10;
+        this.object.reproductNum = 2;
     }
 
     update () {
@@ -135,7 +137,7 @@ class CarnivoreHabit {
         this.object = option.object || {};
         this.object.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
-        this.object.velocity = this.object.velocity * 4;
+        this.object.velocity = this.object.velocity * 5.0;
         this.object.fillColor = '#EB6973';
         this.object.reproductEnergyThreshold = 30;
     }
@@ -147,7 +149,7 @@ class CarnivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore' && collidedObject.status != 'death') {
-            this.object.energy.value += 2.0;
+            this.object.energy.value += 1.0;
         }
 
     }
@@ -170,7 +172,7 @@ class CarnivoreHabit {
 class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.reviveTime = 600;
+        this.reviveTime = 900;
         this.collidersSet = this.object.colliders;
         this.deathTimer = 0;
         this.object.layer = 30;
@@ -225,15 +227,18 @@ class AnimalFactory {
 
     checkCanReproduct (animal) {
         if(animal.canReproduct) {
-            animal.canReproduct = false;
-            this.make({
-                identifiedName: utl.randomStringLikeSynbolID(),
-                position: {x:animal.position.x, y:animal.position.y},
-                creatureType: animal.creatureType,
-                radius: animal.radius.value,
-                fillColor : animal.fillColor,
-                isReproduct: true,
-            });
+            for (let i=0; i<animal.reproductNum; i++) {
+                animal.canReproduct = false;
+                this.make({
+                    identifiedName: utl.randomStringLikeSynbolID(),
+                    position: {x:animal.position.x, y:animal.position.y},
+                    creatureType: animal.creatureType,
+                    radius: animal.radius.value,
+                    fillColor : animal.fillColor,
+                    isReproduct: true,
+                });
+            }
+            
         }
     }
 
