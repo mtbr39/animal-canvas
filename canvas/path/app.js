@@ -63,6 +63,7 @@ window.addEventListener('load', () => {
     function loop() {
         let currentTime = Date.now();
         if (currentTime - previousTime > targetInterval) {
+            // console.log("loop-debug", currentTime-previousTime);
             update();
             previousTime = Date.now();
         }
@@ -70,6 +71,8 @@ window.addEventListener('load', () => {
     }
 
     function update() {
+        let currentTime = Date.now();
+
         objectDistributer.collisionManager.check();
         animalFactory.update();
         inputManager.update();
@@ -80,6 +83,8 @@ window.addEventListener('load', () => {
         ctx.fillStyle = 'white';
         // ctx.fillText(`デバッグ${window.devicePixelRatio}`, 100,100);
 
+        let updateTime = Date.now() - currentTime;
+        // console.log("update-time-debug", updateTime);
     }
 
     loop();

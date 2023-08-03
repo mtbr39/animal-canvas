@@ -2,17 +2,16 @@
 
 class CollisionManager {
     constructor(option = {}) {
-        this.objects = [];
+        this.objects = option.objects || {};
 
-    }
-
-    submit(object) {
-        this.objects.push(object);
     }
 
     check() {
-        this.objects.forEach( (targetObject) => {
-        this.objects.forEach( (checkObject)  => {
+        let checkObjects = this.objects.filter( (object) => {
+            return typeof object.colliders != 'undefined';
+        } );
+        checkObjects.forEach( (targetObject) => {
+        checkObjects.forEach( (checkObject)  => {
             if (targetObject.id !== checkObject.id) {
                 targetObject.colliders.forEach( (targetCollider) => {
                 checkObject.colliders.forEach(  (checkCollider)  => {

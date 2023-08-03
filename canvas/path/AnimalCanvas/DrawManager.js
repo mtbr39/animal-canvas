@@ -32,7 +32,6 @@ class DrawManager {
     }
     drawObject(object) {
         if (object.drawType === 'drawMethod') {
-            console.log("backgroundobjectなのか", object);
             object.drawSelf();
         }
         if (object.drawType === undefined) {
@@ -198,6 +197,7 @@ class BackgroundObject {
         this.cageSize = option.cageSize;
         this.calcCanvasSize = option.calcCanvasSize;
         this.drawType = 'drawMethod';
+        this.layer = 25;
 
         this.draw.objects.push(this);
     }
@@ -228,6 +228,6 @@ class BackgroundObject {
             this.draw.drawLine(p1,p2, {color: color, alpha: 0.2});
         }
 
-        this.draw.fillText("食物連鎖シミュレーター", {x: -1*this.calcCanvasSize.width/2, y:-1*this.calcCanvasSize.height/2}, {size:100, color:'black', strokeWidth:'none', alpha:0.2});
+        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:64, color:'black', strokeWidth:'none', alpha:1.0});
     }
 }

@@ -3,9 +3,6 @@
 class ObjectDistributer {
     constructor(option) {
         this.canvas = option.canvas;
-        // this.ctx = option.ctx;
-        this.cw = option.cw;
-        this.org = option.org;
         this.objects = [];
         this.debugMode = false;
         option.objects = this.objects;
@@ -16,9 +13,6 @@ class ObjectDistributer {
 
     submitObject(object) {
         this.objects.push(object);
-        if (typeof object.collider == 'undefined') {
-            this.collisionManager.submit(object);
-        }
     }
     update() {
         this.checkAndDeleteObject();
