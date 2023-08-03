@@ -177,7 +177,6 @@ class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.reviveTime = 900;
-        this.collidersSet = this.object.colliders;
         this.deathTimer = 0;
         this.object.layer = 30;
         this.object.radius.value = 10;
@@ -186,6 +185,7 @@ class PlantHabit {
         this.object.colliders = [
             {type:'circle', id:'plantBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
+        this.collidersSet = this.object.colliders;
         
     }
 
@@ -196,7 +196,7 @@ class PlantHabit {
         if (this.deathTimer > this.reviveTime) {
             this.deathTimer = 0;
             this.object.status = 'live'
-            this.object.colliders = this.collidersSet;
+            // this.object.colliders = this.collidersSet;
             this.object.strokeColor = "#86efac";
         }
     }
