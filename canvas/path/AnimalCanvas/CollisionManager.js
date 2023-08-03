@@ -2,8 +2,12 @@
 
 class CollisionManager {
     constructor(option = {}) {
-        this.objects = option.objects || [];
+        this.objects = [];
 
+    }
+
+    submit(object) {
+        this.objects.push(object);
     }
 
     check() {

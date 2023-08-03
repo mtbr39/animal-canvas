@@ -10,7 +10,7 @@ class DrawManager {
         this.camera = {position:{x:0, y:0}, zoom:100, scrollSpeed:0.2, scrollType:-1};
         this.debugMode = false;
 
-        
+        this.calcCanvasSize = {width: this.canvas.width / this.cw, height: this.canvas.height / this.cw};
         this.cageSize = {width: this.canvas.width/this.cw * 0.9, height: this.canvas.height/this.cw * 0.9};
     }
 
@@ -26,13 +26,15 @@ class DrawManager {
         
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.drawBackground();
-
         this.objects.forEach( (object) => {
             this.drawObject(object);
         } );
     }
     drawObject(object) {
+        if (object.drawType === 'drawMethod') {
+            console.log("backgroundobjectなのか", object);
+            object.drawSelf();
+        }
         if (object.drawType === undefined) {
             this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor, alpha:object.alpha});
         }
@@ -63,24 +65,7 @@ class DrawManager {
         } );
     }
 
-    drawBackground() {
-        let border = {x:-1 * this.cageSize.width/2, y:-1*this.cageSize.height/2, w: this.cageSize.width, h: this.cageSize.height, num:16};
-        // this.drawLine(this.objects[0].position, this.objects[1].position, {color:'white'});
-        let color = '#C5BCB6';
-        let gap = border.w/(border.num);
-        for(let i=0; i<=border.num; i++) {
-            let p1 = {x: border.x + gap*i, y:border.y};
-            let p2 = {x: border.x + gap*i, y:border.y+border.h};
-            
-            this.drawLine(p1,p2, {color: color, alpha: 0.2});
-        }
-        for(let i=0; gap*i<=border.h; i++) {
-            let p1 = {x: border.x, y: border.y + gap*i};
-            let p2 = {x: border.x + border.w, y: border.y + gap*i};
-            
-            this.drawLine(p1,p2, {color: color, alpha: 0.2});
-        }
-    }
+    
 
     onMouseHoldDown(input) {
         const lerp = (x, y, p) => {
@@ -120,13 +105,13 @@ class DrawManager {
         const size = option.size || 10;
         const color = option.color || "black";
         const strokeWidth = option.strokeWidth || "none";
+        const alpha = option.alpha || 1.0;
         // this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
         this.ctx.font = size*3+"px 'M PLUS Rounded 1c',serif";
+        this.style({fillStyle:color, lineWidth:strokeWidth*this.cw, globalAlpha:alpha});
         if (strokeWidth == 'none') {
-            this.ctx.fillStyle = color;
             this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
         } else {
-            this.ctx.lineWidth = strokeWidth*this.cw;
             this.ctx.strokeText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
         }
     }
@@ -204,5 +189,45 @@ class DrawUtl {
         this.modLineTo( pointEnd );
         this.ctx.strokeStyle = "#ef4444";
         this.ctx.stroke();
+    }
+}
+
+class BackgroundObject {
+    constructor(option = {}) {
+        this.draw = option.drawManager;
+        this.cageSize = option.cageSize;
+        this.calcCanvasSize = option.calcCanvasSize;
+        this.drawType = 'drawMethod';
+
+        this.draw.objects.push(this);
+    }
+
+    drawSelf() {
+        this.drawBackground();
+    }
+
+    update() {
+
+    }
+
+    drawBackground() {
+        let border = {x:this.cageSize.x, y:this.cageSize.y, w: this.cageSize.width, h: this.cageSize.height, num:16};
+        // this.drawLine(this.objects[0].position, this.objects[1].position, {color:'white'});
+        let color = '#C5BCB6';
+        let gap = border.w/(border.num);
+        for(let i=0; i<=border.num; i++) {
+            let p1 = {x: border.x + gap*i, y:border.y};
+            let p2 = {x: border.x + gap*i, y:border.y+border.h};
+            
+            this.draw.drawLine(p1,p2, {color: color, alpha: 0.2});
+        }
+        for(let i=0; gap*i<=border.h; i++) {
+            let p1 = {x: border.x, y: border.y + gap*i};
+            let p2 = {x: border.x + border.w, y: border.y + gap*i};
+            
+            this.draw.drawLine(p1,p2, {color: color, alpha: 0.2});
+        }
+
+        this.draw.fillText("食物連鎖シミュレーター", {x: -1*this.calcCanvasSize.width/2, y:-1*this.calcCanvasSize.height/2}, {size:100, color:'black', strokeWidth:'none', alpha:0.2});
     }
 }

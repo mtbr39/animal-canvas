@@ -13,10 +13,11 @@ window.addEventListener('load', () => {
     const canvasWidthCw = 0.001 * 1.8;
     // const canvasHeightCw = canvasWidthCw / canvas.width * canvas.height;
     let cw = Math.sqrt(canvas.width * canvas.height) * canvasWidthCw; // canvasのピクセル面積に対して描写比率を決定
-    let org = {x: canvas.width / cw / 2 , y: canvas.height / cw / 2};
+    // let org = {x: canvas.width / cw / 2 , y: canvas.height / cw / 2};
+    let org = {x: 0, y: 0};
 
     let calcCanvasSize = {width: canvas.width / cw, height: canvas.height / cw};
-    let cageSize = {width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.9};
+    let cageSize = {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.9};
 
     //クラスインスタンス生成など
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
@@ -28,7 +29,7 @@ window.addEventListener('load', () => {
     for (let i=0; i<40; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
+            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
             creatureType: 'herbivore',
         });
     }
@@ -36,7 +37,7 @@ window.addEventListener('load', () => {
     let alphaPlants = [];
     for (let i=0; i<400; i++) {
         alphaPlants[i] = new Animal({
-            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
+            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
             creatureType: 'plant',
         });
         objectDistributer.submitObject(alphaPlants[i]);
@@ -45,12 +46,13 @@ window.addEventListener('load', () => {
     for (let i=0; i<2; i++) {
         animalFactory.make({
             identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()-0.5) * cageSize.width, y: (Math.random()-0.5) * cageSize.height},
+            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
             creatureType: 'carnivore',
         });
         objectDistributer.submitObject(alphaPlants[i]);
     }
     
+    let backgroundObject = new BackgroundObject( {drawManager:objectDistributer.drawManager, cageSize: cageSize, calcCanvasSize: calcCanvasSize} );
 
     // FrameLoop
     const fps = 60;

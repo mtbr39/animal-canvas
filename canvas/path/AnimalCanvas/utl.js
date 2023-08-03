@@ -96,7 +96,7 @@ class utl {
         let N = length;
         return Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
     }
-    static randomStringLikeSynbolID(alphabetLength = 6, numberLength = 6) {
+    static randomStringLikeSynbolID(alphabetLength = 4, numberLength = 4) {
         const randomStringFromLetters = (S, N) => Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
         const randomNaturalNumber = (start, N) => Math.floor(Math.random()*N+start);
         return [

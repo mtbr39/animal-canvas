@@ -12,11 +12,13 @@ class ObjectDistributer {
         this.collisionManager = new CollisionManager(option);
         this.drawManager = new DrawManager(option);
 
-        console.log("objDist-debug", );
     }
 
     submitObject(object) {
         this.objects.push(object);
+        if (typeof object.collider == 'undefined') {
+            this.collisionManager.submit(object);
+        }
     }
     update() {
         this.checkAndDeleteObject();

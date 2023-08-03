@@ -137,7 +137,7 @@ class CarnivoreHabit {
         this.object = option.object || {};
         this.object.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
-        this.object.velocity = this.object.velocity * 5.0;
+        this.object.velocity = this.object.velocity * 3.0;
         this.object.fillColor = '#EB6973';
         this.object.reproductEnergyThreshold = 30;
     }
@@ -149,7 +149,7 @@ class CarnivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore' && collidedObject.status != 'death') {
-            this.object.energy.value += 1.0;
+            this.object.energy.value += 1.5;
         }
 
     }
@@ -258,11 +258,17 @@ class AnimalFactory {
             whichSideY = 1;
         }
         let halfCageSize = {width: this.cageSize.width/2, height: this.cageSize.height/2}
-        if ( Math.abs(animal.position.x) > halfCageSize.width ) {
-            animal.position.x = halfCageSize.width * whichSideX;
+        if ( animal.position.x < this.cageSize.x ) {
+            animal.position.x = this.cageSize.x;
         }
-        if ( Math.abs(animal.position.y) > halfCageSize.height ) {
-            animal.position.y = halfCageSize.height * whichSideY;
+        if( animal.position.x > this.cageSize.x + this.cageSize.width ) {
+            animal.position.x = this.cageSize.x + this.cageSize.width;
+        }
+        if ( animal.position.y < this.cageSize.y ) {
+            animal.position.y = this.cageSize.y;
+        }
+        if( animal.position.y > this.cageSize.y + this.cageSize.height ) {
+            animal.position.y = this.cageSize.y + this.cageSize.height;
         }
     }
 
