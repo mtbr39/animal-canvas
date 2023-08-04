@@ -101,12 +101,11 @@ class DrawManager {
     }
     fillText(text, point, option = {}) {
         const offset = option.offset || {x:0, y:0};
-        const size = option.size || 10;
+        const size = option.size * this.cw || 30; // size指定時はズーム可能フォント,未指定時は固定サイズフォント
         const color = option.color || "black";
         const strokeWidth = option.strokeWidth || "none";
         const alpha = option.alpha || 1.0;
-        // this.ctx.font = size*this.cw+"px 'M PLUS Rounded 1c',serif";
-        this.ctx.font = size*3+"px 'M PLUS Rounded 1c',serif";
+        this.ctx.font = size+"px 'M PLUS Rounded 1c',serif";
         this.style({fillStyle:color, lineWidth:strokeWidth*this.cw, globalAlpha:alpha});
         if (strokeWidth == 'none') {
             this.ctx.fillText(text, this.canvasPoint(point).x + offset.x*this.cw, this.canvasPoint(point).y + offset.y*this.cw);
@@ -228,6 +227,6 @@ class BackgroundObject {
             this.draw.drawLine(p1,p2, {color: color, alpha: 0.4});
         }
 
-        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:64, color:'black', strokeWidth:'none', alpha:1.0});
+        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:64, color:'black', strokeWidth:'none', alpha:1.0, });
     }
 }
