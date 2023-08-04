@@ -26,31 +26,9 @@ window.addEventListener('load', () => {
 
     const animalFactory = new AnimalFactory({distributer: objectDistributer, org: org, cageSize: cageSize});
 
-    for (let i=0; i<40; i++) {
-        animalFactory.make({
-            identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
-            creatureType: 'herbivore',
-        });
-    }
-
-    let alphaPlants = [];
-    for (let i=0; i<400; i++) {
-        alphaPlants[i] = new Animal({
-            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
-            creatureType: 'plant',
-        });
-        objectDistributer.submitObject(alphaPlants[i]);
-    }
-
-    for (let i=0; i<2; i++) {
-        animalFactory.make({
-            identifiedName: utl.randomStringLikeSynbolID(),
-            position: {x: (Math.random()) * cageSize.width, y: (Math.random()) * cageSize.height},
-            creatureType: 'carnivore',
-        });
-        objectDistributer.submitObject(alphaPlants[i]);
-    }
+    animalFactory.makeMultiple({ creatureType: 'herbivore', number: 40, box: cageSize,});
+    animalFactory.makeMultiple({ creatureType: 'plant', number: 400, box: cageSize,});
+    animalFactory.makeMultiple({ creatureType: 'carnivore', number: 2, box: cageSize,});
     
     let backgroundObject = new BackgroundObject( {drawManager:objectDistributer.drawManager, cageSize: cageSize, calcCanvasSize: calcCanvasSize} );
 

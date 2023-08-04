@@ -225,7 +225,7 @@ class BackgroundObject {
             let p1 = {x: border.x, y: border.y + gap*i};
             let p2 = {x: border.x + border.w, y: border.y + gap*i};
             
-            this.draw.drawLine(p1,p2, {color: color, alpha: 0.2});
+            this.draw.drawLine(p1,p2, {color: color, alpha: 0.4});
         }
 
         this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:64, color:'black', strokeWidth:'none', alpha:1.0});

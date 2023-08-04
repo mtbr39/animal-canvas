@@ -22,7 +22,7 @@ class Animal {
         this.exhaustVelocity = 0;
         this.needDelete = false;
         this.canReproduct = false;
-        this.reproductEnergyThreshold = 10;
+        this.reproductEnergyThreshold = 15;
         this.status = 'live';
         this.changeStatus = '';
         this.isReproduct = option.isReproduct || false;
@@ -43,7 +43,7 @@ class Animal {
                 break;
         }
 
-        console.log(this.identifiedName, );
+        // console.log(this.identifiedName, );
 
     }
 
@@ -179,7 +179,7 @@ class PlantHabit {
         this.reviveTime = 900;
         this.deathTimer = 0;
         this.object.layer = 30;
-        this.object.radius.value = 10;
+        this.object.radius.value = 6;
         this.object.strokeColor = this.object.fillColor;
         this.object.alpha = 0.5;
         this.object.colliders = [
@@ -230,6 +230,21 @@ class AnimalFactory {
             this.teleportOutsideCage(animal);
             this.checkCanReproduct(animal);
         } );
+    }
+
+    makeMultiple(option = {}) {
+        let number = option.number;
+        let box = option.box; // {x: y: width: height:}
+        let creatureType = option.creatureType;
+        console.log("option-debug", option);
+        for(let i=0; i<number; i++) {
+            this.make({
+                identifiedName: utl.randomStringLikeSynbolID(),
+                position: {x: box.x + (Math.random()) * box.width, y: box.y + (Math.random()) * box.height},
+                creatureType: creatureType,
+            });
+        }
+        
     }
 
     checkCanReproduct (animal) {
