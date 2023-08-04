@@ -196,7 +196,7 @@ class BackgroundObject {
         this.cageSize = option.cageSize;
         this.calcCanvasSize = option.calcCanvasSize;
         this.drawType = 'drawMethod';
-        this.layer = 25;
+        this.layer = 40;
 
         this.draw.objects.push(this);
     }
@@ -214,19 +214,20 @@ class BackgroundObject {
         // this.drawLine(this.objects[0].position, this.objects[1].position, {color:'white'});
         let color = '#C5BCB6';
         let gap = border.w/(border.num);
+        let alpha = 0.5;
         for(let i=0; i<=border.num; i++) {
             let p1 = {x: border.x + gap*i, y:border.y};
             let p2 = {x: border.x + gap*i, y:border.y+border.h};
             
-            this.draw.drawLine(p1,p2, {color: color, alpha: 0.2});
+            this.draw.drawLine(p1,p2, {color: color, alpha: alpha});
         }
         for(let i=0; gap*i<=border.h; i++) {
             let p1 = {x: border.x, y: border.y + gap*i};
             let p2 = {x: border.x + border.w, y: border.y + gap*i};
             
-            this.draw.drawLine(p1,p2, {color: color, alpha: 0.4});
+            this.draw.drawLine(p1,p2, {color: color, alpha: alpha});
         }
 
-        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:64, color:'black', strokeWidth:'none', alpha:1.0, });
+        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:this.cageSize.width*0.167, color:'black', strokeWidth:'none', alpha:0.8, });
     }
 }
