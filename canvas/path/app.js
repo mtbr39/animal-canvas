@@ -10,12 +10,15 @@ window.addEventListener('load', () => {
     canvas.height = pixelRatioCanvasSize.height;
     let ctx = canvas.getContext('2d');
     
-    const canvasAreaRatio = 0.001 * 4.0;
+    const canvasAreaRatio = 0.001 * 2.0;
     let cw = Math.sqrt(canvas.width * canvas.height) * canvasAreaRatio; // canvasのピクセル面積に対して描写比率を決定
     let org = {x: 0, y: 0};
 
     let calcCanvasSize = {width: canvas.width / cw, height: canvas.height / cw};
-    let cageSize = {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.9};
+    let cageSize = [
+        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.4, height: calcCanvasSize.height * 0.9},
+        {x: calcCanvasSize.width*0.5, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.4, height: calcCanvasSize.height * 0.9},
+    ];
 
     //クラスインスタンス生成など
     const updater = new Updater();
@@ -27,15 +30,21 @@ window.addEventListener('load', () => {
 
     updater.submitInstances([objectDistributer, drawManager, collisionManager, inputManager]);
 
-    const animalFactory = new AnimalFactory({distributer: objectDistributer, org: org, cageSize: cageSize});
+    let animalFactory = [];
+    let backgroundObject = [];
+    for(let i=0; i<2; i++) {
+        animalFactory.push( new AnimalFactory({distributer: objectDistributer, org: org, cageSize: cageSize[i]}) );
 
-    updater.submitInstances([animalFactory]);
-
-    animalFactory.makeMultiple({ creatureType: 'herbivore', number: 20, box: cageSize,});
-    animalFactory.makeMultiple({ creatureType: 'plant', number: 200, box: cageSize,});
-    animalFactory.makeMultiple({ creatureType: 'carnivore', number: 2, box: cageSize,});
+        updater.submitInstances([animalFactory[i]]);
     
-    let backgroundObject = new BackgroundObject( {drawManager:drawManager, cageSize: cageSize, calcCanvasSize: calcCanvasSize} );
+        animalFactory[i].makeMultiple({ creatureType: 'herbivore', number: 10});
+        animalFactory[i].makeMultiple({ creatureType: 'plant', number: 100});
+        if(i!=0) animalFactory[i].makeMultiple({ creatureType: 'carnivore', number: 2});
+        
+        let mainText = i==0 ? "草食動物のみの場合" : "肉食動物がいる場合";
+        backgroundObject.push( new BackgroundObject( {drawManager:drawManager, cageSize: cageSize[i], calcCanvasSize: calcCanvasSize, mainText: mainText} ) );
+    }
+
 
     // FrameLoop
     const fps = 60;

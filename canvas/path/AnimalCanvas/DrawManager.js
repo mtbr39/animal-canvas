@@ -214,6 +214,7 @@ class BackgroundObject {
         this.calcCanvasSize = option.calcCanvasSize;
         this.drawType = 'drawMethod';
         this.layer = 40;
+        this.mainText = option.mainText || "模擬食物連鎖";
 
         this.draw.objects.push(this);
     }
@@ -245,6 +246,6 @@ class BackgroundObject {
             this.draw.drawLine(p1,p2, {color: color, alpha: alpha});
         }
 
-        this.draw.fillText("模擬食物連鎖 ", {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:this.cageSize.width*0.167, color:'black', strokeWidth:'none', alpha:0.8, });
+        this.draw.fillText(this.mainText, {x: this.cageSize.x, y:this.cageSize.y + this.cageSize.height/2}, {size:this.cageSize.width*0.1, color:'black', strokeWidth:'none', alpha:0.8, });
     }
 }

@@ -99,7 +99,7 @@ class HerbivoreHabit {
         this.object.colliders = [
             {type:'circle', id:'herbivoreBody', opponentIds:['plantBody', 'carnivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
-        this.object.doDisplayName = true;
+        this.object.doDisplayName = false;
     }
 
     update () {
@@ -244,7 +244,7 @@ class AnimalFactory {
 
     makeMultiple(option = {}) {
         let number = option.number;
-        let box = option.box; // {x: y: width: height:}
+        let box = this.cageSize; // {x: y: width: height:}
         let creatureType = option.creatureType;
         console.log("option-debug", option);
         for(let i=0; i<number; i++) {
