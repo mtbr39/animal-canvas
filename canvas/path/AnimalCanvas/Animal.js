@@ -27,6 +27,7 @@ class Animal {
         this.changeStatus = '';
         this.isReproduct = option.isReproduct || false;
         this.reproductNum = 1;
+        this.doDisplayName = false;
 
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
@@ -98,9 +99,11 @@ class HerbivoreHabit {
         this.object.colliders = [
             {type:'circle', id:'herbivoreBody', opponentIds:['plantBody', 'carnivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
+        this.object.doDisplayName = true;
     }
 
     update () {
+        this.uploadStatus();
         this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
@@ -116,6 +119,12 @@ class HerbivoreHabit {
             this.object.exhaustVelocity = 0.03;
         }
 
+    }
+
+    uploadStatus() {
+        if (this.object.status == 'death') {
+            this.objectDisplayName = false;
+        }
     }
 
     randomWalkAction() {
@@ -144,6 +153,7 @@ class CarnivoreHabit {
         this.object.colliders = [
             {type:'circle', id:'carnivoreBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
+        this.object.drawType = 'sharpTriangle';
     }
 
     update () {

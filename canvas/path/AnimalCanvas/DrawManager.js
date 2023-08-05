@@ -31,13 +31,26 @@ class DrawManager {
         } );
     }
     drawObject(object) {
-        if (object.drawType === 'drawMethod') {
-            object.drawSelf();
+        switch ( object.drawType ) {
+            case 'drawMethod':
+                object.drawSelf();
+                break;
+            case undefined:
+                this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor, alpha:object.alpha});
+                break;
+            case 'sharpTriangle':
+                let rotateBasePoint = {x:object.position.x,y:object.position.y + object.radius.value};
+                let modDirection = object.direction - Math.PI/2;
+                let p1 = utl.rotatePoint(rotateBasePoint, modDirection, object.position);
+                let p2 = utl.rotatePoint(rotateBasePoint, modDirection + 0.75*Math.PI, object.position);
+                let p3 = utl.rotatePoint(rotateBasePoint, modDirection - 0.75*Math.PI, object.position);
+                this.drawLine(p1, p2, {color:object.fillColor, width: 8, alpha:object.alpha});
+                this.drawLine(p2, p3, {color:object.fillColor, width: 8, alpha:object.alpha});
+                this.drawLine(p3, p1, {color:object.fillColor, width: 8, alpha:object.alpha});
+                break;
         }
-        if (object.drawType === undefined) {
-            this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor, alpha:object.alpha});
-        }
-        if (object.creatureType === 'herbivore' && object.status != 'death' || object.creatureType === 'carnivore') {
+
+        if (object.doDisplayName) {
             this.fillText(object.identifiedName, object.position, {
                 offset:{x:-4, y:-10}, size:5, color:'black', strokeWidth:'none',
             });
