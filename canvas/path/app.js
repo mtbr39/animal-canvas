@@ -1,15 +1,19 @@
 window.addEventListener('load', () => {
 
     let canvas = document.getElementById('canvas');
-    canvas.width = document.documentElement.clientWidth;
-    canvas.height = document.documentElement.clientHeight;
+
+    let cssCanvasSize = {width: document.documentElement.clientWidth, height: document.documentElement.clientHeight};
+    let pixelRatioCanvasSize = {width: cssCanvasSize.width * window.devicePixelRatio, height: cssCanvasSize.height * window.devicePixelRatio};
+    canvas.width = pixelRatioCanvasSize.width;
+    canvas.height = pixelRatioCanvasSize.height;
     let ctx = canvas.getContext('2d');
     
     const canvasWidthCw = 600;
+    const canvasHeightCw = canvasWidthCw / canvas.width * canvas.height;
     let cw = canvas.width / canvasWidthCw;
-    let org = {x: canvasWidthCw / 2, y: canvasWidthCw / 2};
+    let org = {x: canvasWidthCw / 2, y: canvasHeightCw / 2};
 
-    let cageSize = {width: 500, height: 500};
+    let cageSize = {width: canvasWidthCw*0.9, height: canvasHeightCw*0.9};
 
     //クラスインスタンス生成など
     const objectDistributer = new ObjectDistributer( {canvas: canvas, ctx: ctx, cw: cw, org: org} );
@@ -67,6 +71,10 @@ window.addEventListener('load', () => {
         objectDistributer.update();
         objectDistributer.drawManager.draw();
 
+        ctx.font = "40px 'M PLUS Rounded 1c',serif";
+        ctx.fillStyle = 'white';
+        // ctx.fillText(`デバッグ${window.devicePixelRatio}`, 100,100);
+
     }
 
     loop();
@@ -77,10 +85,16 @@ window.addEventListener('load', () => {
     window.onresize = resizeCanvas;
 
     function resizeCanvas() {
+        canvas.style.width = `${cssCanvasSize.width}px`;
+        canvas.style.height = `${cssCanvasSize.height}px`;
         // canvas.width = window.innerWidth;
         // canvas.height = window.innerHeight;
-        canvas.width = document.documentElement.clientWidth;
-        canvas.height = document.documentElement.clientHeight;
+        canvas.width = pixelRatioCanvasSize.width;
+        canvas.height = pixelRatioCanvasSize.height;
+        if(utl.isSmartPhone()) {
+            canvas.width = size.w * window.devicePixelRatio;
+            canvas.height = size.h * window.devicePixelRatio;
+        }
     };
 
     document.addEventListener("touchmove", (event) => {

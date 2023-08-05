@@ -17,11 +17,13 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body.dark {
     background-color: var(--color-back1);
     color: var(--color-text);
+    overflow: hidden;
 }
 
 .dark h1 {
@@ -30,7 +32,7 @@ body.dark {
 
 .dark canvas {
     background-color: var(--color-back2);
-    border: 1px solid var(--color-line);
+    /* border: 10px solid var(--color-line); */
     filter: drop-shadow(0px 0px 2px black);
 }
 
