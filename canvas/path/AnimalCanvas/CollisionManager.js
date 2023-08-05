@@ -6,6 +6,10 @@ class CollisionManager {
 
     }
 
+    update() {
+        this.check();
+    }
+
     check() {
         let checkObjects = this.objects.filter( (object) => {
             return typeof object.colliders != 'undefined';

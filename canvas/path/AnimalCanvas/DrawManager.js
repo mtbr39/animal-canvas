@@ -14,6 +14,10 @@ class DrawManager {
         this.cageSize = {width: this.canvas.width/this.cw * 0.9, height: this.canvas.height/this.cw * 0.9};
     }
 
+    update() {
+        this.draw();
+    }
+
     draw() {
         this.sortObjects();
 
