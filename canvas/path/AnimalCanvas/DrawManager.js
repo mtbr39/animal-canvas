@@ -228,7 +228,7 @@ class BackgroundObject {
     }
 
     drawBackground() {
-        let border = {x:this.cageSize.x, y:this.cageSize.y, w: this.cageSize.width, h: this.cageSize.height, num:16};
+        let border = {x:this.cageSize.x, y:this.cageSize.y, w: this.cageSize.width, h: this.cageSize.height, num:24};
         // this.drawLine(this.objects[0].position, this.objects[1].position, {color:'white'});
         let color = '#C5BCB6';
         let gap = border.w/(border.num);

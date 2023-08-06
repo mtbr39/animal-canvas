@@ -15,10 +15,6 @@ window.addEventListener('load', () => {
     let org = {x: 0, y: 0};
 
     let calcCanvasSize = {width: canvas.width / cw, height: canvas.height / cw};
-    let cageSize = [
-        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.4, height: calcCanvasSize.height * 0.9},
-        {x: calcCanvasSize.width*0.5, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.4, height: calcCanvasSize.height * 0.9},
-    ];
 
     //クラスインスタンス生成など
     const updater = new Updater();
@@ -30,6 +26,10 @@ window.addEventListener('load', () => {
 
     updater.submitInstances([objectDistributer, drawManager, collisionManager, inputManager]);
 
+    let cageSize = [
+        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.4},
+        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.55, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.4},
+    ];
     let animalFactory = [];
     let backgroundObject = [];
     for(let i=0; i<2; i++) {
