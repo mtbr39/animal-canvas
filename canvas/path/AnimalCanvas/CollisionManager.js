@@ -2,23 +2,31 @@
 
 class CollisionManager {
     constructor(option = {}) {
-        this.objects = option.objects || [];
+        this.objects = option.objects || {};
 
     }
 
+    update() {
+        this.check();
+    }
+
     check() {
-        this.objects.forEach( (targetObject) => {
-        this.objects.forEach( (checkObject)  => {
+        let checkObjects = this.objects.filter( (object) => {
+            return typeof object.colliders != 'undefined';
+        } );
+        checkObjects.forEach( (targetObject) => {
+        checkObjects.forEach( (checkObject)  => {
             if (targetObject.id !== checkObject.id) {
                 targetObject.colliders.forEach( (targetCollider) => {
                 checkObject.colliders.forEach(  (checkCollider)  => {
-                    if ( CollisionManager.isOverlappedCircle( targetCollider, checkCollider ) ) {
-                        targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                    // console.log("全部falseなのかい",targetCollider.opponentIds, checkCollider.id ,targetCollider.opponentIds.includes( checkCollider.id ) );
+                    if ( targetCollider.opponentIds.includes( checkCollider.id ) ) {
+                        if ( CollisionManager.isOverlappedCircle( targetCollider, checkCollider ) ) {
+                            targetObject.onCollision(checkObject, {ownColliderID: targetCollider.id, opponentColliderID: checkCollider.id});
+                        }
                     }
                 } );
                 } );
-                
-
             }
         } );
         } );

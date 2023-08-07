@@ -9,23 +9,25 @@ class Animal {
         this.velocity = 0.5;
         this.radius = {value: option.radius || 10};
         this.rotationSpeed = 0;
-        // todo: colliderの初期値有りのときcollider.positionに参照渡しする
+        this.layer = 0;
         this.colliders = [
-            // {type:'circle', id:'large', position:this.position, radius:100},
-            // {type:'circle', id:'medium', position:this.position, radius:60},
             {type:'circle', id:'my', position:this.position, radius:this.radius},
         ];
         this.collidersSet = this.colliders;
         
-        this.fillColor = option.fillColor || "#86efac";
+        // this.fillColor = option.fillColor || "#86efac";
+        this.fillColor = option.fillColor || '#36C994';
+        this.alpha = 0.8;
         this.energy = this.radius;
         this.exhaustVelocity = 0;
         this.needDelete = false;
         this.canReproduct = false;
-        this.reproductEnergyThreshold = 10;
+        this.reproductEnergyThreshold = 15;
         this.status = 'live';
         this.changeStatus = '';
         this.isReproduct = option.isReproduct || false;
+        this.reproductNum = 1;
+        this.doDisplayName = false;
 
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
@@ -42,7 +44,7 @@ class Animal {
                 break;
         }
 
-        console.log(this.id, );
+        // console.log(this.identifiedName, );
 
     }
 
@@ -73,7 +75,7 @@ class Animal {
         if (this.status == 'death' && this.colliders != []) {
             this.colliders = [];
         }
-        if (this.energy.value <= 0) {
+        if (this.energy.value <= 0.5) {
             this.radius.value = 0;
             this.needDelete = true;
         }
@@ -88,13 +90,21 @@ class Animal {
 class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
+        this.object.layer = 20;
         this.object.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
-        this.object.radius.value = 6;
+        this.object.radius.value = 5;
         this.object.reproductEnergyThreshold = 10;
+        this.object.reproductNum = 2;
+        this.object.colliders = [
+            {type:'circle', id:'herbivoreBody', opponentIds:['plantBody', 'carnivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
+        this.object.doDisplayName = false;
+        this.object.drawType = 'circle';
     }
 
     update () {
+        this.uploadStatus();
         this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
@@ -110,6 +120,12 @@ class HerbivoreHabit {
             this.object.exhaustVelocity = 0.03;
         }
 
+    }
+
+    uploadStatus() {
+        if (this.object.status == 'death') {
+            this.objectDisplayName = false;
+        }
     }
 
     randomWalkAction() {
@@ -132,9 +148,13 @@ class CarnivoreHabit {
         this.object = option.object || {};
         this.object.exhaustVelocity = 0.015;
         this.object.radius.value = 15;
-        this.object.velocity = this.object.velocity * 4;
-        this.object.fillColor = '#f3b1a5';
-        this.object.reproductEnergyThreshold = 30;
+        this.object.velocity = this.object.velocity * 3.0;
+        this.object.fillColor = '#EB6973';
+        this.object.reproductEnergyThreshold = 20;
+        this.object.colliders = [
+            {type:'circle', id:'carnivoreBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
+        this.object.drawType = 'sharpTriangle';
     }
 
     update () {
@@ -144,7 +164,7 @@ class CarnivoreHabit {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore' && collidedObject.status != 'death') {
-            this.object.energy.value += 2.0;
+            this.object.energy.value += 1.5;
         }
 
     }
@@ -153,13 +173,14 @@ class CarnivoreHabit {
         this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
         this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
-        this.moveTowardsDirection();
+        this.moveTowardsDirectionWithGradient();
     }
     
 
-    moveTowardsDirection() {
-        this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
-        this.object.position.y += this.object.velocity * Math.sin(this.object.direction);
+    moveTowardsDirectionWithGradient() {
+        let gradient = {x:-0.1, y:0};
+        this.object.position.x += this.object.velocity * ( Math.cos(this.object.direction) + gradient.x);
+        this.object.position.y += this.object.velocity * ( Math.sin(this.object.direction) + gradient.y);
     }
 
 }
@@ -167,11 +188,21 @@ class CarnivoreHabit {
 class PlantHabit {
     constructor(option = {}) {
         this.object = option.object || {};
-        this.reviveTime = 600;
-        this.collidersSet = this.object.colliders;
+        this.reviveTime = 900;
         this.deathTimer = 0;
-        this.object.radius.value = 10;
-        this.object.strokeColor = this.object.fillColor;
+        this.object.layer = 30;
+        this.object.radius.value = 6;
+        this.color = '#36C994';
+        this.colorOnDead = '#c9ab73';
+        this.object.fillColor = 'none';
+        this.object.strokeColor = this.color;
+        this.object.alpha = 0.5;
+        this.object.colliders = [
+            {type:'circle', id:'plantBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
+        ];
+        this.collidersSet = this.object.colliders;
+        this.object.drawType = 'circle';
+        
     }
 
     update () {
@@ -182,7 +213,7 @@ class PlantHabit {
             this.deathTimer = 0;
             this.object.status = 'live'
             this.object.colliders = this.collidersSet;
-            this.object.strokeColor = "#86efac";
+            this.object.strokeColor = this.color;
         }
     }
     onCollision(collidedObject, option) {
@@ -190,8 +221,7 @@ class PlantHabit {
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
             this.object.changeStatus = 'death';
-            // this.object.colliders = [];
-            this.object.strokeColor = 'rgba(231, 208, 182)';
+            this.object.strokeColor = this.colorOnDead;
         }
 
     }
@@ -218,16 +248,37 @@ class AnimalFactory {
         } );
     }
 
-    checkCanReproduct (animal) {
-        if(animal.canReproduct) {
-            animal.canReproduct = false;
+    makeMultiple(option = {}) {
+        let number = option.number;
+        let box = this.cageSize; // {x: y: width: height:}
+        let creatureType = option.creatureType;
+        console.log("option-debug", option);
+        for(let i=0; i<number; i++) {
             this.make({
                 identifiedName: utl.randomStringLikeSynbolID(),
-                position: {x:animal.position.x, y:animal.position.y},
-                creatureType: animal.creatureType,
-                radius: animal.radius.value,
-                isReproduct: true,
+                position: {x: box.x + (Math.random()) * box.width, y: box.y + (Math.random()) * box.height},
+                creatureType: creatureType,
             });
+        }
+        
+    }
+
+    checkCanReproduct (animal) {
+        if(animal.canReproduct) {
+            for (let i=0; i<animal.reproductNum; i++) {
+                animal.canReproduct = false;
+                let randomBit = Math.floor(Math.random * 2); // 0 or 1
+                let parentName = animal.identifiedName.substr(0,2);
+                this.make({
+                    identifiedName: randomBit == 0 ? animal.identifiedName :  parentName + utl.randomStringLikeSynbolID(),
+                    position: {x:animal.position.x, y:animal.position.y},
+                    creatureType: animal.creatureType,
+                    radius: animal.radius.value,
+                    fillColor : animal.fillColor,
+                    isReproduct: true,
+                });
+            }
+            
         }
     }
 
@@ -247,11 +298,17 @@ class AnimalFactory {
             whichSideY = 1;
         }
         let halfCageSize = {width: this.cageSize.width/2, height: this.cageSize.height/2}
-        if ( Math.abs(animal.position.x) > halfCageSize.width ) {
-            animal.position.x = halfCageSize.width * whichSideX;
+        if ( animal.position.x < this.cageSize.x ) {
+            animal.position.x = this.cageSize.x;
         }
-        if ( Math.abs(animal.position.y) > halfCageSize.height ) {
-            animal.position.y = halfCageSize.height * whichSideY;
+        if( animal.position.x > this.cageSize.x + this.cageSize.width ) {
+            animal.position.x = this.cageSize.x + this.cageSize.width;
+        }
+        if ( animal.position.y < this.cageSize.y ) {
+            animal.position.y = this.cageSize.y;
+        }
+        if( animal.position.y > this.cageSize.y + this.cageSize.height ) {
+            animal.position.y = this.cageSize.y + this.cageSize.height;
         }
     }
 
