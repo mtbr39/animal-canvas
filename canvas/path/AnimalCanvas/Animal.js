@@ -91,9 +91,9 @@ class HerbivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.object.layer = 20;
-        this.object.exhaustVelocity = 0.01;
+        this.object.exhaustVelocity = 0.005;
         // this.object.fillColor = 'yellow';
-        this.object.radius.value = 6;
+        this.object.radius.value = 5;
         this.object.reproductEnergyThreshold = 10;
         this.object.reproductNum = 2;
         this.object.colliders = [
@@ -147,7 +147,7 @@ class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.object.exhaustVelocity = 0.015;
-        this.object.radius.value = 10;
+        this.object.radius.value = 15;
         this.object.velocity = this.object.velocity * 3.0;
         this.object.fillColor = '#EB6973';
         this.object.reproductEnergyThreshold = 20;
@@ -173,13 +173,14 @@ class CarnivoreHabit {
         this.object.rotationSpeed += 0.02 * (Math.random()-0.5);
         this.object.rotationSpeed = Math.max(Math.min(this.object.rotationSpeed, 0.05), -0.05);
         this.object.direction += this.object.rotationSpeed;
-        this.moveTowardsDirection();
+        this.moveTowardsDirectionWithGradient();
     }
     
 
-    moveTowardsDirection() {
-        this.object.position.x += this.object.velocity * Math.cos(this.object.direction);
-        this.object.position.y += this.object.velocity * Math.sin(this.object.direction);
+    moveTowardsDirectionWithGradient() {
+        let gradient = {x:-0.1, y:0};
+        this.object.position.x += this.object.velocity * ( Math.cos(this.object.direction) + gradient.x);
+        this.object.position.y += this.object.velocity * ( Math.sin(this.object.direction) + gradient.y);
     }
 
 }
@@ -190,7 +191,7 @@ class PlantHabit {
         this.reviveTime = 900;
         this.deathTimer = 0;
         this.object.layer = 30;
-        this.object.radius.value = 4;
+        this.object.radius.value = 6;
         this.color = '#36C994';
         this.colorOnDead = '#c9ab73';
         this.object.fillColor = 'none';
