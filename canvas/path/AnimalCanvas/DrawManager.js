@@ -61,7 +61,7 @@ class DrawManager {
 
         if (object.doDisplayName) {
             this.fillText(object.identifiedName, object.position, {
-                offset:{x:-4, y:-10}, size:5, color:'black', strokeWidth:'none',
+                offset:{x:-4, y:-10}, size:8, color:'black', strokeWidth:'none',
             });
         }
         if (this.debugMode) {

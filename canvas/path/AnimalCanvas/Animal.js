@@ -266,8 +266,10 @@ class AnimalFactory {
         if(animal.canReproduct) {
             for (let i=0; i<animal.reproductNum; i++) {
                 animal.canReproduct = false;
+                let randomBit = Math.floor(Math.random * 2); // 0 or 1
+                let parentName = animal.identifiedName.substr(0,2);
                 this.make({
-                    identifiedName: utl.randomStringLikeSynbolID(),
+                    identifiedName: randomBit == 0 ? animal.identifiedName :  parentName + utl.randomStringLikeSynbolID(),
                     position: {x:animal.position.x, y:animal.position.y},
                     creatureType: animal.creatureType,
                     radius: animal.radius.value,
