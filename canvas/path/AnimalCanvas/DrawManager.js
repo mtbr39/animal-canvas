@@ -40,17 +40,22 @@ class DrawManager {
                 object.drawSelf();
                 break;
             case undefined:
+            case 'circle':
                 this.circle(object.position, object.radius.value, {fillColor:object.fillColor, strokeColor:object.strokeColor, alpha:object.alpha});
                 break;
             case 'sharpTriangle':
                 let rotateBasePoint = {x:object.position.x,y:object.position.y + object.radius.value};
                 let modDirection = object.direction - Math.PI/2;
                 let p1 = utl.rotatePoint(rotateBasePoint, modDirection, object.position);
-                let p2 = utl.rotatePoint(rotateBasePoint, modDirection + 0.75*Math.PI, object.position);
-                let p3 = utl.rotatePoint(rotateBasePoint, modDirection - 0.75*Math.PI, object.position);
+                let p2 = utl.rotatePoint(rotateBasePoint, modDirection + 0.7*Math.PI, object.position);
+                let p3 = utl.rotatePoint(rotateBasePoint, modDirection - 0.7*Math.PI, object.position);
                 this.drawLine(p1, p2, {color:object.fillColor, width: 8, alpha:object.alpha});
                 this.drawLine(p2, p3, {color:object.fillColor, width: 8, alpha:object.alpha});
                 this.drawLine(p3, p1, {color:object.fillColor, width: 8, alpha:object.alpha});
+                break;
+            case 'rect':
+                let rect = {x:object.position.x, y:object.position.y, width:object.radius.value, height:object.radius.value};
+                this.rect(rect, {fillStyle: object.fillColor, strokeStyle:object.strokeColor, alpha:object.alpha});
                 break;
         }
 
@@ -156,10 +161,21 @@ class DrawManager {
     lineTo(p) {
         this.ctx.lineTo( this.canvasPoint(p).x, this.canvasPoint(p).y );
     }
+    rect( rect, option ) { // rect = {x:,y:,w:,h:}
+        let fillStyle = option.fillStyle ?? 'none';
+        let strokeStyle = option.strokeStyle ?? 'none';
+        let alpha = option.alpha ?? 1.0;
+        this.ctx.beginPath();
+        let pos = this.canvasPoint({x:rect.x-rect.width/2, y:rect.y-rect.height/2});
+        this.ctx.rect(pos.x, pos.y, 2*rect.width * this.cw, 2*rect.height * this.cw);
+        this.style({fillStyle:fillStyle, strokeStyle:strokeStyle, globalAlpha: alpha});
+        if(strokeStyle != 'none') this.ctx.stroke();
+        if(fillStyle != 'none') this.ctx.fill();
+    }
     style(option = {}) {
         this.ctx.fillStyle = option.fillStyle ?? 'black';
         this.ctx.strokeStyle = option.strokeStyle ?? 'black';
-        this.ctx.lineWidth = option.lineWidth ?? 2;
+        this.ctx.lineWidth = option.lineWidth ?? 4;
         this.ctx.globalAlpha = option.globalAlpha ?? 1.0;
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';

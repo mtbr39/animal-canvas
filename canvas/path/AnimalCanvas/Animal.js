@@ -100,6 +100,7 @@ class HerbivoreHabit {
             {type:'circle', id:'herbivoreBody', opponentIds:['plantBody', 'carnivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
         this.object.doDisplayName = false;
+        this.object.drawType = 'circle';
     }
 
     update () {
@@ -146,10 +147,10 @@ class CarnivoreHabit {
     constructor(option = {}) {
         this.object = option.object || {};
         this.object.exhaustVelocity = 0.015;
-        this.object.radius.value = 15;
+        this.object.radius.value = 10;
         this.object.velocity = this.object.velocity * 3.0;
         this.object.fillColor = '#EB6973';
-        this.object.reproductEnergyThreshold = 30;
+        this.object.reproductEnergyThreshold = 20;
         this.object.colliders = [
             {type:'circle', id:'carnivoreBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
@@ -189,13 +190,17 @@ class PlantHabit {
         this.reviveTime = 900;
         this.deathTimer = 0;
         this.object.layer = 30;
-        this.object.radius.value = 6;
-        this.object.strokeColor = this.object.fillColor;
+        this.object.radius.value = 4;
+        this.color = '#36C994';
+        this.colorOnDead = '#c9ab73';
+        this.object.fillColor = 'none';
+        this.object.strokeColor = this.color;
         this.object.alpha = 0.5;
         this.object.colliders = [
             {type:'circle', id:'plantBody', opponentIds:['herbivoreBody'], position:this.object.position, radius:this.object.radius},
         ];
         this.collidersSet = this.object.colliders;
+        this.object.drawType = 'circle';
         
     }
 
@@ -207,7 +212,7 @@ class PlantHabit {
             this.deathTimer = 0;
             this.object.status = 'live'
             this.object.colliders = this.collidersSet;
-            this.object.strokeColor = "#86efac";
+            this.object.strokeColor = this.color;
         }
     }
     onCollision(collidedObject, option) {
@@ -215,7 +220,7 @@ class PlantHabit {
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore') {
             this.object.changeStatus = 'death';
-            this.object.strokeColor = 'rgba(231, 208, 182)';
+            this.object.strokeColor = this.colorOnDead;
         }
 
     }
