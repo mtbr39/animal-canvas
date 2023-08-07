@@ -45,6 +45,13 @@ window.addEventListener('load', () => {
         backgroundObject.push( new BackgroundObject( {drawManager:drawManager, cageSize: cageSize[i], calcCanvasSize: calcCanvasSize, mainText: mainText} ) );
     }
 
+    // let herbivore = new Herbivore( {
+    //     identifiedName: utl.randomStringLikeSynbolID(),
+    //     position: {x: 0, y: 0},
+    //     creatureType: 'herbivore',
+    // } );
+    // objectDistributer.objects.push(herbivore);
+
 
     // FrameLoop
     const fps = 60;

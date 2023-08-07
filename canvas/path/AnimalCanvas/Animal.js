@@ -32,17 +32,17 @@ class Animal {
         // 生物種によるhabit:習慣
         this.creatureType = option.creatureType || 'herbivore';
         this.habit = {};
-        switch ( this.creatureType ) {
-            case 'herbivore':
-                this.habit = new HerbivoreHabit({object: this});
-                break;
-            case 'carnivore':
-                this.habit = new CarnivoreHabit({object: this});
-                break;
-            case 'plant':
-                this.habit = new PlantHabit({object: this});
-                break;
-        }
+        // switch ( this.creatureType ) {
+        //     case 'herbivore':
+        //         this.habit = new HerbivoreHabit({object: this});
+        //         break;
+        //     case 'carnivore':
+        //         this.habit = new CarnivoreHabit({object: this});
+        //         break;
+        //     case 'plant':
+        //         this.habit = new PlantHabit({object: this});
+        //         break;
+        // }
 
         // console.log(this.identifiedName, );
 
@@ -237,7 +237,18 @@ class AnimalFactory {
     }
 
     make(option) {
-        let animal = new Animal(option);
+        let animal = {};
+        switch ( option.creatureType ) {
+            case 'herbivore':
+                animal = new Herbivore(option);
+                break;
+            case 'carnivore':
+                animal = new Carnivore(option);
+                break;
+            case 'plant':
+                animal = new Plant(option);
+                break;
+        }
         this.animals.push(animal);
         this.distributer.submitObject(animal);
     }
