@@ -7,6 +7,7 @@
   const analytics = getAnalytics(app);
 
   window.addEventListener('load', () => {
+    writeUserData(123, "name1", "icebox-umai@email.com", "imgurl");
 
     let canvas = document.getElementById('canvas');
 
