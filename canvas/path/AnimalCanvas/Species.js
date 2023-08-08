@@ -17,14 +17,15 @@ class Herbivore extends Animal {
     }
 
     update () {
-        this.uploadStatus();
+        this.animalCommonUpdate();
+        this.hideNameOnDeath();
         this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'plant' && collidedObject.status != 'death') {
-            // this.energy.value += 2;
+            this.energy.value += 2;
         }
         if (collidedObject.creatureType == 'carnivore') {
             this.velocity = 0;
@@ -35,7 +36,7 @@ class Herbivore extends Animal {
 
     }
 
-    uploadStatus() {
+    hideNameOnDeath() {
         if (this.status == 'death') {
             this.objectDisplayName = false;
         }
@@ -64,8 +65,7 @@ class Carnivore extends Animal {
         this.exhaustVelocity = 0.015;
         this.radius.value = 15;
         this.velocity = this.velocity * 3.0;
-        // this.fillColor = '#EB6973';
-        this.fillColor = 'red';
+        this.fillColor = '#EB6973';
         this.reproductEnergyThreshold = 20;
         this.colliders = [
             {type:'circle', id:'carnivoreBody', opponentIds:['herbivoreBody'], position:this.position, radius:this.radius},
@@ -74,13 +74,14 @@ class Carnivore extends Animal {
     }
 
     update () {
+        this.animalCommonUpdate();
         this.randomWalkAction();
     }
     onCollision(collidedObject, option) {
         const ownColliderID = option.ownColliderID || null;
         const opponentColliderID = option.opponentColliderID || null;
         if (collidedObject.creatureType == 'herbivore' && collidedObject.status != 'death') {
-            // this.energy.value += 1.5;
+            this.energy.value += 1.5;
         }
 
     }
@@ -123,12 +124,13 @@ class Plant extends Animal {
     }
 
     update () {
+        this.animalCommonUpdate();
         if (this.status == 'death') {
             this.deathTimer ++;
         } 
         if (this.deathTimer > this.reviveTime) {
             this.deathTimer = 0;
-            this.status = 'live'
+            this.status = 'live';
             this.colliders = this.collidersSet;
             this.strokeColor = this.color;
         }
