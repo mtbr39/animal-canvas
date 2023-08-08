@@ -1,4 +1,12 @@
-window.addEventListener('load', () => {
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+  window.addEventListener('load', () => {
 
     let canvas = document.getElementById('canvas');
 
@@ -26,24 +34,7 @@ window.addEventListener('load', () => {
 
     updater.submitInstances([objectDistributer, drawManager, collisionManager, inputManager]);
 
-    let cageSize = [
-        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.05, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.4},
-        {x: calcCanvasSize.width*0.05, y: calcCanvasSize.height*0.55, width: calcCanvasSize.width * 0.9, height: calcCanvasSize.height * 0.4},
-    ];
-    let animalFactory = [];
-    let backgroundObject = [];
-    for(let i=0; i<2; i++) {
-        animalFactory.push( new AnimalFactory({distributer: objectDistributer, org: org, cageSize: cageSize[i]}) );
-
-        updater.submitInstances([animalFactory[i]]);
     
-        animalFactory[i].makeMultiple({ creatureType: 'herbivore', number: 10});
-        animalFactory[i].makeMultiple({ creatureType: 'plant', number: 100});
-        if(i!=0) animalFactory[i].makeMultiple({ creatureType: 'carnivore', number: 2});
-        
-        let mainText = i==0 ? "草食動物のみの場合" : "肉食動物がいる場合";
-        backgroundObject.push( new BackgroundObject( {drawManager:drawManager, cageSize: cageSize[i], calcCanvasSize: calcCanvasSize, mainText: mainText} ) );
-    }
 
     // FrameLoop
     const fps = 60;
