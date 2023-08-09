@@ -1,0 +1,20 @@
+{
+  "name": "firebase_canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "FirebaseControll.js",
+  "scripts": {
+    "build": "webpack --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^10.1.0",
+    "vite": "^4.4.9"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
