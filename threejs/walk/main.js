@@ -63,8 +63,9 @@ function init() {
     world.add(cubeBody);
 
     camera.position.z = 5;
-    cannonControls = new THREE.OrbitControls(camera, renderer.domElement);
-    // cannonControls = new CannonDebugRenderer(scene, world); // Cannon.jsのデバッグレンダラーを使う例
+    // cannonControls = new THREE.OrbitControls(camera, renderer.domElement);
+        cannonControls = new CannonCameraController(camera, world, camera.position);
+
 
     // ####################################################
 
@@ -113,8 +114,8 @@ function init() {
 
     // ... 他の設定は省略 ...
 
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("keyup", onKeyUp);
+    // document.addEventListener("keydown", onKeyDown);
+    // document.addEventListener("keyup", onKeyUp);
 
     document.addEventListener("mousedown", onMouseDown);
     document.addEventListener("mousemove", onMouseMove);
@@ -131,39 +132,39 @@ function init() {
     });
 }
 
-function onKeyDown(event) {
-    switch (event.key) {
-        case "w":
-            moveForward = true;
-            break;
-        case "s":
-            moveBackward = true;
-            break;
-        case "a":
-            moveLeft = true;
-            break;
-        case "d":
-            moveRight = true;
-            break;
-    }
-}
+// function onKeyDown(event) {
+//     switch (event.key) {
+//         case "w":
+//             moveForward = true;
+//             break;
+//         case "s":
+//             moveBackward = true;
+//             break;
+//         case "a":
+//             moveLeft = true;
+//             break;
+//         case "d":
+//             moveRight = true;
+//             break;
+//     }
+// }
 
-function onKeyUp(event) {
-    switch (event.key) {
-        case "w":
-            moveForward = false;
-            break;
-        case "s":
-            moveBackward = false;
-            break;
-        case "a":
-            moveLeft = false;
-            break;
-        case "d":
-            moveRight = false;
-            break;
-    }
-}
+// function onKeyUp(event) {
+//     switch (event.key) {
+//         case "w":
+//             moveForward = false;
+//             break;
+//         case "s":
+//             moveBackward = false;
+//             break;
+//         case "a":
+//             moveLeft = false;
+//             break;
+//         case "d":
+//             moveRight = false;
+//             break;
+//     }
+// }
 
 function onMouseDown(event) {
     isDragging = true;
@@ -209,36 +210,14 @@ function onMouseUp() {
 function animate() {
     requestAnimationFrame(animate);
 
-    // Cannon.jsのシミュレーションステップを進める
-    world.step(1 / 60);
+    cannonControls.update();
 
     // Three.jsのオブジェクトをCannon.jsの位置に更新
     cube.position.copy(cubeBody.position);
     cube.quaternion.copy(cubeBody.quaternion);
 
-    // Cannon.jsのコントロールをアップデート
-    cannonControls.update();
-
-    // カメラの向きに対して移動
-    var cameraDirection = camera.getWorldDirection(new THREE.Vector3());
-    var cameraRight = new THREE.Vector3(
-        -cameraDirection.z,
-        0,
-        cameraDirection.x
-    );
-
-    if (moveForward) {
-        camera.position.add(cameraDirection.multiplyScalar(cameraSpeed));
-    }
-    if (moveBackward) {
-        camera.position.sub(cameraDirection.multiplyScalar(cameraSpeed));
-    }
-    if (moveLeft) {
-        camera.position.sub(cameraRight.multiplyScalar(cameraSpeed));
-    }
-    if (moveRight) {
-        camera.position.add(cameraRight.multiplyScalar(cameraSpeed));
-    }
+    // // Cannon.jsのコントロールをアップデート
+    // cannonControls.update();
 
     // ... 他のアニメーション処理 ...
 
