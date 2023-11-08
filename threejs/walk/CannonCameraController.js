@@ -135,7 +135,7 @@ class CannonCameraController {
         this.velocity = new CANNON.Vec3(0, 0, 0);
 
         // 移動速度を設定
-        var moveSpeed = 10;
+        var moveSpeed = 2;
 
         // カメラの向きに対して移動
         var cameraDirection = camera.getWorldDirection(new THREE.Vector3());

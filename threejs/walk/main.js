@@ -66,6 +66,39 @@ function init() {
     cubeBody.addShape(cubeShape);
     world.add(cubeBody);
 
+    var numBuildings = 20; // 生成するビルの数
+
+    for (var i = 0; i < numBuildings; i++) {
+        var buildingWidth = Math.random() * 1.0 + 0.5; // ビルの幅（ランダムに設定）
+        var buildingHeight = Math.random() * 4 + 2; // ビルの高さ（ランダムに設定）
+        var buildingDepth = Math.random() * 1.0 + 0.5; // ビルの奥行き（ランダムに設定）
+
+        var buildingGeometry = new THREE.BoxGeometry(
+            buildingWidth,
+            buildingHeight,
+            buildingDepth
+        );
+
+        var buildingMaterial = new THREE.MeshPhongMaterial({
+            color: 0x00ff00,
+        });
+
+        var building = new THREE.Mesh(buildingGeometry, buildingMaterial);
+
+        // ランダムな位置に配置
+        building.position.set(
+            Math.random() * 20 - 10, // X座標をランダムに配置
+            buildingHeight / 2, // Y座標をビルの半分の高さに設定
+            Math.random() * 20 - 10 // Z座標をランダムに配置
+        );
+
+        // ビルの影を受ける設定
+        building.castShadow = true;
+        building.receiveShadow = true;
+
+        scene.add(building);
+    }
+
     camera.position.z = 5;
     // cannonControls = new THREE.OrbitControls(camera, renderer.domElement);
     cannonControls = new CannonCameraController(camera, world, camera.position);
@@ -94,32 +127,23 @@ function init() {
     directionalLight.position.set(5, 10, 7); // ライトの位置を変更
     scene.add(directionalLight);
 
-    // シャドウマップの設定
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
-    // directionalLight.shadow.map.dispose(); // 以前のシャドウマップを破棄
-
-    // 影の色をオレンジ色に設定
-    directionalLight.shadow.map = new THREE.WebGLRenderTarget(1024, 1024, {
-        minFilter: THREE.LinearFilter,
-        magFilter: THREE.LinearFilter,
-        format: THREE.RGBAFormat,
-        stencilBuffer: false,
-    });
-
-    // シャドウマップのマテリアルに影響するライトの色を設定
-    directionalLight.shadow.color = new THREE.Color(1, 0.5, 0); // オレンジ色（R: 1, G: 0.5, B: 0）
-
-    // 影の明るさを調整
-    // directionalLight.shadow.bias = -0.005; // シャドウ バイアス
-    // directionalLight.shadow.radius = 2; // シャドウのぼかし
+    directionalLight.position.set(10, 20, 15);
+    directionalLight.intensity = 1.0; // 強度を調整
+    // directionalLight.color = new THREE.Color(1, 0.6, 0); // オレンジ色のライト
 
     // ディレクショナルライトをシャドウキャスターに設定
     directionalLight.castShadow = true;
 
     // シャドウマップの設定
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 2048;
+
+    // シャドウマップのマテリアルに影響するライトの色を設定
+    directionalLight.shadow.color = new THREE.Color(1, 0.5, 0); // オレンジ色（R: 1, G: 0.5, B: 0）
+
+    // 影の明るさを調整
+    directionalLight.shadow.bias = -0.005; // シャドウ バイアス
+    directionalLight.shadow.radius = 20; // シャドウのぼかし
 
     // シャドウカメラの設定
     directionalLight.shadow.camera.near = 0.1;
