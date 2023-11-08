@@ -35,6 +35,9 @@ function init() {
     // カメラの注視点を設定
     camera.lookAt(0, 0, 0); // カメラの注視点を原点に設定
 
+    // 夕日のようなオレンジ色の背景色を設定
+    scene.background = new THREE.Color(0xffa500); // オレンジ色
+
     // レンダラーの作成
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -52,7 +55,8 @@ function init() {
     world.add(ground);
 
     var cubeGeometry = new THREE.BoxGeometry();
-    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    // var cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var cubeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
     cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     cube.position.set(0, 1, 0); // 高さ1の位置に設定
     scene.add(cube);
@@ -64,8 +68,7 @@ function init() {
 
     camera.position.z = 5;
     // cannonControls = new THREE.OrbitControls(camera, renderer.domElement);
-        cannonControls = new CannonCameraController(camera, world, camera.position);
-
+    cannonControls = new CannonCameraController(camera, world, camera.position);
 
     // ####################################################
 
@@ -90,6 +93,26 @@ function init() {
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(5, 10, 7); // ライトの位置を変更
     scene.add(directionalLight);
+
+    // シャドウマップの設定
+    directionalLight.shadow.mapSize.width = 1024;
+    directionalLight.shadow.mapSize.height = 1024;
+    // directionalLight.shadow.map.dispose(); // 以前のシャドウマップを破棄
+
+    // 影の色をオレンジ色に設定
+    directionalLight.shadow.map = new THREE.WebGLRenderTarget(1024, 1024, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat,
+        stencilBuffer: false,
+    });
+
+    // シャドウマップのマテリアルに影響するライトの色を設定
+    directionalLight.shadow.color = new THREE.Color(1, 0.5, 0); // オレンジ色（R: 1, G: 0.5, B: 0）
+
+    // 影の明るさを調整
+    // directionalLight.shadow.bias = -0.005; // シャドウ バイアス
+    // directionalLight.shadow.radius = 2; // シャドウのぼかし
 
     // ディレクショナルライトをシャドウキャスターに設定
     directionalLight.castShadow = true;
@@ -117,9 +140,9 @@ function init() {
     // document.addEventListener("keydown", onKeyDown);
     // document.addEventListener("keyup", onKeyUp);
 
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
+    // document.addEventListener("mousedown", onMouseDown);
+    // document.addEventListener("mousemove", onMouseMove);
+    // document.addEventListener("mouseup", onMouseUp);
 
     // Pointer Lock API を使ってマウスキャプチャを設定
     var element = document.body;
@@ -166,46 +189,46 @@ function init() {
 //     }
 // }
 
-function onMouseDown(event) {
-    isDragging = true;
-    previousMousePosition = {
-        x: event.clientX,
-        y: event.clientY,
-    };
-}
+// function onMouseDown(event) {
+//     isDragging = true;
+//     previousMousePosition = {
+//         x: event.clientX,
+//         y: event.clientY,
+//     };
+// }
 
-function onMouseMove(event) {
-    if (isDragging) {
-        var deltaMove = {
-            x: event.clientX - previousMousePosition.x,
-            y: event.clientY - previousMousePosition.y,
-        };
+// function onMouseMove(event) {
+//     if (isDragging) {
+//         var deltaMove = {
+//             x: event.clientX - previousMousePosition.x,
+//             y: event.clientY - previousMousePosition.y,
+//         };
 
-        var sensitivity = 0.005; // 回転感度
-        var euler = new THREE.Euler(0, 0, 0, "YXZ");
-        euler.setFromQuaternion(camera.quaternion);
+//         var sensitivity = 0.005; // 回転感度
+//         var euler = new THREE.Euler(0, 0, 0, "YXZ");
+//         euler.setFromQuaternion(camera.quaternion);
 
-        euler.y -= deltaMove.x * sensitivity;
-        euler.x -= deltaMove.y * sensitivity;
+//         euler.y -= deltaMove.x * sensitivity;
+//         euler.x -= deltaMove.y * sensitivity;
 
-        var maxVerticalAngle = Math.PI / 4; // 上向きの最大角度 (ここでは45度)
-        euler.x = Math.max(
-            -maxVerticalAngle,
-            Math.min(maxVerticalAngle, euler.x)
-        );
+//         var maxVerticalAngle = Math.PI / 4; // 上向きの最大角度 (ここでは45度)
+//         euler.x = Math.max(
+//             -maxVerticalAngle,
+//             Math.min(maxVerticalAngle, euler.x)
+//         );
 
-        camera.quaternion.setFromEuler(euler);
+//         camera.quaternion.setFromEuler(euler);
 
-        previousMousePosition = {
-            x: event.clientX,
-            y: event.clientY,
-        };
-    }
-}
+//         previousMousePosition = {
+//             x: event.clientX,
+//             y: event.clientY,
+//         };
+//     }
+// }
 
-function onMouseUp() {
-    isDragging = false;
-}
+// function onMouseUp() {
+//     isDragging = false;
+// }
 
 function animate() {
     requestAnimationFrame(animate);
