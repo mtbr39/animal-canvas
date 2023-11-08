@@ -21,9 +21,14 @@ class CannonCameraController {
             right: false,
         };
 
+        this.isDragging = false;
+
         // Set up keyboard input
         document.addEventListener("keydown", this.onKeyDown.bind(this));
         document.addEventListener("keyup", this.onKeyUp.bind(this));
+        document.addEventListener("mousedown", this.onMouseDown.bind(this));
+        document.addEventListener("mousemove", this.onMouseMove.bind(this));
+        document.addEventListener("mouseup", this.onMouseUp.bind(this));
     }
 
     moveForward() {
@@ -80,6 +85,47 @@ class CannonCameraController {
                 this.stopLeftRight();
                 break;
         }
+    }
+
+    onMouseDown(event) {
+        this.isDragging = true;
+        previousMousePosition = {
+            x: event.clientX,
+            y: event.clientY,
+        };
+    }
+    
+    onMouseMove(event) {
+        if (this.isDragging) {
+            var deltaMove = {
+                x: event.clientX - previousMousePosition.x,
+                y: event.clientY - previousMousePosition.y,
+            };
+    
+            var sensitivity = 0.005; // 回転感度
+            var euler = new THREE.Euler(0, 0, 0, "YXZ");
+            euler.setFromQuaternion(camera.quaternion);
+    
+            euler.y -= deltaMove.x * sensitivity;
+            euler.x -= deltaMove.y * sensitivity;
+    
+            var maxVerticalAngle = Math.PI / 4; // 上向きの最大角度 (ここでは45度)
+            euler.x = Math.max(
+                -maxVerticalAngle,
+                Math.min(maxVerticalAngle, euler.x)
+            );
+    
+            this.camera.quaternion.setFromEuler(euler);
+    
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY,
+            };
+        }
+    }
+    
+    onMouseUp() {
+        this.isDragging = false;
     }
 
     update(deltaTime) {
