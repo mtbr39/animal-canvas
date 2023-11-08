@@ -84,20 +84,52 @@ class CannonCameraController {
 
     update(deltaTime) {
         // Update camera velocity based on control states
-        const moveSpeed = 2.0; // Adjust as needed
-        this.velocity.set(0, 0, 0);
+
+        // カメラの速度ベクトルを初期化
+        this.velocity = new CANNON.Vec3(0, 0, 0);
+
+        // 移動速度を設定
+        var moveSpeed = 10;
+
+        // カメラの向きに対して移動
+        var cameraDirection = camera.getWorldDirection(new THREE.Vector3());
+        var cameraRight = new THREE.Vector3(
+            -cameraDirection.z,
+            0,
+            cameraDirection.x
+        );
 
         if (this.keys.forward) {
-            this.velocity.z -= moveSpeed;
+            var forwardVector = new CANNON.Vec3(
+                cameraDirection.x,
+                cameraDirection.y,
+                cameraDirection.z
+            );
+            this.velocity.vadd(forwardVector.mult(moveSpeed), this.velocity);
         }
         if (this.keys.backward) {
-            this.velocity.z += moveSpeed;
+            var backwardVector = new CANNON.Vec3(
+                -cameraDirection.x,
+                -cameraDirection.y,
+                -cameraDirection.z
+            );
+            this.velocity.vadd(backwardVector.mult(moveSpeed), this.velocity);
         }
         if (this.keys.left) {
-            this.velocity.x -= moveSpeed;
+            var leftVector = new CANNON.Vec3(
+                -cameraRight.x,
+                -cameraRight.y,
+                -cameraRight.z
+            );
+            this.velocity.vadd(leftVector.mult(moveSpeed), this.velocity);
         }
         if (this.keys.right) {
-            this.velocity.x += moveSpeed;
+            var rightVector = new CANNON.Vec3(
+                cameraRight.x,
+                cameraRight.y,
+                cameraRight.z
+            );
+            this.velocity.vadd(rightVector.mult(moveSpeed), this.velocity);
         }
 
         // Apply the velocity to the Cannon.js body
@@ -117,11 +149,11 @@ class CannonCameraController {
 
         // Update Three.js camera orientation based on Cannon.js body
         const quaternion = this.cameraBody.quaternion;
-        this.camera.quaternion.set(
-            quaternion.x,
-            quaternion.y,
-            quaternion.z,
-            quaternion.w
-        );
+        // this.camera.quaternion.set(
+        //     quaternion.x,
+        //     quaternion.y,
+        //     quaternion.z,
+        //     quaternion.w
+        // );
     }
 }
