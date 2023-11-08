@@ -122,14 +122,31 @@ function init() {
     // シャドウマップを有効化
     renderer.shadowMap.enabled = true;
 
-    // ディレクショナルライトの設定
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 10, 7); // ライトの位置を変更
+    // ディレクショナルライト（太陽光）を追加
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(10, 10, 15);
     scene.add(directionalLight);
 
-    directionalLight.position.set(10, 20, 15);
-    directionalLight.intensity = 1.0; // 強度を調整
-    // directionalLight.color = new THREE.Color(1, 0.6, 0); // オレンジ色のライト
+    // ポイントライト（ランプのような光）を追加
+    const pointLight = new THREE.PointLight(0xff0000, 1, 10);
+    pointLight.position.set(0, 3, 0);
+    scene.add(pointLight);
+
+    // スポットライト（焦点を当てる光）を追加
+    const spotLight = new THREE.SpotLight(0x00ff00, 1, 10, Math.PI / 4, 1, 2);
+    spotLight.position.set(0, 5, 5);
+    scene.add(spotLight);
+
+    // ライトヘルパーを使用して光源の位置を表示
+    const directionalLightHelper = new THREE.DirectionalLightHelper(
+        directionalLight,
+        1
+    );
+    scene.add(directionalLightHelper);
+    const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.1);
+    scene.add(pointLightHelper);
+    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    scene.add(spotLightHelper);
 
     // ディレクショナルライトをシャドウキャスターに設定
     directionalLight.castShadow = true;
@@ -137,21 +154,6 @@ function init() {
     // シャドウマップの設定
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
-
-    // シャドウマップのマテリアルに影響するライトの色を設定
-    directionalLight.shadow.color = new THREE.Color(1, 0.5, 0); // オレンジ色（R: 1, G: 0.5, B: 0）
-
-    // 影の明るさを調整
-    directionalLight.shadow.bias = -0.005; // シャドウ バイアス
-    directionalLight.shadow.radius = 20; // シャドウのぼかし
-
-    // シャドウカメラの設定
-    directionalLight.shadow.camera.near = 0.1;
-    directionalLight.shadow.camera.far = 100;
-    directionalLight.shadow.camera.top = 10;
-    directionalLight.shadow.camera.bottom = -10;
-    directionalLight.shadow.camera.left = -10;
-    directionalLight.shadow.camera.right = 10;
 
     // 立方体にシャドウキャスターの設定を追加
     cube.castShadow = true;
