@@ -116,24 +116,24 @@ function init() {
     scene.add(ground);
 
     // アンビエントライトの設定
-    var ambientLight = new THREE.AmbientLight(0x404040);
+    var ambientLight = new THREE.AmbientLight(0x404040, 0.5);
     scene.add(ambientLight);
 
     // シャドウマップを有効化
     renderer.shadowMap.enabled = true;
 
     // ディレクショナルライト（太陽光）を追加
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(10, 10, 15);
+    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, 150, 150);
     scene.add(directionalLight);
 
     // ポイントライト（ランプのような光）を追加
-    const pointLight = new THREE.PointLight(0xff0000, 1, 10);
-    pointLight.position.set(0, 3, 0);
+    const pointLight = new THREE.PointLight(0xff0000, 0.5, 100);
+    pointLight.position.set(0, 10, 0);
     scene.add(pointLight);
 
     // スポットライト（焦点を当てる光）を追加
-    const spotLight = new THREE.SpotLight(0x00ff00, 1, 10, Math.PI / 4, 1, 2);
+    const spotLight = new THREE.SpotLight(0x00ff00, 2, 10, Math.PI / 4, 1, 2);
     spotLight.position.set(0, 5, 5);
     scene.add(spotLight);
 
@@ -150,6 +150,8 @@ function init() {
 
     // ディレクショナルライトをシャドウキャスターに設定
     directionalLight.castShadow = true;
+    // spotLight.castShadow = true;
+    // pointLight.castShadow = true;
 
     // シャドウマップの設定
     directionalLight.shadow.mapSize.width = 2048;
