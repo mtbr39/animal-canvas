@@ -123,19 +123,24 @@ function init() {
     renderer.shadowMap.enabled = true;
 
     // ディレクショナルライト（太陽光）を追加
-    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(100, 150, 150);
     scene.add(directionalLight);
 
-    // ポイントライト（ランプのような光）を追加
-    const pointLight = new THREE.PointLight(0xff0000, 0.5, 100);
-    pointLight.position.set(0, 10, 0);
-    scene.add(pointLight);
+    // ディレクショナルライト（太陽光）を追加2
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    fillLight.position.set(-100, 50, -150);
+    scene.add(fillLight);
 
-    // スポットライト（焦点を当てる光）を追加
-    const spotLight = new THREE.SpotLight(0x00ff00, 2, 10, Math.PI / 4, 1, 2);
-    spotLight.position.set(0, 5, 5);
-    scene.add(spotLight);
+    // // ポイントライト（ランプのような光）を追加
+    // const pointLight = new THREE.PointLight(0xff0000, 0.5, 100);
+    // pointLight.position.set(0, 10, 0);
+    // scene.add(pointLight);
+
+    // // スポットライト（焦点を当てる光）を追加
+    // const spotLight = new THREE.SpotLight(0x00ff00, 2, 10, Math.PI / 4, 1, 2);
+    // spotLight.position.set(0, 5, 5);
+    // scene.add(spotLight);
 
     // ライトヘルパーを使用して光源の位置を表示
     const directionalLightHelper = new THREE.DirectionalLightHelper(
@@ -143,10 +148,15 @@ function init() {
         1
     );
     scene.add(directionalLightHelper);
-    const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.1);
-    scene.add(pointLightHelper);
-    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    scene.add(spotLightHelper);
+    const fillLightHelper = new THREE.DirectionalLightHelper(
+        fillLight,
+        1
+    );
+    scene.add(fillLightHelper);
+    // const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.1);
+    // scene.add(pointLightHelper);
+    // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    // scene.add(spotLightHelper);
 
     // ディレクショナルライトをシャドウキャスターに設定
     directionalLight.castShadow = true;
