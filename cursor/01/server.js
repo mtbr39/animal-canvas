@@ -6,19 +6,16 @@ import cors from "cors";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-const app = express();
-app.use(cors({ origin: "http://localhost:8080" }));
-
 // const app = express();
-// app.use(cors()); // すべてのオリジンからのリクエストを許可する場合
+// app.use(cors({ origin: "http://localhost:8080" }));
+
+const app = express();
+app.use(cors()); // すべてのオリジンからのリクエストを許可する場合
 
 app.use(express.static("dist"));
 
 const server = http.createServer(app);
-const io = new Server(server, {
-  origins: ["http://localhost:8080"],
-  methods: ["GET", "POST"],
-});
+const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log("a user connected");
