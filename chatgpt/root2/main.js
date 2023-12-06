@@ -135,8 +135,90 @@ class Pathfinding {
     }
 }
 
+class MovingRect {
+    static cellSize = 40;
+  
+    static moveRect(ctx, map, currentPosition) {
+      const possibleMoves = [];
+  
+      if (currentPosition.x > 0 && map[currentPosition.y][currentPosition.x - 1] !== 1) {
+        possibleMoves.push({ x: -1, y: 0 }); // 左に移動可能
+      }
+      if (currentPosition.x < map[0].length - 1 && map[currentPosition.y][currentPosition.x + 1] !== 1) {
+        possibleMoves.push({ x: 1, y: 0 }); // 右に移動可能
+      }
+      if (currentPosition.y > 0 && map[currentPosition.y - 1][currentPosition.x] !== 1) {
+        possibleMoves.push({ x: 0, y: -1 }); // 上に移動可能
+      }
+      if (currentPosition.y < map.length - 1 && map[currentPosition.y + 1][currentPosition.x] !== 1) {
+        possibleMoves.push({ x: 0, y: 1 }); // 下に移動可能
+      }
+  
+      if (possibleMoves.length > 0) {
+        const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+        currentPosition.x += randomMove.x;
+        currentPosition.y += randomMove.y;
+      }
+      for (let y = 0; y < map.length; y++) {
+        for (let x = 0; x < map[y].length; x++) {
+          if (map[y][x] === 1) {
+            ctx.fillStyle = "black";
+          } else {
+            ctx.fillStyle = "white";
+          }
+          ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+        }
+      }
+  
+      ctx.fillStyle = "black";
+      ctx.fillRect(currentPosition.x * this.cellSize, currentPosition.y * this.cellSize, this.cellSize, this.cellSize);
+    }
+  }
+
+class MovingRectManager {
+    static _rectangles = [];
+  
+    static get rectangles() {
+      return this._rectangles;
+    }
+  
+    static addRect(rect) {
+      this._rectangles.push(rect);
+    }
+  
+    static moveAll(ctx, map) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      for (const rect of this._rectangles) {
+        MovingRect.moveRect();
+      }
+    }
+  }
+
+class UpdateManager {
+    static lastFrameTime = 0;
+    static updateFunctions = [];
+
+    static add(func) {
+        this.updateFunctions.push(func);
+    }
+
+    static update(ctx, map) {
+        const currentTime = performance.now();
+        const deltaTime = currentTime - this.lastFrameTime;
+        const interval = 1000 / 60; // 60FPSの場合の1フレームの時間（ミリ秒）
+
+        if (deltaTime > interval) {
+            this.updateFunctions.forEach((func) => func(map));
+            this.lastFrameTime = currentTime - (deltaTime % interval);
+        }
+
+        requestAnimationFrame(() => this.update(ctx, map));
+    }
+}
+
 // 使用例
 const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 const start = { x: 0, y: 0 };
 const end = { x: 9, y: 9 };
 const rows = 10;
@@ -147,3 +229,19 @@ const cellWidth = 20;
 const cellHeight = 20;
 
 Pathfinding.init(canvas, start, end, map, cellWidth, cellHeight);
+
+// MovingRect.startMoving(ctx, map);
+
+console.log("ctx",ctx);
+UpdateManager.add((ctx) => {
+    console.log("ctx2",ctx);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+});
+
+
+
+
+MovingRectManager.addRect({x:2,y:2});
+UpdateManager.add(MovingRectManager.moveAll);
+
+UpdateManager.update(ctx, map);
