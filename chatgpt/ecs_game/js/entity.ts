@@ -6,4 +6,8 @@ export class Entity {
   constructor() {
     this.components = {};
   }
+
+  addComponent(componentName: string, component: Component): void {
+    this.components[componentName] = component;
+  }
 }
