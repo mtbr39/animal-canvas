@@ -1,9 +1,9 @@
 import { Entity } from "./entity";
-import { InputSystem } from "./inputSystem";
-import { RenderSystem } from "./renderSystem";
-import { MovementSystem, CollisionSystem } from "./system";
+import { InputSystem } from "./system/inputSystem";
+import { RenderSystem } from "./system/renderSystem";
+import { MovementSystem, CollisionSystem } from "./system/system";
 import { PositionComponent, SizeComponent, PointComponent, VelocityComponent } from "./component";
-import { SystemManager } from "./systemManager";
+import { SystemManager } from "./system/systemManager";
 
 const init = () => {
 

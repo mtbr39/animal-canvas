@@ -1,5 +1,5 @@
-import { Entity } from './entity';
-import { PositionComponent, SizeComponent, VelocityComponent } from './component';
+import { Entity } from '../entity';
+import { PositionComponent, SizeComponent, VelocityComponent } from '../component';
 
 export abstract class System {
   entities: Entity[];

@@ -1,6 +1,6 @@
-import { Entity } from './entity';
+import { Entity } from '../entity';
 import { System } from './system';
-import { VelocityComponent } from './component';
+import { VelocityComponent } from '../component';
 
 export class InputSystem {
   constructor(private player: Entity) {
