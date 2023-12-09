@@ -1,5 +1,8 @@
 import { Entity } from "./entity";
+import { InputSystem } from "./inputSystem";
 import { MovementSystem, CollisionSystem } from "./system";
+
+import { PositionComponent, SizeComponent, PointComponent, VelocityComponent } from "./component";
 
 function getRenderingContext(
   canvas: HTMLCanvasElement
@@ -43,43 +46,7 @@ for (let i = 0; i < 5; i++) {
 const movementSystem = new MovementSystem(entities);
 const collisionSystem = new CollisionSystem(entities);
 
-function handleKeydown(event) {
-  const velocity = player.components.VelocityComponent;
-
-  switch (event.key) {
-    case "w":
-      velocity.speedY = -5;
-      break;
-    case "a":
-      velocity.speedX = -5;
-      break;
-    case "s":
-      velocity.speedY = 5;
-      break;
-    case "d":
-      velocity.speedX = 5;
-      break;
-  }
-}
-
-function handleKeyup(event) {
-  const velocity = player.components.VelocityComponent;
-
-  switch (event.key) {
-    case "w":
-    case "s":
-      velocity.speedY = 0;
-      break;
-    case "a":
-    case "d":
-      velocity.speedX = 0;
-      break;
-  }
-}
-
-// イベントリスナーを追加
-window.addEventListener("keydown", handleKeydown);
-window.addEventListener("keyup", handleKeyup);
+const inputSystem = new InputSystem(entities[0]);
 
 function gameLoop() {
   if (!ctx) return;
@@ -92,8 +59,8 @@ function gameLoop() {
 
   ctx.fillStyle = "white";
   entities.forEach((entity) => {
-    const position = entity.components.PositionComponent;
-    const size = entity.components.SizeComponent;
+    const position = entity.components.PositionComponent as PositionComponent;
+    const size = entity.components.SizeComponent as SizeComponent;
 
     if (position && size) {
       ctx.fillRect(position.x, position.y, size.width, size.height);
