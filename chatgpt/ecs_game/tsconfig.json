@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "strict": true,
+        // "module": "commonjs",
+        // "outDir": "./dist",
+        "module": "amd",
+        "outFile": "./dist/bundle.js"
+    },
+    "scripts": {
+        "start": "tsc --watch"
+    },
+    "include": [
+        "js/**/*.ts" // TypeScriptファイルのソースディレクトリ
+    ],
+    "exclude": [
+        "node_modules" // コンパイルから除外するディレクトリ
+    ]
+}
