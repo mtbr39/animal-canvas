@@ -1,7 +1,10 @@
 // global変数と関数を用いた愚直な実装 (ECSでの設計と比較用)
 
 // Canvas要素を取得
-const canvas = document.getElementById("gameCanvas");
+const canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
+canvas.width = 800;
+canvas.height = 600;
 const ctx = canvas.getContext("2d");
 
 // プレイヤーの初期位置とサイズ
@@ -73,7 +76,8 @@ function checkCollision() {
 
 // ゲームループ
 function gameLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // キャンバスをクリア
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // プレイヤーを描画
   ctx.fillStyle = "white";
