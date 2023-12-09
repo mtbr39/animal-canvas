@@ -51,6 +51,8 @@ export class CollisionSystem extends System {
         playerPosition.y + size.height > position.y
       ) {
         // 衝突した場合の処理
+        this.entities.splice(this.entities.indexOf(entity), 1);
+        console.log("衝突", this.entities);
       }
     });
   }
