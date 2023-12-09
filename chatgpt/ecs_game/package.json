@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "webpack": "*",
+    "webpack-cli": "*"
+  }
+}

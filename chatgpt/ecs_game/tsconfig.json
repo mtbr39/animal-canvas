@@ -2,10 +2,10 @@
     "compilerOptions": {
         "target": "es6",
         "strict": true,
-        // "module": "commonjs",
-        // "outDir": "./dist",
-        "module": "amd",
-        "outFile": "./dist/bundle.js"
+        "module": "ES2015",
+        "outDir": "./dist",
+        // "module": "system",
+        // "outFile": "./dist/bundle.js"
     },
     "scripts": {
         "start": "tsc --watch"
