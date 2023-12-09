@@ -3,6 +3,7 @@ import { InputSystem } from "./inputSystem";
 import { RenderSystem } from "./renderSystem";
 import { MovementSystem, CollisionSystem } from "./system";
 import { PositionComponent, SizeComponent, PointComponent, VelocityComponent } from "./component";
+import { SystemManager } from "./systemManager";
 
 const init = () => {
 
@@ -49,25 +50,12 @@ const init = () => {
   const inputSystem = new InputSystem(entities[0]);
   const renderSystem = new RenderSystem(ctx, entities);
 
+  const systemManager = new SystemManager();
+  systemManager.addSystems([movementSystem, collisionSystem, renderSystem]);
+
   function gameLoop() {
-    if (!ctx) return;
   
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-    movementSystem.update();
-    collisionSystem.update();
-    renderSystem.update();
-  
-    ctx.fillStyle = "white";
-    entities.forEach((entity) => {
-      const position = entity.components.PositionComponent as PositionComponent;
-      const size = entity.components.SizeComponent as SizeComponent;
-  
-      if (position && size) {
-        ctx.fillRect(position.x, position.y, size.width, size.height);
-      }
-    });
+    systemManager.updateSystems();
   
     requestAnimationFrame(gameLoop);
   }
