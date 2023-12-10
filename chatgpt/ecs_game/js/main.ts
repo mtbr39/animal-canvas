@@ -12,6 +12,7 @@ import { SystemManager } from "./system/systemManager";
 import { UIManager, createButton } from "./UIManager";
 import { UIRenderSystem } from "./system/UIRenderSystem";
 import { makeEntity } from "./makeEntity";
+import { AnimalSystem } from "./system/AnimalSystem";
 
 const init = () => {
     console.log("init 1243");
@@ -32,8 +33,11 @@ const init = () => {
 
     const inputSystem = new InputSystem(entities[0]);
     const uiManager = new UIManager(entities);
+    
     const movementSystem = new MovementSystem(entities);
     const collisionSystem = new CollisionSystem(entities);
+    const animalSystem = new AnimalSystem(entities);
+
     const renderSystem = new RenderSystem(ctx, entities);
     const uiRenderSystem = new UIRenderSystem(ctx, entities);
 
@@ -41,6 +45,7 @@ const init = () => {
     systemManager.addSystems([
         movementSystem,
         collisionSystem,
+        animalSystem,
         renderSystem,
         uiRenderSystem,
     ]);

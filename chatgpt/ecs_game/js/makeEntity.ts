@@ -1,5 +1,5 @@
 import { createButton } from "./UIManager";
-import { ColliderComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
+import { AnimalComponent, ColliderComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
 
 export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
@@ -15,6 +15,8 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
             console.log("buttonAction");
         })
     );
+
+    entities.push(createAnimalEntity());
 
     entities.push(...createMap());
 
@@ -43,6 +45,16 @@ function createBlock(x: number, y:number) {
     block.components.SizeComponent = new SizeComponent(40, 40);
     block.components.ColliderComponent = new ColliderComponent("block", []);
     return block;
+}
+
+function createAnimalEntity() {
+    const animal = new Entity();
+    animal.components.PositionComponent = new PositionComponent(50, 50);
+    animal.components.SizeComponent = new SizeComponent(20, 30);
+    animal.components.VelocityComponent = new VelocityComponent(0, 0);
+    animal.components.ColliderComponent = new ColliderComponent("animal", ['block']);
+    animal.components.AnimalComponent = new AnimalComponent();
+    return animal;
 }
 
 function createMap() {

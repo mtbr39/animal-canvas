@@ -25,3 +25,15 @@ export class ColliderComponent extends Component {
     super();
   }
 }
+
+export class AnimalComponent extends Component {
+  constructor(public state: string = '', public stateTime: number = 0) {
+    super();
+  }
+}
+
+export class PathfindComponent extends Component {
+  constructor() {
+    super();
+  }
+}

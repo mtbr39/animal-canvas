@@ -71,7 +71,7 @@ export class CollisionSystem extends System {
                     const otherSize = otherEntity.components["SizeComponent"] as SizeComponent;
 
                     if (otherCollider && otherPosition && otherSize && otherIndex != presentIndex) {
-                        if (collider.layer === "player" && collider.collideWith.includes(otherCollider.layer)) {
+                        if (collider.collideWith.includes(otherCollider.layer)) {
                             if (
                                 CollisionSystem.checkCollision(
                                     position.x,
