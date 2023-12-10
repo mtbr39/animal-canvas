@@ -33,7 +33,13 @@ export class AnimalComponent extends Component {
 }
 
 export class PathfindComponent extends Component {
-  constructor() {
+  constructor(public path: Point[] = [], public achievement: number = 0) {
+    super();
+  }
+}
+
+export class MapComponent extends Component {
+  constructor(public grid: number[][]) {
     super();
   }
 }

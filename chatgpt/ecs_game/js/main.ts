@@ -10,7 +10,7 @@ import { MovementSystem } from "./system/movementSystem";
 import { CollisionSystem } from "./system/collisionSystem";
 
 const init = () => {
-    console.log("init 1243");
+    console.log("init 0017");
 
     const canvas = document.createElement("canvas");
     document.body.appendChild(canvas);

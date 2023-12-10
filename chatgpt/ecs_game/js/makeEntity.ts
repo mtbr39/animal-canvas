@@ -1,5 +1,5 @@
 import { createButton } from "./UIManager";
-import { AnimalComponent, ColliderComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
+import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
 
 export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
@@ -18,7 +18,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
 
     entities.push(createAnimalEntity());
 
-    entities.push(...createMap());
+    entities.push(...createMap(entities));
 
 }
 
@@ -54,15 +54,47 @@ function createAnimalEntity() {
     animal.components.VelocityComponent = new VelocityComponent(0, 0);
     animal.components.ColliderComponent = new ColliderComponent("animal", ['block']);
     animal.components.AnimalComponent = new AnimalComponent();
+    animal.components.PathfindComponent = new PathfindComponent();
     return animal;
 }
 
-function createMap() {
+function createMap(entities: Entity[]) {
+    const mapEntity = new Entity();
+    mapEntity.components.MapComponent = new MapComponent(
+        [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 0, 1, 1, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ]
+    );
+    entities.push(mapEntity);
+
+    const mapComponent = mapEntity.components.MapComponent as MapComponent;
+    const map = mapComponent.grid;
+
     const blocks = [];
 
-    for (let i=0; i<2; i++) {
-        blocks.push(createBlock(i*40, 0));
+    for (let y = 0; y < map.length; y++) {
+        for (let x = 0; x < map[y].length; x++) {
+            if (map[y][x] === 1) {
+                blocks.push(createBlock(x*40, y*40));
+            } else {
+                
+            }
+        }
     }
+    
+
+    // for (let i=0; i<2; i++) {
+    //     blocks.push(createBlock(i*40, 0));
+    // }
     return blocks;
 }
 
