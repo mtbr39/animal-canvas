@@ -19,3 +19,9 @@ export class VelocityComponent extends Component {
 }
 
 export class PointComponent extends Component {}
+
+export class ColliderComponent extends Component {
+  constructor(public layer: string, public collideWith: string[]) {
+    super();
+  }
+}

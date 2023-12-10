@@ -11,8 +11,11 @@ import {
 import { SystemManager } from "./system/systemManager";
 import { UIManager, createButton } from "./UIManager";
 import { UIRenderSystem } from "./system/UIRenderSystem";
+import { makeEntity } from "./makeEntity";
 
 const init = () => {
+    console.log("init 1243");
+
     const canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
     canvas.width = 800;
@@ -25,36 +28,7 @@ const init = () => {
 
     const entities: Entity[] = [];
 
-    // 初期化とエンティティの追加
-    // ...
-
-    const player = new Entity();
-    player.components.PositionComponent = new PositionComponent(50, 50);
-    player.components.SizeComponent = new SizeComponent(20, 20);
-    player.components.VelocityComponent = new VelocityComponent(0, 0);
-    entities.push(player);
-
-    // 青い矩形を追加する関数
-    function addPointEntity() {
-        const point = new Entity();
-        point.components.PositionComponent = new PositionComponent(
-            Math.random() * (canvas.width - 30) + 15,
-            Math.random() * (canvas.height - 30) + 15
-        );
-        point.components.SizeComponent = new SizeComponent(15, 15);
-        point.components.PointComponent = new PointComponent();
-        entities.push(point);
-    }
-
-    for (let i = 0; i < 5; i++) {
-        addPointEntity();
-    }
-
-    entities.push(
-        createButton(100, 0, 120, 40, "testButton", function () {
-            console.log("buttonAction");
-        })
-    );
+    makeEntity(entities, canvas);
 
     const inputSystem = new InputSystem(entities[0]);
     const uiManager = new UIManager(entities);
