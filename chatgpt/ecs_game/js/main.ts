@@ -1,18 +1,13 @@
 import { Entity } from "./entity";
 import { InputSystem } from "./system/inputSystem";
 import { RenderSystem } from "./system/renderSystem";
-import { MovementSystem, CollisionSystem } from "./system/system";
-import {
-    PositionComponent,
-    SizeComponent,
-    PointComponent,
-    VelocityComponent,
-} from "./component";
 import { SystemManager } from "./system/systemManager";
 import { UIManager, createButton } from "./UIManager";
 import { UIRenderSystem } from "./system/UIRenderSystem";
 import { makeEntity } from "./makeEntity";
-import { AnimalSystem } from "./system/AnimalSystem";
+import { AnimalSystem } from "./system/animalSystem";
+import { MovementSystem } from "./system/movementSystem";
+import { CollisionSystem } from "./system/collisionSystem";
 
 const init = () => {
     console.log("init 1243");
