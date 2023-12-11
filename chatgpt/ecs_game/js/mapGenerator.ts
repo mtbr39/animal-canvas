@@ -105,4 +105,43 @@ export class MapGenerator {
             y: (point.y * gridSize) + halfGridSize,
         };
     }
+
+    static run2(width: number, height: number) {
+        // 0で埋めた空のマップを生成
+        const map = [];
+        for (let i = 0; i < height; i++) {
+            const row = Array(width).fill(0); // すべてのセルを0で初期化
+            map.push(row);
+        }
+        // surroundWithWalls(map, startX, startY, width, height);
+        return map;
+    }
+
+    static surroundWithWalls(map: number[][], startX: number, startY: number, width: number, height: number) {
+        const endX = startX + width - 1;
+        const endY = startY + height - 1;
+    
+        // 上の壁を設定
+        for (let i = startX; i <= endX; i++) {
+            map[startY][i] = 1;
+        }
+    
+        // 下の壁を設定
+        for (let i = startX; i <= endX; i++) {
+            map[endY][i] = 1;
+        }
+    
+        // 左の壁を設定
+        for (let i = startY; i <= endY; i++) {
+            map[i][startX] = 1;
+        }
+    
+        // 右の壁を設定
+        for (let i = startY; i <= endY; i++) {
+            map[i][endX] = 1;
+        }
+    
+        return map;
+    }
+    
 }
