@@ -97,4 +97,12 @@ export class MapGenerator {
 
         return [map, roomCenters];
     }
+
+    static convertPointToCenterPoint(point: Point, gridSize: number): Point {
+        const halfGridSize = gridSize / 2;
+        return {
+            x: (point.x * gridSize) + halfGridSize,
+            y: (point.y * gridSize) + halfGridSize,
+        };
+    }
 }

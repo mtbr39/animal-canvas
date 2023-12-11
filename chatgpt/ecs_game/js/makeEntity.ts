@@ -2,6 +2,7 @@ import { createButton } from "./UIManager";
 import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
 import { MapGenerator } from "./mapGenerator";
+import { convertPathToCenterPoints } from "./pathfind";
 
 export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
 
@@ -17,9 +18,15 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
         })
     );
 
-    entities.push(createAnimalEntity());
+    
 
-    entities.push(...createMap(entities));
+    const mapEntity = createMap();
+    entities.push(mapEntity);
+    const mapComponent = mapEntity.components.MapComponent as MapComponent;
+    entities.push(...createMapBlock(mapComponent.grid));
+
+    const animalInitPoint = MapGenerator.convertPointToCenterPoint(mapComponent.centers[0], 10);
+    entities.push(createAnimalEntity(animalInitPoint));
 
 }
 
@@ -56,9 +63,9 @@ function createBlock(x: number, y:number) {
     return block;
 }
 
-function createAnimalEntity() {
+function createAnimalEntity(initPoint: Point) {
     const animal = new Entity();
-    animal.components.PositionComponent = new PositionComponent(50, 50);
+    animal.components.PositionComponent = new PositionComponent(initPoint.x, initPoint.y);
     animal.components.SizeComponent = new SizeComponent(2, 2);
     animal.components.VelocityComponent = new VelocityComponent(0, 0);
     animal.components.ColliderComponent = new ColliderComponent("animal", ['block']);
@@ -67,32 +74,19 @@ function createAnimalEntity() {
     return animal;
 }
 
-function createMap(entities: Entity[]) {
+function createMap() {
     const mapEntity = new Entity();
-    // mapEntity.components.MapComponent = new MapComponent(
-    //     [
-    //         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 0, 1, 1, 0, 1, 1, 0, 0, 1],
-    //         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    //         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    //     ]
-    // );
     let mapGrid, roomCenters;
     [mapGrid, roomCenters] = MapGenerator.run(40,40);
     mapEntity.components.MapComponent = new MapComponent(
-        mapGrid as number[][]
+        mapGrid as number[][],
+        roomCenters as Point[]
     );
-    entities.push(mapEntity);
+    return mapEntity;
+}
 
-    const mapComponent = mapEntity.components.MapComponent as MapComponent;
-    const map = mapComponent.grid;
-    console.log("mapdebug", map);
+function createMapBlock(map: number[][]) {
+
 
     const blocks = [];
 

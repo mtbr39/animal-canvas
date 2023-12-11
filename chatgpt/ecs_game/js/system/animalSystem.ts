@@ -43,17 +43,18 @@ export class AnimalSystem extends System {
                         velocity.speedY = 0;
                         break;
                     case "pathfindStart":
-                        const start: Point = { x: 1, y: 1 };
-                        const goal: Point = { x: 37, y: 37 };
+                        // const start: Point = { x: 1, y: 1 };
+                        // const goal: Point = { x: 37, y: 37 };
+                        const start: Point = map.centers[0];
+                        const goal: Point = map.centers[2];
                         const gridSize = 10;
                         const finalResult = findAndConvertPath(map.grid, start, goal, gridSize);
-                        // pathfind.path = finalResult!;
-                        if ("TEST"=="TEST") {
+                        if (finalResult !== null) {
+                            pathfind.path = finalResult!;
+
                             pathfind.path.forEach((path) => {
                                 // this.entities.push(createPointEntity(path.x, path.y)) ;
-                            })
-                            
-                            
+                            });
                         }
                         animal.state = "pathfinding";
                         break;
@@ -61,7 +62,6 @@ export class AnimalSystem extends System {
                         // Handle other states
                         break;
                 }
-
             }
         });
     }

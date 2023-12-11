@@ -39,7 +39,7 @@ export class PathfindComponent extends Component {
 }
 
 export class MapComponent extends Component {
-    constructor(public grid: number[][]) {
+    constructor(public grid: number[][], public centers: Point[] = []) {
         super();
     }
 }

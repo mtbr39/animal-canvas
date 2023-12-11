@@ -68,7 +68,7 @@ function findPath(map: number[][], start: Point, goal: Point): Point[] | null {
     return null; // 目的地までの経路が見つからなかった
 }
 
-function convertPathToCenterPoints(path: Point[], gridSize: number): Point[] {
+export function convertPathToCenterPoints(path: Point[], gridSize: number): Point[] {
     const halfGridSize = gridSize / 2;
     return path.map(point => ({
         x: (point.x * gridSize) + halfGridSize,
