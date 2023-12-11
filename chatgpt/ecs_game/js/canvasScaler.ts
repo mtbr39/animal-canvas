@@ -16,13 +16,11 @@ export const canvasScaler = () => {
         return array.map(value => value * scale);
     },
     array2: (array: number[]): number[] => {
-        const adjustedScale = scale * 1.015; // 0.000001など微小な調整値を加える
+        const adjustedScale = scale * 1.05; // 0.000001など微小な調整値を加える
         return array.map(value => value * adjustedScale);
     },
     setScale: (newScale: number) => {
-    
       scale = newScale;
-      console.log("arraydebug", scale);
     },
     setGameSize: (newGameSize: {}) => {
         gameSize = newGameSize;

@@ -1,5 +1,6 @@
 import { AnimalComponent, Component, MapComponent, PathfindComponent, PositionComponent, VelocityComponent } from "../component";
 import { Entity } from "../entity";
+import { createPointEntity } from "../makeEntity";
 import { findAndConvertPath } from "../pathfind";
 import { System, UtilitySystem } from "./system";
 
@@ -43,10 +44,18 @@ export class AnimalSystem extends System {
                         break;
                     case "pathfindStart":
                         const start: Point = { x: 1, y: 1 };
-                        const goal: Point = { x: 6, y: 7 };
-                        const gridSize = 40;
+                        const goal: Point = { x: 37, y: 37 };
+                        const gridSize = 10;
                         const finalResult = findAndConvertPath(map.grid, start, goal, gridSize);
                         pathfind.path = finalResult!;
+                        if ("TEST"=="TEST") {
+                            pathfind.path.forEach((path) => {
+                                // this.entities.push(createPointEntity(path.x, path.y)) ;
+                            })
+                            
+                            
+                        }
+                        animal.state = "pathfinding";
                         break;
                     default:
                         // Handle other states

@@ -7,7 +7,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
     entities.push(createPlayerEntity());
 
     for (let i = 0; i < 5; i++) {
-        entities.push(createPointEntity(canvas));
+        entities.push(createRandomPointEntity(canvas));
     }
 
     entities.push(
@@ -31,10 +31,18 @@ function createPlayerEntity() {
     return player;
 }
 
-function createPointEntity(canvas: HTMLCanvasElement) {
+export function createRandomPointEntity(canvas: HTMLCanvasElement) {
     const point = new Entity();
     point.components.PositionComponent = new PositionComponent(Math.random() * (canvas.width - 30) + 15, Math.random() * (canvas.height - 30) + 15);
-    point.components.SizeComponent = new SizeComponent(15, 15);
+    point.components.SizeComponent = new SizeComponent(5, 5);
+    point.components.PointComponent = new PointComponent();
+    return point;
+}
+
+export function createPointEntity(_x: number, _y: number) {
+    const point = new Entity();
+    point.components.PositionComponent = new PositionComponent(_x, _y);
+    point.components.SizeComponent = new SizeComponent(5, 5);
     point.components.PointComponent = new PointComponent();
     return point;
 }
@@ -42,7 +50,7 @@ function createPointEntity(canvas: HTMLCanvasElement) {
 function createBlock(x: number, y:number) {
     const block = new Entity();
     block.components.PositionComponent = new PositionComponent(x, y);
-    block.components.SizeComponent = new SizeComponent(40, 40);
+    block.components.SizeComponent = new SizeComponent(10, 10);
     block.components.ColliderComponent = new ColliderComponent("block", []);
     return block;
 }
@@ -50,7 +58,7 @@ function createBlock(x: number, y:number) {
 function createAnimalEntity() {
     const animal = new Entity();
     animal.components.PositionComponent = new PositionComponent(50, 50);
-    animal.components.SizeComponent = new SizeComponent(20, 30);
+    animal.components.SizeComponent = new SizeComponent(2, 2);
     animal.components.VelocityComponent = new VelocityComponent(0, 0);
     animal.components.ColliderComponent = new ColliderComponent("animal", ['block']);
     animal.components.AnimalComponent = new AnimalComponent();
@@ -60,19 +68,22 @@ function createAnimalEntity() {
 
 function createMap(entities: Entity[]) {
     const mapEntity = new Entity();
+    // mapEntity.components.MapComponent = new MapComponent(
+    //     [
+    //         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 0, 1, 1, 0, 1, 1, 0, 0, 1],
+    //         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    //         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    //     ]
+    // );
     mapEntity.components.MapComponent = new MapComponent(
-        [
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 0, 1, 1, 0, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        ]
+        MapComponent.generateMap(40,40)
     );
     entities.push(mapEntity);
 
@@ -84,7 +95,7 @@ function createMap(entities: Entity[]) {
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
             if (map[y][x] === 1) {
-                blocks.push(createBlock(x*40, y*40));
+                blocks.push(createBlock(x*10, y*10));
             } else {
                 
             }

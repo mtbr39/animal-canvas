@@ -1,6 +1,6 @@
 import { Entity } from '../entity';
 import { System } from './system';
-import { PositionComponent, SizeComponent } from '../component';
+import { PointComponent, PositionComponent, SizeComponent } from '../component';
 
 export class RenderSystem extends System {
   private ctx: CanvasRenderingContext2D;
@@ -22,8 +22,11 @@ export class RenderSystem extends System {
     this.entities.forEach((entity) => {
       const position = entity.components.PositionComponent as PositionComponent;
       const size = entity.components.SizeComponent as SizeComponent;
+      const point = entity.components.PointComponent as PointComponent;
 
       if (position && size) {
+        this.ctx.fillStyle = 'white';
+        if (point) this.ctx.fillStyle = 'gray';
         this.rect(position.x, position.y, size.width, size.height);
       }
     });
