@@ -47,7 +47,7 @@ export class AnimalSystem extends System {
                         const goal: Point = { x: 37, y: 37 };
                         const gridSize = 10;
                         const finalResult = findAndConvertPath(map.grid, start, goal, gridSize);
-                        pathfind.path = finalResult!;
+                        // pathfind.path = finalResult!;
                         if ("TEST"=="TEST") {
                             pathfind.path.forEach((path) => {
                                 // this.entities.push(createPointEntity(path.x, path.y)) ;

@@ -1,6 +1,7 @@
 import { createButton } from "./UIManager";
 import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
+import { MapGenerator } from "./mapGenerator";
 
 export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
 
@@ -82,13 +83,16 @@ function createMap(entities: Entity[]) {
     //         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     //     ]
     // );
+    let mapGrid, roomCenters;
+    [mapGrid, roomCenters] = MapGenerator.run(40,40);
     mapEntity.components.MapComponent = new MapComponent(
-        MapComponent.generateMap(40,40)
+        mapGrid as number[][]
     );
     entities.push(mapEntity);
 
     const mapComponent = mapEntity.components.MapComponent as MapComponent;
     const map = mapComponent.grid;
+    console.log("mapdebug", map);
 
     const blocks = [];
 
