@@ -1,5 +1,5 @@
 import { createButton } from "./UIManager";
-import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
+import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PlayerComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
 import { MapGenerator } from "./mapGenerator";
 import { convertPathToCenterPoints } from "./pathfind";
@@ -23,7 +23,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
     const mapEntity = createMap();
     entities.push(mapEntity);
     const mapComponent = mapEntity.components.MapComponent as MapComponent;
-    entities.push(...createMapBlock(mapComponent.grid));
+    // entities.push(...createMapBlock(mapComponent.grid));
 
     const animalInitPoint = MapGenerator.convertPointToCenterPoint(mapComponent.centers[0], 10);
     entities.push(createAnimalEntity(animalInitPoint));
@@ -32,6 +32,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
 
 function createPlayerEntity() {
     const player = new Entity();
+    player.components.PlayerComponent = new PlayerComponent();
     player.components.PositionComponent = new PositionComponent(50, 50);
     player.components.SizeComponent = new SizeComponent(20, 20);
     player.components.VelocityComponent = new VelocityComponent(0, 0);
@@ -89,11 +90,12 @@ function createMapBlock(map: number[][]) {
 
 
     const blocks = [];
+    const mapCellGridSize = 10;
 
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
-            if (map[y][x] === 1) {
-                blocks.push(createBlock(x*10, y*10));
+            if (map[y][x] === 0) {
+                blocks.push(createBlock(x*mapCellGridSize, y*mapCellGridSize));
             } else {
                 
             }

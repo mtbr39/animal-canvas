@@ -47,8 +47,8 @@ export class AnimalSystem extends System {
                         // const goal: Point = { x: 37, y: 37 };
                         const start: Point = map.centers[0];
                         const goal: Point = map.centers[2];
-                        const gridSize = 10;
-                        const finalResult = findAndConvertPath(map.grid, start, goal, gridSize);
+                        const mapCellGridSize = 10;
+                        const finalResult = findAndConvertPath(map.grid, start, goal, mapCellGridSize);
                         if (finalResult !== null) {
                             pathfind.path = finalResult!;
 

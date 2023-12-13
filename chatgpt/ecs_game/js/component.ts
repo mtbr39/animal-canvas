@@ -18,6 +18,8 @@ export class VelocityComponent extends Component {
     }
 }
 
+export class PlayerComponent extends Component {}
+
 export class PointComponent extends Component {}
 
 export class ColliderComponent extends Component {

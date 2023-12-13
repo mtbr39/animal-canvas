@@ -25,5 +25,8 @@ export const canvasScaler = () => {
     setGameSize: (newGameSize: {}) => {
         gameSize = newGameSize;
     },
+    getScale: () => {
+      return scale;
+    }
   };
 };

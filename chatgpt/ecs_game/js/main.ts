@@ -47,7 +47,7 @@ const init = () => {
 
     makeEntity(entities, canvas);
 
-    const inputSystem = new InputSystem(entities[0]);
+    const inputSystem = new InputSystem(entities, scaler);
     const uiManager = new UIManager(entities);
     
     const movementSystem = new MovementSystem(entities);

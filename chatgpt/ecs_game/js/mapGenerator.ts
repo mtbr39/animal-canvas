@@ -1,27 +1,4 @@
 export class MapGenerator {
-    // static generateMap2(width: number, height: number) {
-    //     // 壁で囲まれた空のマップを生成
-    //     const map = [];
-    //     for (let i = 0; i < height; i++) {
-    //         if (i === 0 || i === height - 1) {
-    //             // 最上段と最下段は壁
-    //             map.push(Array(width).fill(1));
-    //         } else {
-    //             // 壁で囲まれた空間を作成
-    //             map.push([1, ...Array(width - 2).fill(0), 1]);
-    //         }
-    //     }
-
-    //     // 中にいくつかの障害物を配置
-    //     const obstacleCount = Math.floor((width * height) / 40); // 適当な障害物の数
-    //     for (let i = 0; i < obstacleCount; i++) {
-    //         const obstacleX = Math.floor(Math.random() * (width - 2)) + 1; // ランダムなX座標
-    //         const obstacleY = Math.floor(Math.random() * (height - 2)) + 1; // ランダムなY座標
-    //         map[obstacleY][obstacleX] = 1; // 障害物を配置
-    //     }
-
-    //     return map;
-    // }
 
     static run(width: number, height: number) {
         // 壁で埋めた空のマップを生成
@@ -105,6 +82,18 @@ export class MapGenerator {
             y: (point.y * gridSize) + halfGridSize,
         };
     }
+
+    static convertCenterPointToPoint(centerPoint: Point, gridSize: number, scale: number): Point {
+        const scaledGridSize = gridSize * scale;
+        const halfScaledGridSize = scaledGridSize / 2;
+    
+        return {
+            x: Math.floor((centerPoint.x) / scaledGridSize),
+            y: Math.floor((centerPoint.y) / scaledGridSize),
+        };
+    }
+    
+    
 
     static run2(width: number, height: number) {
         // 0で埋めた空のマップを生成
