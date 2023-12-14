@@ -18,7 +18,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
         })
     );
 
-    
+    entities.push(...createSurroundingBlocks(100,100,150,150,4));
 
     const mapEntity = createMap();
     entities.push(mapEntity);
@@ -57,13 +57,34 @@ export function createPointEntity(_x: number, _y: number) {
     return point;
 }
 
-function createBlock(x: number, y:number) {
+function createBlock(x: number, y:number, w:number=10, h:number=10) {
     const block = new Entity();
     block.components.PositionComponent = new PositionComponent(x, y);
-    block.components.SizeComponent = new SizeComponent(10, 10);
+    block.components.SizeComponent = new SizeComponent(w, h);
     block.components.ColliderComponent = new ColliderComponent("block", []);
+    block.components.ShapeComponent = new ShapeComponent('square', 'black');
     return block;
 }
+
+function createSurroundingBlocks(x: number, y: number, width: number, height: number, borderWidth: number): Entity[] {
+    const blocks: Entity[] = [];
+    // const offset = borderWidth * 0.5;
+    // 上辺のブロック
+    blocks.push(createBlock(x, y, width, borderWidth));
+    // 下辺のブロック
+    blocks.push(createBlock(x, y + height - borderWidth, width, borderWidth));
+    // 左辺のブロック
+    blocks.push(createBlock(x, y, borderWidth, height));
+    // 右辺のブロック
+    blocks.push(createBlock(x + width - borderWidth, y, borderWidth, height));
+
+    return blocks;
+}
+
+// 例えば、位置 (50, 50) に 100x100 の領域に、幅10のブロックで囲む場合
+const surroundingBlocks = createSurroundingBlocks(50, 50, 100, 100, 10);
+
+
 
 function createAnimalEntity(initPoint: Point) {
     const animal = new Entity();

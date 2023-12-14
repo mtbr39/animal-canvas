@@ -31,7 +31,7 @@ export class RenderSystem extends System {
                             const rectX = x * mapCellGridSize; // x 座標の計算
                             const rectY = y * mapCellGridSize; // y 座標の計算
                             this.ctx.fillStyle = "#4D6653";
-                            this.rect(rectX, rectY, mapCellGridSize, mapCellGridSize);
+                            this.rect(rectX, rectY, mapCellGridSize, mapCellGridSize, true, true);
                         }
                     }
                 }
@@ -51,7 +51,6 @@ export class RenderSystem extends System {
             }
             if (position && size && shape) {
                 // shapeがある場合
-                // public type: ShapeType, public color: string, public isFill: boolean = true
                 this.ctx.fillStyle = shape.color;
                 switch (shape.type) {
                     case "square":
@@ -65,9 +64,9 @@ export class RenderSystem extends System {
         });
     }
 
-    rect(_x: number, _y: number, _w: number, _h: number, _isFill: boolean = true) {
-        const [x, y] = this.scaler.array([_x, _y]);
-        const [w, h] = this.scaler.array2([_w, _h]);
+    rect(_x: number, _y: number, _w: number, _h: number, _isFill: boolean = true, adjust: boolean = false) {
+        let [x, y, w, h] = this.scaler.array([_x, _y, _w, _h]);
+        if (adjust) [w, h] = this.scaler.array2([_w, _h]);
         if (_isFill) {
             this.ctx.fillRect(x, y, w, h);
         } else {
