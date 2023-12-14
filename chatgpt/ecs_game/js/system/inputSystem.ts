@@ -6,6 +6,7 @@ import { MapGenerator } from "../mapGenerator";
 type ComponentType<T> = new (...args: any[]) => T;
 
 export class InputSystem {
+    private isPointerHold: boolean = false;
     constructor(private entities: Entity[], private scaler: any) {
         window.addEventListener("keydown", this.handleKeydown.bind(this));
         window.addEventListener("keyup", this.handleKeyup.bind(this));
@@ -88,9 +89,29 @@ export class InputSystem {
     }
 
     handlePointerDown(ev: PointerEvent) {
+        this.isPointerHold = true;
         const clientX = ev.clientX * window.devicePixelRatio;
         const clientY = ev.clientY * window.devicePixelRatio;
 
+        // this.updateMapFromPointer(clientX, clientY);
+    }
+
+    handlePointerMove(ev: PointerEvent) {
+        const clientX = ev.clientX * window.devicePixelRatio;
+        const clientY = ev.clientY * window.devicePixelRatio;
+
+        if (this.isPointerHold) {
+            this.updateMapFromPointer(clientX, clientY);
+        }
+    }
+
+    handlePointerUp(ev: PointerEvent) {
+        this.isPointerHold = false;
+        const clientX = ev.clientX * window.devicePixelRatio;
+        const clientY = ev.clientY * window.devicePixelRatio;
+    }
+
+    updateMapFromPointer(clientX: number, clientY: number) {
         let map: MapComponent;
         this.entities.forEach((entity) => {
             const mapComponent = entity.components.MapComponent as MapComponent;
@@ -102,16 +123,6 @@ export class InputSystem {
                 map.grid[clickPoint.y][clickPoint.x] = 0;
                 return;
             }
-        });
-    }
-
-    handlePointerMove(ev: PointerEvent) {
-        const clientX = ev.clientX;
-        const clientY = ev.clientY;
-    }
-
-    handlePointerUp(ev: PointerEvent) {
-        const clientX = ev.clientX;
-        const clientY = ev.clientY;
+        }); 
     }
 }

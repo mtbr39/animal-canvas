@@ -11,7 +11,7 @@ import { CollisionSystem } from "./system/collisionSystem";
 import { canvasScaler } from "./canvasScaler";
 
 const init = () => {
-    console.log("init 0017");
+    console.log("init 1214");
 
     const canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
