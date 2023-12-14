@@ -18,6 +18,12 @@ export class VelocityComponent extends Component {
     }
 }
 
+export class ShapeComponent extends Component {
+    constructor(public type: ShapeType, public color: string, public isFill: boolean = true) {
+        super();
+    }
+}
+
 export class PlayerComponent extends Component {}
 
 export class PointComponent extends Component {}

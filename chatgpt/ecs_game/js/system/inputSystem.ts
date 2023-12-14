@@ -93,7 +93,7 @@ export class InputSystem {
         const clientX = ev.clientX * window.devicePixelRatio;
         const clientY = ev.clientY * window.devicePixelRatio;
 
-        // this.updateMapFromPointer(clientX, clientY);
+        this.updateMapFromPointer(clientX, clientY);
     }
 
     handlePointerMove(ev: PointerEvent) {

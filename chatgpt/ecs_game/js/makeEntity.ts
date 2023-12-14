@@ -1,5 +1,5 @@
 import { createButton } from "./UIManager";
-import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PlayerComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "./component";
+import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PlayerComponent, PointComponent, PositionComponent, ShapeComponent, SizeComponent, VelocityComponent } from "./component";
 import { Entity } from "./entity";
 import { MapGenerator } from "./mapGenerator";
 import { convertPathToCenterPoints } from "./pathfind";
@@ -37,6 +37,7 @@ function createPlayerEntity() {
     player.components.SizeComponent = new SizeComponent(20, 20);
     player.components.VelocityComponent = new VelocityComponent(0, 0);
     player.components.ColliderComponent = new ColliderComponent("player", ['block']);
+    player.components.ShapeComponent = new ShapeComponent('square', 'black');
     return player;
 }
 
@@ -70,6 +71,7 @@ function createAnimalEntity(initPoint: Point) {
     animal.components.SizeComponent = new SizeComponent(2, 2);
     animal.components.VelocityComponent = new VelocityComponent(0, 0);
     animal.components.ColliderComponent = new ColliderComponent("animal", ['block']);
+    animal.components.ShapeComponent = new ShapeComponent('square', 'black');
     animal.components.AnimalComponent = new AnimalComponent();
     animal.components.PathfindComponent = new PathfindComponent();
     return animal;

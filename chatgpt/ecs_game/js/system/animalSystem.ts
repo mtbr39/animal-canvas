@@ -32,7 +32,6 @@ export class AnimalSystem extends System {
                 //     animal.stateTime = 0;
                 //     animal.state = Math.random() > 0.5 ? 'walk' : 'idle';
                 // }
-                animal.state = "pathfindStart";
                 switch (animal.state) {
                     case "walk":
                         velocity.speedX = 1;
@@ -58,8 +57,11 @@ export class AnimalSystem extends System {
                         }
                         animal.state = "pathfinding";
                         break;
+                    case "pathfinding":
+
+                        break;
                     default:
-                        // Handle other states
+                        animal.state = "pathfindStart";
                         break;
                 }
             }
