@@ -18,7 +18,7 @@ export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
         })
     );
 
-    entities.push(...createSurroundingBlocks(100,100,150,150,4));
+    entities.push(...createSurroundingBlocks(100,100,150,150, 2));
 
     const mapEntity = createMap();
     entities.push(mapEntity);

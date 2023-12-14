@@ -25,6 +25,24 @@ export class RenderSystem extends System {
                 const mapCellGridSize = 10; // グリッドサイズ
                 const rectSize = 10; // 矩形のサイズ
 
+                if ("gridDraw" == "gridDraw") {
+                    // グリッド線の色や太さを設定
+                    this.ctx.strokeStyle = "#000"; // 線の色を黒に設定
+                    this.ctx.lineWidth = 1; // 線の太さを1に設定
+
+                    // 横方向のグリッド線を描画
+                    for (let y = 0; y <= map.grid.length; y++) {
+                        const lineY = y * mapCellGridSize;
+                        this.line(0, lineY, map.grid[0].length * mapCellGridSize, lineY, 1);
+                    }
+
+                    // 縦方向のグリッド線を描画
+                    for (let x = 0; x <= map.grid[0].length; x++) {
+                        const lineX = x * mapCellGridSize;
+                        this.line(lineX, 0, lineX, map.grid.length * mapCellGridSize, 1);
+                    }
+                }
+
                 for (let y = 0; y < map.grid.length; y++) {
                     for (let x = 0; x < map.grid[y].length; x++) {
                         if (map.grid[y][x] === 0) {
@@ -87,5 +105,14 @@ export class RenderSystem extends System {
             this.ctx.stroke();
         }
         this.ctx.closePath();
+    }
+
+    line(_startX: number, _startY: number, _endX: number, _endY: number, lineWidth = 1): void {
+        const [startX, startY, endX, endY] = this.scaler.array([_startX, _startY, _endX, _endY]);
+        this.ctx.lineWidth = 1;
+        this.ctx.beginPath();
+        this.ctx.moveTo(startX, startY);
+        this.ctx.lineTo(endX, endY);
+        this.ctx.stroke();
     }
 }
