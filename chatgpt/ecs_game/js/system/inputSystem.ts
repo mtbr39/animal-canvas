@@ -31,6 +31,16 @@ export class InputSystem {
         return foundComponents;
     }
 
+    // // 全ての必要なコンポーネントが見つかった場合、特定の処理を実行する例
+    // executeIfAllComponentsFound(player, [HealthComponent], (components) => {
+    //     // ここで必要な処理を実行する
+    //     console.log('All required components found:', components);
+    // });
+    // ----
+    // // 問題点 : 以下のようにしたとき、speedYを持っていないとなる
+    // this.executeIfAllComponentsFound(entity, [PlayerComponent], (components) => {
+    //     components.velocity.speedY = -5;
+    // });
     executeIfAllComponentsFound(entity: Entity, componentTypes: ComponentType<Component>[], callback: (components: Record<string, Component>) => void) {
         const foundComponents = this.findComponents(entity, componentTypes);
 
@@ -123,6 +133,6 @@ export class InputSystem {
                 map.grid[clickPoint.y][clickPoint.x] = 0;
                 return;
             }
-        }); 
+        });
     }
 }

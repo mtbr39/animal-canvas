@@ -1,4 +1,41 @@
+import { Entity } from "../entity";
+
 export abstract class Component {}
+
+
+// // Problem :  window[componentName]
+// export function setComponent(entity: any, componentName: string, args: any[]) {
+//     if (
+//         typeof componentName === 'string'
+//     ) {
+//         //@ts-ignore
+//         if (window[componentName]) {
+//             //@ts-ignore
+//             entity.components[componentName] = new window[componentName](...args);
+//         } else {
+//             // Handle unknown components or do nothing
+//             console.log("window[componetName]が存在しない", window);
+//         }
+//     } else {
+//         // Handle unknown components or do nothing
+//         console.log("componentNameがstringでない");
+//     }
+// }
+
+// export function setMultipleComponents(entity: any, components: { [key: string]: any[] }) {
+//     for (let componentName in components) {
+//         if (Object.prototype.hasOwnProperty.call(components, componentName)) {
+//             setComponent(entity, componentName, components[componentName]);
+//         }
+//     }
+// }
+
+// export function createEntityWithComponents(components: { [key: string]: any[] }): Entity {
+//     const entity = new Entity();
+//     setMultipleComponents(entity, components);
+//     return entity;
+// }
+
 
 export class PositionComponent extends Component {
     constructor(public x: number, public y: number) {
