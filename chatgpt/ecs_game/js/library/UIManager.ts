@@ -1,6 +1,6 @@
-import { ButtonComponent, UIComponent } from "./component/UIComponent";
-import { Entity } from "./entity";
-import { System } from "./system/system";
+import { ButtonComponent, UIComponent } from "../component/UIComponent"
+import { Entity } from "../entity";
+import { System } from "../system/system";
 
 // UIManagerはUIEntityを管理し、Canvas上で描画やイベントを処理する
 export class UIManager extends System {

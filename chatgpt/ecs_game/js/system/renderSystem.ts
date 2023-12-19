@@ -1,6 +1,6 @@
 import { Entity } from "../entity";
 import { System } from "./system";
-import { MapComponent, PointComponent, PositionComponent, ShapeComponent, SizeComponent } from "../component";
+import { MapComponent, PointComponent, PositionComponent, ShapeComponent, SizeComponent } from "../component/component";
 
 export class RenderSystem extends System {
     private ctx: CanvasRenderingContext2D;

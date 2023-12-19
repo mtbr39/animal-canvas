@@ -1,7 +1,7 @@
 import { Entity } from "../entity";
 import { System } from "./system";
-import { Component, MapComponent, PlayerComponent, VelocityComponent } from "../component";
-import { MapGenerator } from "../mapGenerator";
+import { Component, MapComponent, PlayerComponent, VelocityComponent } from "../component/component";
+import { MapGenerator } from "../library/mapGenerator";
 
 type ComponentType<T> = new (...args: any[]) => T;
 

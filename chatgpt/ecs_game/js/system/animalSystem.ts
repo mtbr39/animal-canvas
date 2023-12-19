@@ -1,7 +1,7 @@
-import { AnimalComponent, Component, MapComponent, PathfindComponent, PositionComponent, VelocityComponent } from "../component";
+import { AnimalComponent, Component, MapComponent, PathfindComponent, PositionComponent, VelocityComponent } from "../component/component";
 import { Entity } from "../entity";
 import { createPointEntity } from "../makeEntity";
-import { findAndConvertPath } from "../pathfind";
+import { findAndConvertPath } from "../library/pathfind";
 import { System, UtilitySystem } from "./system";
 
 export class AnimalSystem extends System {

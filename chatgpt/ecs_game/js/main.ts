@@ -2,13 +2,13 @@ import { Entity } from "./entity";
 import { InputSystem } from "./system/inputSystem";
 import { RenderSystem } from "./system/renderSystem";
 import { SystemManager } from "./system/systemManager";
-import { UIManager, createButton } from "./UIManager";
+import { UIManager, createButton } from "./library/UIManager";
 import { UIRenderSystem } from "./system/UIRenderSystem";
 import { makeEntity } from "./makeEntity";
 import { AnimalSystem } from "./system/animalSystem";
 import { MovementSystem } from "./system/movementSystem";
 import { CollisionSystem } from "./system/collisionSystem";
-import { canvasScaler } from "./canvasScaler";
+import { canvasScaler } from "./library/canvasScaler";
 
 const init = () => {
     console.log("init 1214");

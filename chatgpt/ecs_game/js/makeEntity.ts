@@ -1,8 +1,8 @@
-import { createButton } from "./UIManager";
-import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PlayerComponent, PointComponent, PositionComponent, ShapeComponent, SizeComponent, VelocityComponent } from "./component";
+import { createButton } from "./library/UIManager";
+import { AnimalComponent, ColliderComponent, MapComponent, PathfindComponent, PlayerComponent, PointComponent, PositionComponent, ShapeComponent, SizeComponent, VelocityComponent } from "./component/component";
 import { Entity } from "./entity";
-import { MapGenerator } from "./mapGenerator";
-import { convertPathToCenterPoints } from "./pathfind";
+import { MapGenerator } from "./library/mapGenerator";
+import { convertPathToCenterPoints } from "./library/pathfind";
 
 export function makeEntity(entities: Entity[], canvas: HTMLCanvasElement) {
 

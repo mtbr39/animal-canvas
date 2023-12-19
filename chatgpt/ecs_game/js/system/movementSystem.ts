@@ -1,5 +1,5 @@
 import { Entity } from "../entity";
-import { ColliderComponent, PathfindComponent, PositionComponent, SizeComponent, VelocityComponent } from "../component"; // 必要なコンポーネントをインポート
+import { ColliderComponent, PathfindComponent, PositionComponent, SizeComponent, VelocityComponent } from "../component/component"; // 必要なコンポーネントをインポート
 import { System } from "./system";
 
 export class MovementSystem extends System {

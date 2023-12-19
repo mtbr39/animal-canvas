@@ -1,5 +1,5 @@
 import { Entity } from "../entity";
-import { ColliderComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "../component";
+import { ColliderComponent, PointComponent, PositionComponent, SizeComponent, VelocityComponent } from "../component/component";
 import { System } from "./system";
 
 export class CollisionSystem extends System {

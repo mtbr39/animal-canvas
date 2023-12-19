@@ -1,6 +1,6 @@
 import { Entity } from "../entity";
 import { System } from "./system";
-import { PositionComponent, SizeComponent } from "../component";
+import { PositionComponent, SizeComponent } from "../component/component";
 import { ButtonComponent, UIComponent } from "../component/UIComponent";
 
 export class UIRenderSystem extends System {
